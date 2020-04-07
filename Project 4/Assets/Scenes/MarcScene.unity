@@ -199,7 +199,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1249110752}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 10, y: 10, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -356,7 +356,11 @@ Tilemap:
   m_TileAssetArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileSpriteArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
   m_TileMatrixArray:
@@ -364,28 +368,28 @@ Tilemap:
     m_Data:
       e00: NaN
       e01: 0
-      e02: 1
-      e03: NaN
+      e02: 1.04e-43
+      e03: 0
       e10: NaN
       e11: 0
-      e12: 4.08e-43
-      e13: NaN
-      e20: 0
+      e12: NaN
+      e13: 0
+      e20: 1.04e-43
       e21: 0
       e22: 0
-      e23: 0
-      e30: 0
-      e31: 0
+      e23: 1.4663e-41
+      e30: 2.82e-43
+      e31: NaN
       e32: 0
-      e33: 0
+      e33: 9.02e-43
   m_TileColorArray:
   - m_RefCount: 0
-    m_Data: {r: -4.839981, g: -4.839981, b: -4.839981, a: -4.839981}
+    m_Data: {r: 6.553711, g: 6.553711, b: 6.553711, a: 6.553711}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -5, y: -1, z: 0}
-  m_Size: {x: 5, y: 5, z: 1}
+  m_Size: {x: 27, y: 30, z: 1}
   m_TileAnchor: {x: 0, y: 0, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -418,4 +422,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 1584668666}
-  testTile: {fileID: 11400000, guid: a5a53a2b258671a4a95ca29c9592fab6, type: 2}
+  landTile: {fileID: 11400000, guid: 793943be9742b174bb64f8c90e18b46a, type: 2}
+  waterTile: {fileID: 11400000, guid: f9b42ef28e3ff494e96056790c3f998f, type: 2}
+  desertTile: {fileID: 11400000, guid: dd229ae83a73bbb478ed1d00ce6ed59a, type: 2}
+  jungleTile: {fileID: 11400000, guid: d0a2705b5a9c31e44add6d64f13ebce2, type: 2}
+  mountainTile: {fileID: 11400000, guid: fd83223ef55886840bfa3603b3d46e8f, type: 2}
+  directionTryLimit: 100
+  mapSize: {x: 1000, y: 1000}
+  waterSize: {x: 200, y: 300}
+  waterNumberPer100X100: {x: 0, y: 10}
+  oceanSize: {x: 700, y: 1000}
+  oceanNumberPer100X100: {x: 0, y: 0.15}
+  desertSize: {x: 500, y: 700}
+  desertNumberPer100X100: {x: 0, y: 0.2}
+  jungleSize: {x: 500, y: 700}
+  jungleNumberPer100X100: {x: 0, y: 0.2}
+  mountainSize: {x: 1, y: 10}
+  mountainNumberPer100X100: {x: 0, y: 50}
