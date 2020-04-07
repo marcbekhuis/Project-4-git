@@ -24,7 +24,7 @@ public class TestPlaceTile : MonoBehaviour
                 Debug.LogError("Touch");
                 Vector3 worldPosition = Camera.main.ScreenToWorldPoint(touch.position);
                 //Vector3Int gridPosition = tilemap.WorldToCell(worldPosition);
-                tilemap.SetTile((Vector3Int)HexagonCalculator.GetHexagonPosition(worldPosition), tile);
+                tilemap.SetTile((Vector3Int)HexagonCalculator.WorldToHexagonPosition(worldPosition), tile);
             }
         }
     }
