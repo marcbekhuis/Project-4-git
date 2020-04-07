@@ -1,0 +1,23 @@
+Starts off with a shotgun sync for the "mr blue sky"
+
+This is the shotgun.
+
+It has 6 shots, and 32 reserve.
+
+It can do up to 102 damage and like 5 from far away.
+
+It can be used on the soldier class, the pyro class, the engineer class  and the heavy class 
+although on heavy it's kinda useless since you have to unref your minigun or you are just playing fat scout. 
+Which is actually a viable tactic! Try it! In competitive!
+(and other fun lies you can tell yourself)
+
+The shotgun is a finishing weapon (unless you are an engineer), you will deal damage with your primary, so a rocket launmcher, flamethrower or minignug.
+You will remove the remaining health points from the enemy with your shotgun.
+
+It has a random bullet spread in casual and in competitive it is fixed and it looks like this
+												. . .
+												. . .
+												. . .
+The random bullet spread makes the damage inconsistent, if you look at an enemy and shoot multiple times you will do random damage. this is always the same with fixed bullet spread.
+
+Tbh, it's just a bad scattergun.
