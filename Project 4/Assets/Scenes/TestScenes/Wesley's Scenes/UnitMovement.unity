@@ -403,6 +403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff83ff04071edb34e806d423c5259529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isHealthbarActive: 0
   health: 100
 --- !u!1 &445555428 stripped
 GameObject:
@@ -571,6 +572,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff83ff04071edb34e806d423c5259529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isHealthbarActive: 0
   health: 100
 --- !u!1 &705137908 stripped
 GameObject:
