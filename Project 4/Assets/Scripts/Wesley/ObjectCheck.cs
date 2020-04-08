@@ -7,6 +7,9 @@ public class ObjectCheck : MonoBehaviour
     BasicMovement basicMovement;
 
     [HideInInspector]public bool isMovingAway = false;
+    [HideInInspector]public bool isMoving = false;
+
+    float distance = 5000;
 
     private void Start()
     {
@@ -15,9 +18,20 @@ public class ObjectCheck : MonoBehaviour
 
     private void Update()
     {
-        if (isMovingAway)
+
+        if (basicMovement.movePosition != null)
         {
-            basicMovement.Movement("Up");
+            distance = Vector2.Distance(this.transform.parent.position, basicMovement.movePosition.transform.position);
+
+            if (isMovingAway)
+            {
+                basicMovement.Movement("Up");
+            }
+            if (distance <= 0.005f && basicMovement.doesMerge)
+            {
+                this.transform.parent.position = basicMovement.movePosition.transform.position;
+                StopMovement();
+            }
         }
     }
 
@@ -27,9 +41,9 @@ public class ObjectCheck : MonoBehaviour
         {
             ChangeState();
         }
-        else if (collission.transform.parent.gameObject == basicMovement.movePosition)
+        else if (collission.transform.parent.gameObject == basicMovement.movePosition && !basicMovement.doesMerge)
         {
-            basicMovement.movePosition = null;
+            StopMovement();
         }
     }
 
@@ -43,8 +57,13 @@ public class ObjectCheck : MonoBehaviour
 
     void ChangeState()
     {
-
         isMovingAway = !isMovingAway;
         basicMovement.isConstructed = !basicMovement.isConstructed;
+    }
+
+    void StopMovement()
+    {
+        basicMovement.movePosition = null;
+        isMoving = false;
     }
 }

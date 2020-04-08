@@ -8,6 +8,7 @@ public class BasicMovement : MonoBehaviour
     public GameObject movePosition;
 
     [HideInInspector]public bool isConstructed = false;
+    [Tooltip("Makes it so that this object merges into the movePosition object")]public bool doesMerge = true;
 
     [SerializeField, Range(0, 10f)] float speed = 2.5f;
     float moveX = 0;
