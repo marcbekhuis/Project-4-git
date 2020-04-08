@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ObjectCheck : MonoBehaviour
 {
+    [HideInInspector] public CombatSystem combatSystem;
     BasicMovement basicMovement;
 
     [HideInInspector]public bool isMovingAway = false;
@@ -18,15 +19,17 @@ public class ObjectCheck : MonoBehaviour
 
     private void Update()
     {
-
+        //Checks if the object is currently moving to a new position
         if (basicMovement.movePosition != null)
         {
             distance = Vector2.Distance(this.transform.parent.position, basicMovement.movePosition.transform.position);
 
+            //Moves the object up if it runs into anything
             if (isMovingAway)
             {
                 basicMovement.Movement("Up");
             }
+            //Makes the object stop when it has merged inside the position if doesMerge is enabled
             if (distance <= 0.005f && basicMovement.doesMerge)
             {
                 this.transform.parent.position = basicMovement.movePosition.transform.position;
@@ -39,11 +42,19 @@ public class ObjectCheck : MonoBehaviour
     {
         if (collission.transform.parent.CompareTag("Prop"))
         {
-            ChangeState();
+            ChangeState(true);
         }
         else if (collission.transform.parent.gameObject == basicMovement.movePosition && !basicMovement.doesMerge)
         {
             StopMovement();
+        }
+
+        if (collission.transform.parent.CompareTag("Hostile") && combatSystem != null)
+        {
+            combatSystem.enemy = collission.transform.parent.gameObject;
+
+            //Temp
+            this.transform.parent.GetComponent<CombatSystem>().inCombat = true;
         }
     }
 
@@ -51,14 +62,14 @@ public class ObjectCheck : MonoBehaviour
     {
         if (collission.transform.parent.CompareTag("Prop"))
         {
-            ChangeState();
+            ChangeState(false);
         }
     }
 
-    void ChangeState()
+    void ChangeState(bool state)
     {
-        isMovingAway = !isMovingAway;
-        basicMovement.isConstructed = !basicMovement.isConstructed;
+        isMovingAway = state;
+        basicMovement.isConstructed = state;
     }
 
     void StopMovement()
