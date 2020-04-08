@@ -5,39 +5,40 @@ using UnityEngine.Tilemaps;
 
 public class GenerateMap : MonoBehaviour
 {
-    public Tilemap tilemap;
-    public TilePrefab landTile;
-    public TilePrefab waterTile;
-    public TilePrefab desertTile;
-    public TilePrefab jungleTile;
-    public TilePrefab mountainTile;
-    public int directionTryLimit = 100;
-    public Vector2Int mapSize;
-    [Header("Water")]
-    public Vector2Int waterSize;
-    public Vector2 waterNumberPer100X100;
-    [Header("Ocean")]
-    public Vector2Int oceanSize;
-    public Vector2 oceanNumberPer100X100;
-    [Header("Desert")]
-    public Vector2Int desertSize;
-    public Vector2 desertNumberPer100X100;
-    [Header("Jungle")]
-    public Vector2Int jungleSize;
-    public Vector2 jungleNumberPer100X100;
-    [Header("Mountain")]
-    public Vector2Int mountainSize;
-    public Vector2 mountainNumberPer100X100;
+    [SerializeField] private Tilemap tilemap;
+    [SerializeField] private Vector2Int mapSize;
+    [Space]
+    [SerializeField] [Tooltip("Biomes are generated in the orde of the array.")] private BiomeSettings[] biomes;
+
 
     private TileTypes[,] tileTypes;
+    FastNoise fastNoise = new FastNoise();
 
-    enum TileTypes
+    [System.Serializable]
+    public class BiomeSettings
     {
-        Land,
+        public string biomeName = "New biome";
+        public TileTypes tileType = TileTypes.Plains;
+        public TilePrefab tilePrefab;
+        [Space]
+        [Header("Noise Settings")]
+        [Tooltip("Generates the biome if the noise value is above or equel to this value")] public float returnValueAbove = 0;
+        public FastNoise.NoiseType noiseType = FastNoise.NoiseType.PerlinFractal;
+        public int octaves = 6;
+        [Tooltip("Scale of the noise map.")] public float Frequency = 0.2f;
+        public float gain;
+        public float lacunarity;
+    }
+
+    public enum TileTypes
+    {
+        Plains,
         Water,
+        Ocean,
         Jungle,
         Desert,
-        Mountain
+        Mountain,
+        Forest
     }
 
     // Start is called before the first frame update
@@ -49,11 +50,12 @@ public class GenerateMap : MonoBehaviour
     private void Generate()
     {
         tileTypes = new TileTypes[mapSize.x, mapSize.y];
-        GenerateBiomes(desertNumberPer100X100, desertSize, TileTypes.Desert);
-        GenerateBiomes(jungleNumberPer100X100, jungleSize, TileTypes.Jungle);
-        GenerateBiomes(mountainNumberPer100X100, mountainSize, TileTypes.Mountain);
-        GenerateBiomes(waterNumberPer100X100, waterSize, TileTypes.Water);
-        GenerateBiomes(oceanNumberPer100X100, oceanSize, TileTypes.Water);
+
+        foreach (var biome in biomes)
+        {
+            GenerateBiome(biome.octaves,biome.Frequency, biome.gain, biome.lacunarity, biome.returnValueAbove, biome.noiseType, biome.tileType);
+        }
+
         PlaceTiles();
     }
 
@@ -64,126 +66,95 @@ public class GenerateMap : MonoBehaviour
         {
             for (int y = 0; y < mapSize.y; y++)
             {
-                switch (tileTypes[x,y])
+                foreach (var biome in biomes)
                 {
-                    case TileTypes.Land:
-                        tilemap.SetTile((Vector3Int)HexagonCalculator.WorldToHexagonPosition(new Vector2(x, y)), landTile.tile);
-                        Tiles.tiles[x, y] = new TileData(HexagonCalculator.WorldToHexagonPosition(new Vector2(x, y)), landTile);
+                    if (tileTypes[x,y] == biome.tileType)
+                    {
+                        tilemap.SetTile((Vector3Int)HexagonCalculator.WorldToHexagonPosition(new Vector2(x, y)), biome.tilePrefab.tile);
+                        Tiles.tiles[x, y] = new TileData(HexagonCalculator.WorldToHexagonPosition(new Vector2(x, y)), biome.tilePrefab);
+                    }
+                }
+            }
+        }
+    }
+
+    private void GenerateBiome(int octaves, float frequency, float gain, float lacunarity, float returnValueAbove, FastNoise.NoiseType noiseType,  TileTypes tileType)
+    {
+        fastNoise.SetSeed(Random.Range(-1000,1000));
+        fastNoise.SetFractalOctaves(octaves);
+        fastNoise.SetFrequency(frequency);
+        fastNoise.SetFractalGain(gain);
+        fastNoise.SetFractalLacunarity(lacunarity);
+        for (int x = 0; x < mapSize.x; x++)
+        {
+            for (int y = 0; y < mapSize.y; y++)
+            {
+                switch (noiseType)
+                {
+                    case FastNoise.NoiseType.Value:
+                        if (fastNoise.GetValue(x, y) >= returnValueAbove)
+                        {
+                            tileTypes[x, y] = tileType;
+                        }
                         break;
-                    case TileTypes.Water:
-                        tilemap.SetTile((Vector3Int)HexagonCalculator.WorldToHexagonPosition(new Vector2(x, y)), waterTile.tile);
-                        Tiles.tiles[x, y] = new TileData(HexagonCalculator.WorldToHexagonPosition(new Vector2(x, y)), waterTile);
+                    case FastNoise.NoiseType.ValueFractal:
+                        if (fastNoise.GetValueFractal(x, y) >= returnValueAbove)
+                        {
+                            tileTypes[x, y] = tileType;
+                        }
                         break;
-                    case TileTypes.Desert:
-                        tilemap.SetTile((Vector3Int)HexagonCalculator.WorldToHexagonPosition(new Vector2(x, y)), desertTile.tile);
-                        Tiles.tiles[x, y] = new TileData(HexagonCalculator.WorldToHexagonPosition(new Vector2(x, y)), desertTile);
+                    case FastNoise.NoiseType.Perlin:
+                        if (fastNoise.GetPerlin(x, y) >= returnValueAbove)
+                        {
+                            tileTypes[x, y] = tileType;
+                        }
                         break;
-                    case TileTypes.Jungle:
-                        tilemap.SetTile((Vector3Int)HexagonCalculator.WorldToHexagonPosition(new Vector2(x, y)), jungleTile.tile);
-                        Tiles.tiles[x, y] = new TileData(HexagonCalculator.WorldToHexagonPosition(new Vector2(x, y)), jungleTile);
+                    case FastNoise.NoiseType.PerlinFractal:
+                        if (fastNoise.GetPerlinFractal(x, y) >= returnValueAbove)
+                        {
+                            tileTypes[x, y] = tileType;
+                        }
                         break;
-                    case TileTypes.Mountain:
-                        tilemap.SetTile((Vector3Int)HexagonCalculator.WorldToHexagonPosition(new Vector2(x, y)), mountainTile.tile);
-                        Tiles.tiles[x, y] = new TileData(HexagonCalculator.WorldToHexagonPosition(new Vector2(x, y)), mountainTile);
+                    case FastNoise.NoiseType.Simplex:
+                        if (fastNoise.GetSimplex(x, y) >= returnValueAbove)
+                        {
+                            tileTypes[x, y] = tileType;
+                        }
+                        break;
+                    case FastNoise.NoiseType.SimplexFractal:
+                        if (fastNoise.GetSimplexFractal(x, y) >= returnValueAbove)
+                        {
+                            tileTypes[x, y] = tileType;
+                        }
+                        break;
+                    case FastNoise.NoiseType.Cellular:
+                        if (fastNoise.GetCellular(x, y) >= returnValueAbove)
+                        {
+                            tileTypes[x, y] = tileType;
+                        }
+                        break;
+                    case FastNoise.NoiseType.WhiteNoise:
+                        if (fastNoise.GetWhiteNoise(x, y) >= returnValueAbove)
+                        {
+                            tileTypes[x, y] = tileType;
+                        }
+                        break;
+                    case FastNoise.NoiseType.Cubic:
+                        if (fastNoise.GetCubic(x, y) >= returnValueAbove)
+                        {
+                            tileTypes[x, y] = tileType;
+                        }
+                        break;
+                    case FastNoise.NoiseType.CubicFractal:
+                        if (fastNoise.GetCubicFractal(x, y) >= returnValueAbove)
+                        {
+                            tileTypes[x, y] = tileType;
+                        }
                         break;
                     default:
                         break;
                 }
             }
         }
-    }
-
-    private void GenerateBiomes(Vector2 biomeNumberPer10X10, Vector2 biomeSize, TileTypes tileType)
-    {
-        int numberOfWaters = Mathf.RoundToInt(Random.Range(biomeNumberPer10X10.x * mapSize.x / 100 * mapSize.y / 100, biomeNumberPer10X10.y * mapSize.x / 100 * mapSize.y / 100));
-
-        for (int i = 0; i < numberOfWaters; i++)
-        {
-            GenerateBiome((int)Random.Range(biomeSize.x, biomeSize.y), tileType);
-        }
-    }
-
-    private void GenerateBiome(int biomeSize, TileTypes tileType)
-    {
-        Vector2Int beginTileLocation = new Vector2Int(Random.Range(0, mapSize.x), Random.Range(0, mapSize.y));
-        Vector2Int biomeTileLocation = beginTileLocation;
-
-        for (int i = 0; i < biomeSize; i++)
-        {
-            tileTypes[biomeTileLocation.x, biomeTileLocation.y] = tileType;
-            biomeTileLocation = GetNewPosition(biomeTileLocation, beginTileLocation, biomeSize, tileType);
-        }
-    }
-
-    private Vector2Int GetNewPosition(Vector2Int TileLocation, Vector2Int beginLocation, int biomeSize, TileTypes tileType)
-    {
-        int prefDirection = 4;
-        for (int i = 0; i < directionTryLimit; i++)
-        {
-            int direction = Random.Range(0, 4);
-            if (i % 50f == 0 & i != 0)
-            {
-                int range = Mathf.Clamp(biomeSize / 50, 5, 50);
-                TileLocation = new Vector2Int(Mathf.Clamp(beginLocation.x + Random.Range(-range, range + 1), 0, mapSize.x - 1), Mathf.Clamp(beginLocation.y + Random.Range(-range, range + 1), 0, mapSize.y - 1));
-            }
-            else if (prefDirection != 4)
-            {
-                if (direction == prefDirection)
-                {
-                    if (direction == 3)
-                    {
-                        direction = 0;
-                    }
-                    else
-                    {
-                        direction++;
-                    }
-                }
-            }
-            switch (direction)
-            {
-                case 0:
-                    if (TileLocation.x > 0)
-                    {
-                        if (tileTypes[TileLocation.x - 1, TileLocation.y] != tileType)
-                        {
-                            return TileLocation - new Vector2Int(1, 0);
-                        }
-                    }
-                    prefDirection = 0;
-                    break;
-                case 1:
-                    if (TileLocation.y > 0)
-                    {
-                        if (tileTypes[TileLocation.x, TileLocation.y - 1] != tileType)
-                        {
-                            return TileLocation - new Vector2Int(0, 1);
-                        }
-                    }
-                    prefDirection = 1;
-                    break;
-                case 2:
-                    if (TileLocation.x < mapSize.x - 1)
-                    {
-                        if (tileTypes[TileLocation.x + 1, TileLocation.y] != tileType)
-                        {
-                            return TileLocation + new Vector2Int(1, 0);
-                        }
-                    }
-                    prefDirection = 2;
-                    break;
-                case 3:
-                    if (TileLocation.y < mapSize.y - 1)
-                    {
-                        if (tileTypes[TileLocation.x, TileLocation.y + 1] != tileType)
-                        {
-                            return TileLocation + new Vector2Int(0, 1);
-                        }
-                    }
-                    prefDirection = 3;
-                    break;
-            }
-        }
-        return TileLocation;
     }
 }

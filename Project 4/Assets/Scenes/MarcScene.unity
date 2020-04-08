@@ -420,20 +420,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 1584668666}
-  landTile: {fileID: 11400000, guid: 793943be9742b174bb64f8c90e18b46a, type: 2}
-  waterTile: {fileID: 11400000, guid: f9b42ef28e3ff494e96056790c3f998f, type: 2}
-  desertTile: {fileID: 11400000, guid: dd229ae83a73bbb478ed1d00ce6ed59a, type: 2}
-  jungleTile: {fileID: 11400000, guid: d0a2705b5a9c31e44add6d64f13ebce2, type: 2}
-  mountainTile: {fileID: 11400000, guid: fd83223ef55886840bfa3603b3d46e8f, type: 2}
-  directionTryLimit: 100
   mapSize: {x: 1000, y: 1000}
-  waterSize: {x: 200, y: 300}
-  waterNumberPer100X100: {x: 0, y: 10}
-  oceanSize: {x: 700, y: 1000}
-  oceanNumberPer100X100: {x: 0, y: 0.15}
-  desertSize: {x: 500, y: 700}
-  desertNumberPer100X100: {x: 0, y: 0.2}
-  jungleSize: {x: 500, y: 700}
-  jungleNumberPer100X100: {x: 0, y: 0.2}
-  mountainSize: {x: 1, y: 10}
-  mountainNumberPer100X100: {x: 0, y: 50}
+  biomes:
+  - biomeName: Plains
+    tileType: 0
+    tilePrefab: {fileID: 11400000, guid: 793943be9742b174bb64f8c90e18b46a, type: 2}
+    returnValueAbove: 0.3
+    noiseType: 3
+    octaves: 6
+    Frequency: 0.05
+    gain: 0.5
+    lacunarity: 2
+  - biomeName: Jungle
+    tileType: 3
+    tilePrefab: {fileID: 11400000, guid: d0a2705b5a9c31e44add6d64f13ebce2, type: 2}
+    returnValueAbove: 0.3
+    noiseType: 3
+    octaves: 6
+    Frequency: 0.05
+    gain: 0.5
+    lacunarity: 2
+  - biomeName: Water
+    tileType: 1
+    tilePrefab: {fileID: 11400000, guid: f9b42ef28e3ff494e96056790c3f998f, type: 2}
+    returnValueAbove: 0.3
+    noiseType: 3
+    octaves: 6
+    Frequency: 0.05
+    gain: 0.5
+    lacunarity: 2
