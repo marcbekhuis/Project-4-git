@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 public class GenerateMap : MonoBehaviour
 {
     [SerializeField] private Tilemap tilemap;
-    [SerializeField] private Vector2Int mapSize;
+    [SerializeField] public Vector2Int mapSize;
     [Space]
     [SerializeField] [Tooltip("Biomes are generated in the orde of the array.")] private BiomeSettings[] biomes;
 
