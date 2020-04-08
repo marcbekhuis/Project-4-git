@@ -281,6 +281,8 @@ GameObject:
   - component: {fileID: 332490458}
   - component: {fileID: 332490457}
   - component: {fileID: 332490456}
+  - component: {fileID: 332490460}
+  - component: {fileID: 332490459}
   m_Layer: 0
   m_Name: UnitB
   m_TagString: Hostile
@@ -370,6 +372,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &332490459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 332490455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8bf1e5e14c0cdd4c92dbb7da9b718b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 0}
+  damageModifier: 1
+  inCombat: 0
+  damage: 10
+  combatTime: 60
+  attackTime: 2
+--- !u!114 &332490460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 332490455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff83ff04071edb34e806d423c5259529, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
 --- !u!1 &445555428 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4307164778414261716, guid: 12bc09a50e221cb4b9ce2cf2a52b53af,
@@ -414,6 +447,8 @@ GameObject:
   - component: {fileID: 632005883}
   - component: {fileID: 632005882}
   - component: {fileID: 632005881}
+  - component: {fileID: 632005885}
+  - component: {fileID: 632005884}
   m_Layer: 0
   m_Name: UnitA
   m_TagString: Friendly
@@ -435,7 +470,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movePosition: {fileID: 332490455}
   isConstructed: 0
-  doesMerge: 1
+  doesMerge: 0
   speed: 5.69
   isPlayer: 0
 --- !u!212 &632005882
@@ -504,6 +539,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &632005884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 632005880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8bf1e5e14c0cdd4c92dbb7da9b718b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 0}
+  damageModifier: 1
+  inCombat: 0
+  damage: 10
+  combatTime: 60
+  attackTime: 2
+--- !u!114 &632005885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 632005880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff83ff04071edb34e806d423c5259529, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
 --- !u!1 &705137908 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4307164778414261716, guid: 12bc09a50e221cb4b9ce2cf2a52b53af,
