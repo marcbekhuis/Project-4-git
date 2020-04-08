@@ -4,5 +4,12 @@ using UnityEngine;
 
 public class TileData
 {
-    public Sprite sprite;
+    public TileData(Vector2 Position, TilePrefab tile)
+    {
+        position = Position;
+        this.tile = tile;
+    }
+
+    public TilePrefab tile;
+    public Vector2 position;
 }
