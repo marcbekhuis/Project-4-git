@@ -7,4 +7,5 @@ using UnityEngine.Tilemaps;
 public class TilePrefab : ScriptableObject
 {
     public TileBase tile;
+    public bool allowMovement = true;
 }
