@@ -29,16 +29,8 @@ public class Inventory : MonoBehaviour
                 }
                 else
                 {
-                    //if theres a slot available, will start a new stack
-                    if (playerInventory.Count < inventoryMaxSize)
-                    {
-                        playerInventory.Add(item);
-                        foundItem = true;
-                    }
-                    else
-                    {
-                        CannotGetItem();
-                    }
+                    foundItem = true;
+                    CannotGetItem();
                     break;
                 }
             }
