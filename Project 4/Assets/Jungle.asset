@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0c4c17fe94ded644b6174e396bde30f, type: 3}
   m_Name: Jungle
   m_EditorClassIdentifier: 
-  tile: {fileID: 11400000, guid: 70b0cc2dd11382e4b8819121db7aeabe, type: 2}
+  tile: {fileID: 11400000, guid: 98aef9a7afe6204448782b9afac06a42, type: 2}
+  allowMovement: 1
