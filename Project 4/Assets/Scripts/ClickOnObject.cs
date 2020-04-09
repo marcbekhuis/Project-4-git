@@ -9,6 +9,8 @@ public class ClickOnObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (SelectUnitMoveToPos.moveUnit) return;
+
         foreach (Touch touch in Input.touches)
         {
             if (Input.touches.Length == 1)

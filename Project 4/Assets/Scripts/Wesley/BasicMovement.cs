@@ -20,6 +20,7 @@ public class BasicMovement : MonoBehaviour
         moveX = this.transform.position.x;
         moveY = this.transform.position.y;
         playerKeys.SetKeys(KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D);
+        movePosition = transform.position;
     }
 
     void Update()

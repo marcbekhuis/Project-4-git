@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 7356aeeb79d7ae64ab4ae104a53622e7, type: 3}
   movementSpeedSec: 10
-  actionPanel: {fileID: 1157683879896118090, guid: 87931cbb87afbec459a75cf853e57064,
+  actionPanel: {fileID: 1157683879896118090, guid: cae83f19037d21c43b9b2b7aa6631bee,
     type: 3}
