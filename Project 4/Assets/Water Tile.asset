@@ -36,10 +36,10 @@ MonoBehaviour:
     - {x: -1, y: 1, z: 0}
     - {x: -1, y: 0, z: 0}
     - {x: -1, y: -1, z: 0}
-    - {x: 1, y: 0, z: 0}
     - {x: 0, y: 1, z: 0}
     - {x: 0, y: -1, z: 0}
-    m_RuleTransform: 0
+    - {x: 1, y: 0, z: 0}
+    m_RuleTransform: 4
   - m_Id: 1
     m_Sprites:
     - {fileID: 2680355343490014661, guid: 6692ba4c7e1de814fba71c3326f4a27e, type: 3}
