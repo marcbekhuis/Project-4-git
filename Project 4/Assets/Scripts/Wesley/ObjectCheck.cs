@@ -22,7 +22,7 @@ public class ObjectCheck : MonoBehaviour
         //Checks if the object is currently moving to a new position
         if (basicMovement.movePosition != null)
         {
-            distance = Vector2.Distance(this.transform.parent.position, basicMovement.movePosition.transform.position);
+            distance = Vector2.Distance(this.transform.parent.position, basicMovement.movePosition);
 
             //Moves the object up if it runs into anything
             if (isMovingAway)
@@ -32,7 +32,7 @@ public class ObjectCheck : MonoBehaviour
             //Makes the object stop when it has merged inside the position if doesMerge is enabled
             if (distance <= 0.005f && basicMovement.doesMerge)
             {
-                this.transform.parent.position = basicMovement.movePosition.transform.position;
+                this.transform.parent.position = basicMovement.movePosition;
                 StopMovement();
             }
         }
@@ -44,10 +44,10 @@ public class ObjectCheck : MonoBehaviour
         {
             ChangeState(true);
         }
-        else if (collission.transform.parent.gameObject == basicMovement.movePosition && !basicMovement.doesMerge)
-        {
-            StopMovement();
-        }
+        //else if (collission.transform.parent.gameObject == basicMovement.movePosition && !basicMovement.doesMerge)
+        //{
+        //    StopMovement();
+        //}
 
         if (collission.transform.parent.CompareTag("Hostile") && combatSystem != null)
         {
@@ -74,7 +74,7 @@ public class ObjectCheck : MonoBehaviour
 
     void StopMovement()
     {
-        basicMovement.movePosition = null;
+        //basicMovement.movePosition = null;
         isMoving = false;
     }
 }

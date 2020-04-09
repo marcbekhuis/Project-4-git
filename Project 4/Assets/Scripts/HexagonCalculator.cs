@@ -4,17 +4,33 @@ using UnityEngine;
 
 public static class HexagonCalculator
 {
-    public static Vector2Int WorldToHexagonPosition(Vector2 position)
+    public static Vector2 WorldToHexagonPosition(Vector2 position)
     {
-        float col = position.x + (position.y % 1);
-        float row = position.y;
-        return new Vector2Int(Mathf.RoundToInt(col), Mathf.RoundToInt(row));
+        float col;
+        if (position.y % 2 == 1)
+        {
+            col = position.x - 0.5f;
+        }
+        else
+        {
+            col = position.x;
+        }
+        float row = position.y * 0.75f;
+        return new Vector2(col, row);
     }
 
     public static Vector2Int HexagonToWorldPosition(Vector2 position)
     {
-        float col = position.x - (position.y % 1);
-        float row = position.y;
+        float col;
+        if (position.y % 2 == 1)
+        {
+            col = position.x + 0.5f;
+        }
+        else
+        {
+            col = position.x;
+        }
+        float row = position.y / 0.75f * 1;
         return new Vector2Int(Mathf.RoundToInt(col), Mathf.RoundToInt(row));
     }
 }

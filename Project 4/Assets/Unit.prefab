@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3626150143577605203}
   - component: {fileID: 3626150143577605204}
   - component: {fileID: 2652938643648129603}
+  - component: {fileID: -1035837817455149395}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Untagged
@@ -94,8 +95,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11000a05c977aae43a241d4e1e0f0b76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movePosition: {fileID: 0}
+  movePosition: {x: 0, y: 0, z: 0}
   isConstructed: 0
   doesMerge: 1
   speed: 2.5
   isPlayer: 0
+--- !u!114 &-1035837817455149395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3626150143577605205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b7e09fc8b046142b092e54f0247cd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combatSystem: {fileID: 0}
+  isMovingAway: 0
+  isMoving: 0
