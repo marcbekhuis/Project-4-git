@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ClickOnObject : MonoBehaviour
 {
+    [SerializeField] private GameObject highlight;
+
     // Update is called once per frame
     void Update()
     {
@@ -18,6 +20,8 @@ public class ClickOnObject : MonoBehaviour
                     {
                         Units.units[position.x, position.y].OpenActionPanel();
                     }
+                    Vector3 worldPosition = HexagonCalculator.WorldToHexagonPosition(position);
+                    highlight.transform.position = new Vector3(worldPosition.x, worldPosition.y, 0);
                 }
             }
         }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class BasicMovement : MonoBehaviour
 {
     MovementKeys playerKeys = new MovementKeys();
-    public GameObject movePosition;
+    public Vector3 movePosition;
 
     [HideInInspector]public bool isConstructed = false;
     [Tooltip("Makes it so that this object merges into the movePosition object")]public bool doesMerge = true;
@@ -50,7 +50,7 @@ public class BasicMovement : MonoBehaviour
                 if (movePosition != null)
                 {
                     Vector2 thisPosition = new Vector2(this.transform.position.x, this.transform.position.y);
-                    Vector2 destination = new Vector2(movePosition.transform.position.x, movePosition.transform.position.y);
+                    Vector2 destination = new Vector2(movePosition.x, movePosition.y);
 
                     
                     this.transform.position = Vector2.Lerp(thisPosition, destination, speed / 1000);

@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class UnitData
 {
-    public UnitData(Vector2 Position, UnitPrefab unit)
+    public UnitData(UnitPrefab unit, BasicMovement basicMovement, GameObject gameObject)
     {
-        position = Position;
         this.unit = unit;
+        this.basicMovement = basicMovement;
+        this.gameObject = gameObject;
     }
 
     public UnitPrefab unit;
-    public Vector2 position;
+    public BasicMovement basicMovement;
+    public GameObject gameObject;
 
     public void OpenActionPanel()
     {

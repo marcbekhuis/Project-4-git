@@ -18,11 +18,13 @@ public class SpawnBeginUnits : MonoBehaviour
     {
         Units.units = new UnitData[generateMap.mapSize.x, generateMap.mapSize.y];
 
-        Vector2Int arrayposition = new Vector2Int((int)(generateMap.mapSize.x * 0.5f), (int)(generateMap.mapSize.y * 0.4f));
+        //Vector2Int arrayposition = new Vector2Int((int)(generateMap.mapSize.x * 0.5f), (int)(generateMap.mapSize.y * 0.4f));
+        Vector2Int arrayposition = new Vector2Int(1, 3);
         Vector2 position = HexagonCalculator.WorldToHexagonPosition(arrayposition);
 
-        Units.units[arrayposition.x, arrayposition.y] = new UnitData(position, settler);
         GameObject spawnedUnit = Instantiate(baseUnit, position, new Quaternion(0,0,0,0));
         spawnedUnit.GetComponent<SpriteRenderer>().sprite = settler.sprite;
+
+        Units.units[arrayposition.x, arrayposition.y] = new UnitData(settler, spawnedUnit.GetComponent<BasicMovement>(), spawnedUnit);
     }
 }
