@@ -8,6 +8,13 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Mm]emoryCaptures/
+/Project 4/[Ll]ibrary/
+/Project 4/[Tt]emp/
+/Project 4/[Oo]bj/
+/Project 4/[Bb]uild/
+/Project 4/[Bb]uilds/
+/Project 4/[Ll]ogs/
+/Project 4/[Mm]emoryCaptures/
 
 # Never ignore Asset meta data
 !/[Aa]ssets/**/*.meta
