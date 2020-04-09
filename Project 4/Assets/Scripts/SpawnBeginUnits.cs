@@ -18,7 +18,7 @@ public class SpawnBeginUnits : MonoBehaviour
     {
         Units.units = new UnitData[generateMap.mapSize.x, generateMap.mapSize.y];
 
-        Vector2Int arrayposition = generateMap.mapSize / 2;
+        Vector2Int arrayposition = new Vector2Int((int)(generateMap.mapSize.x * 0.5f), (int)(generateMap.mapSize.y * 0.4f));
         Vector2 position = HexagonCalculator.WorldToHexagonPosition(arrayposition);
 
         Units.units[arrayposition.x, arrayposition.y] = new UnitData(position, settler);

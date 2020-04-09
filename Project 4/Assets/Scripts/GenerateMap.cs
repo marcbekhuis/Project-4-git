@@ -80,7 +80,7 @@ public class GenerateMap : MonoBehaviour
 
     private void GenerateBiome(int octaves, float frequency, float gain, float lacunarity, float returnValueAbove, FastNoise.NoiseType noiseType,  TileTypes tileType)
     {
-        fastNoise.SetSeed(Random.Range(-1000,1000));
+        fastNoise.SetSeed(Random.Range(-5000,5000));
         fastNoise.SetFractalOctaves(octaves);
         fastNoise.SetFrequency(frequency);
         fastNoise.SetFractalGain(gain);
