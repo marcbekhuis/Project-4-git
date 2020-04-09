@@ -534,7 +534,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 1584668666}
-  mapSize: {x: 1000, y: 1000}
+  mapSize: {x: 300, y: 300}
   biomes:
   - biomeName: Plains
     tileType: 0
