@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CombatSystem : MonoBehaviour
 {
+    /// Need to be reworked
+
     [HideInInspector] public GameObject enemy;
 
     public float damageModifier = 1;

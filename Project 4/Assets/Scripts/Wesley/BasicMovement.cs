@@ -64,11 +64,12 @@ public class BasicMovement : MonoBehaviour
         Vector2 thisPosition = new Vector2(this.transform.position.x, this.transform.position.y);
         float distance = Vector2.Distance(thisPosition, destination);
 
-
+        //Moves this object to it's destination
         this.transform.position = Vector2.Lerp(thisPosition, destination, speed / 1000);
         moveX = this.transform.position.x;
         moveY = this.transform.position.y;
 
+        //Stops the object from moving and snaps it to it's destination if it's close enough
         if (distance <= 0.05f)
         {
             this.transform.position = destination;

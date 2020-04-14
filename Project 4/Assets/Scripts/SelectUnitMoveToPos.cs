@@ -17,6 +17,7 @@ public class SelectUnitMoveToPos : MonoBehaviour
 
     public void ActivateMove()
     {
+        //Sets a new destination of the unit once the move button is clicked
         moveUnit = true;
         if (UIElements.selectedObject != null)
         {
