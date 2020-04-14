@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
 {
+    /// Need to be reworked
+
     GameObject healthBar;
 
     public bool isHealthbarActive = false;
@@ -32,6 +34,7 @@ public class HealthSystem : MonoBehaviour
 
     private void Update()
     {
+        //Disables the hitbar if it has not been hit for a while
         if (isHealthbarActive)
         {
             lastDamageTimer += Time.deltaTime;
@@ -62,6 +65,7 @@ public class HealthSystem : MonoBehaviour
 
     void CheckHealthState()
     {
+        //Checks how low it is and changes the healthbar color with it
         if (health >= maxHealth - ((maxHealth / 8) * 3))
         {
             healthBar.GetComponent<SpriteRenderer>().color = Color.green;

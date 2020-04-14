@@ -5,7 +5,7 @@ using UnityEngine;
 public class BasicMovement : MonoBehaviour
 {
     MovementKeys playerKeys = new MovementKeys();
-    public Vector3 movePosition;
+    public Vector2 destination;
 
     [HideInInspector]public bool isConstructed = false;
     [Tooltip("Makes it so that this object merges into the movePosition object")]public bool doesMerge = true;
@@ -20,7 +20,10 @@ public class BasicMovement : MonoBehaviour
         moveX = this.transform.position.x;
         moveY = this.transform.position.y;
         playerKeys.SetKeys(KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D);
-        movePosition = transform.position;
+        if (destination == Vector2.zero)
+        {
+            destination = transform.position;
+        }
     }
 
     void Update()
@@ -48,17 +51,29 @@ public class BasicMovement : MonoBehaviour
             }
             else
             {
-                if (movePosition != null)
+                if (destination != Vector2.zero)
                 {
-                    Vector2 thisPosition = new Vector2(this.transform.position.x, this.transform.position.y);
-                    Vector2 destination = new Vector2(movePosition.x, movePosition.y);
-
-                    
-                    this.transform.position = Vector2.Lerp(thisPosition, destination, speed / 1000);
-                    moveX = this.transform.position.x;
-                    moveY = this.transform.position.y;
+                    DestinationMovement();
                 }
             }
+        }
+    }
+
+    void DestinationMovement()
+    {
+        Vector2 thisPosition = new Vector2(this.transform.position.x, this.transform.position.y);
+        float distance = Vector2.Distance(thisPosition, destination);
+
+        //Moves this object to it's destination
+        this.transform.position = Vector2.Lerp(thisPosition, destination, speed / 1000);
+        moveX = this.transform.position.x;
+        moveY = this.transform.position.y;
+
+        //Stops the object from moving and snaps it to it's destination if it's close enough
+        if (distance <= 0.05f)
+        {
+            this.transform.position = destination;
+            destination = Vector2.zero;
         }
     }
 
