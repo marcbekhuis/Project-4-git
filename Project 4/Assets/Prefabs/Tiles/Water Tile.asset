@@ -42,7 +42,7 @@ MonoBehaviour:
     m_RuleTransform: 4
   - m_Id: 1
     m_Sprites:
-    - {fileID: 21300000, guid: b9ceff0e47fa91947bafc4b38073da05, type: 3}
+    - {fileID: 2680355343490014661, guid: 6692ba4c7e1de814fba71c3326f4a27e, type: 3}
     - {fileID: -4327783107054442531, guid: 6692ba4c7e1de814fba71c3326f4a27e, type: 3}
     - {fileID: 913160458581592005, guid: 6692ba4c7e1de814fba71c3326f4a27e, type: 3}
     - {fileID: 3242695346839445199, guid: 6692ba4c7e1de814fba71c3326f4a27e, type: 3}
