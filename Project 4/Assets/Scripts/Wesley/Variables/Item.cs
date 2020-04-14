@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Item : MonoBehaviour
+public class Item
 {
-    public new string name;
+    public string name;
     public string discription;
     public Image itemImage;
-    public new GameObject gameObject;
+    public GameObject gameObject;
     public int amount;
+
+    public void SetPicture(string objectName)
+    {
+        itemImage = GameObject.Find(objectName).GetComponent<Image>();
+    }
 }

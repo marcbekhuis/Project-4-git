@@ -12,7 +12,7 @@ public class Inventory : MonoBehaviour
     int inventoryMaxSize = 10;
     int fullStack = 99;
 
-    void PickUpItem(Item item)
+    public void PickUpItem(Item item)
     {
         bool foundItem = false;
         //Checks if the player already has the item
@@ -53,5 +53,16 @@ public class Inventory : MonoBehaviour
     void CannotGetItem()
     {
         //Add logic here
+    }
+
+    public void CheckInventory()
+    {
+        int timesRun = 0;
+        foreach (var item in playerInventory)
+        {
+            print(timesRun + " - " + item.amount);
+            timesRun++;
+        }
+        print("Last Item: " + lastItem.amount);
     }
 }
