@@ -20,9 +20,9 @@ public class ObjectCheck : MonoBehaviour
     private void Update()
     {
         //Checks if the object is currently moving to a new position
-        if (basicMovement.movePosition != null)
+        if (basicMovement.destination != Vector2.zero)
         {
-            distance = Vector2.Distance(this.transform.parent.position, basicMovement.movePosition);
+            distance = Vector2.Distance(this.transform.parent.position, basicMovement.destination);
 
             //Moves the object up if it runs into anything
             if (isMovingAway)
@@ -32,7 +32,7 @@ public class ObjectCheck : MonoBehaviour
             //Makes the object stop when it has merged inside the position if doesMerge is enabled
             if (distance <= 0.005f && basicMovement.doesMerge)
             {
-                this.transform.parent.position = basicMovement.movePosition;
+                this.transform.parent.position = basicMovement.destination;
                 StopMovement();
             }
         }
