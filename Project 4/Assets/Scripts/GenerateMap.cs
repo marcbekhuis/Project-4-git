@@ -70,7 +70,7 @@ public class GenerateMap : MonoBehaviour
                 {
                     if (tileTypes[x,y] == biome.tileType)
                     {
-                        tilemap.SetTile((Vector3Int)new Vector2Int(x, y), biome.tilePrefab.tile);
+                        tilemap.SetTile((Vector3Int)new Vector2Int(x, y), biome.tilePrefab.tiles[Random.Range(0, biome.tilePrefab.tiles.Length)]);
                         Tiles.tiles[x, y] = new TileData(HexagonCalculator.WorldToHexagonPosition(new Vector2(x, y)), biome.tilePrefab);
                     }
                 }

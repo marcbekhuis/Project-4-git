@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0c4c17fe94ded644b6174e396bde30f, type: 3}
   m_Name: Plains
   m_EditorClassIdentifier: 
-  tile: {fileID: 11400000, guid: 93f4c81441249ae419c6d486d5653fc2, type: 2}
+  tiles:
+  - {fileID: 11400000, guid: 93f4c81441249ae419c6d486d5653fc2, type: 2}
   allowMovement: 1
