@@ -30,6 +30,9 @@ public class UnitData
             UIElements.activeUnitPanel = spawnedPanel;
             UIElements.selectedObject = gameObject;
             spawnedPanel.transform.Find("Move Unit").GetComponent<SelectUnitMoveToPos>().unitsData = this;
+            PlaceBuilding placeBuilding = spawnedPanel.transform.Find("Place Town center").GetComponent<PlaceBuilding>();
+            placeBuilding.gridPosition = positionGrid;
+            placeBuilding.unit = this;
         }
         else
         {

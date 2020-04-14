@@ -17,12 +17,18 @@ public class ClickOnObject : MonoBehaviour
             {
                 if(touch.phase == TouchPhase.Began)
                 {
-                    Vector2Int position = HexagonCalculator.HexagonToWorldPosition(CameraController.camera.ScreenToWorldPoint(touch.position));
-                    if (Units.units[position.x, position.y] != null)
+                    Vector2Int gridPosition = HexagonCalculator.HexagonToWorldPosition(CameraController.camera.ScreenToWorldPoint(touch.position));
+                    Vector3 worldPosition = HexagonCalculator.WorldToHexagonPosition(gridPosition);
+
+                    if (Units.units[gridPosition.x, gridPosition.y] != null)
                     {
-                        Units.units[position.x, position.y].OpenActionPanel();
+                        Units.units[gridPosition.x, gridPosition.y].OpenActionPanel();
                     }
-                    Vector3 worldPosition = HexagonCalculator.WorldToHexagonPosition(position);
+                    else if (Buildings.buildings[gridPosition.x, gridPosition.y] != null)
+                    {
+                        Buildings.buildings[gridPosition.x, gridPosition.y].OpenActionPanel();
+                    }
+
                     highlight.transform.position = new Vector3(worldPosition.x, worldPosition.y, 0);
                 }
             }

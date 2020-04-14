@@ -7,9 +7,6 @@ public class SelectUnitMoveToPos : MonoBehaviour
     public static bool moveUnit = false;
     public UnitData unitsData;
 
-    BasicMovement basicMovement;
-    Vector2Int position;
-
     private void Start()
     {
         moveUnit = false;
@@ -19,11 +16,6 @@ public class SelectUnitMoveToPos : MonoBehaviour
     {
         //Sets a new destination of the unit once the move button is clicked
         moveUnit = true;
-        if (UIElements.selectedObject != null)
-        {
-            basicMovement = UIElements.selectedObject.gameObject.GetComponent<BasicMovement>();
-            basicMovement.destination = position;
-        }
     }
 
     private void Update()
@@ -36,7 +28,7 @@ public class SelectUnitMoveToPos : MonoBehaviour
                 {
                     if (touch.phase == TouchPhase.Began)
                     {
-                        position = HexagonCalculator.HexagonToWorldPosition(CameraController.camera.ScreenToWorldPoint(touch.position));
+                        Vector2Int position = HexagonCalculator.HexagonToWorldPosition(CameraController.camera.ScreenToWorldPoint(touch.position));
 
                         Units.units[unitsData.positionGrid.x, unitsData.positionGrid.y] = null;
                         Units.units[position.x, position.y] = unitsData;
