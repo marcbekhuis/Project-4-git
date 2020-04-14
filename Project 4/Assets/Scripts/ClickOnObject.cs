@@ -9,8 +9,6 @@ public class ClickOnObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SelectUnitMoveToPos.moveUnit) return;
-
         foreach (Touch touch in Input.touches)
         {
             if (Input.touches.Length == 1)
@@ -19,6 +17,9 @@ public class ClickOnObject : MonoBehaviour
                 {
                     Vector2Int gridPosition = HexagonCalculator.HexagonToWorldPosition(CameraController.camera.ScreenToWorldPoint(touch.position));
                     Vector3 worldPosition = HexagonCalculator.WorldToHexagonPosition(gridPosition);
+                    highlight.transform.position = new Vector3(worldPosition.x, worldPosition.y, 0);
+
+                    if (SelectUnitMoveToPos.moveUnit) return;
 
                     if (Units.units[gridPosition.x, gridPosition.y] != null)
                     {
@@ -28,8 +29,6 @@ public class ClickOnObject : MonoBehaviour
                     {
                         Buildings.buildings[gridPosition.x, gridPosition.y].OpenActionPanel();
                     }
-
-                    highlight.transform.position = new Vector3(worldPosition.x, worldPosition.y, 0);
                 }
             }
         }

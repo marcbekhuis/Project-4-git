@@ -10,14 +10,5 @@ public static class UIElements
     public static GameObject canvas;
     public static GameObject selectedObject;
     public static Tilemap buildingsTilemap;
-}
-
-public class SetupUIElements : MonoBehaviour
-{
-    [SerializeField] private GameObject canves;
-
-    private void Start()
-    {
-        UIElements.canvas = canves;
-    }
+    public static Tilemap bordersTilemap;
 }

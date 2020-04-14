@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a338a5ad954fbb743a976c48a94c7744, type: 3}
   m_Name: Settler
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 7356aeeb79d7ae64ab4ae104a53622e7, type: 3}
+  sprite: {fileID: 21300000, guid: a7cdd0eeaf8164a479eb9d558f5955b2, type: 3}
   movementSpeedSec: 10
   actionPanel: {fileID: 1157683879896118090, guid: 0df6d728dc4cad9499d33e01b21274fc,
     type: 3}
