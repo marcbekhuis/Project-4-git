@@ -14,7 +14,7 @@ public class ObjectCheck : MonoBehaviour
 
     private void Start()
     {
-        basicMovement = this.transform.parent.GetComponent<BasicMovement>();
+        basicMovement = this.transform.GetComponent<BasicMovement>();
     }
 
     private void Update()

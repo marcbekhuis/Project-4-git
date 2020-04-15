@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c0fc294cfc4ec143aafc6442be8ecc3, type: 3}
+  m_Name: Town Center Data
+  m_EditorClassIdentifier: 
+  tile: {fileID: 11400000, guid: 450fdc36bec78a94bb317f1a69df297f, type: 2}
+  buildingScripts: {fileID: 6322924576314203408, guid: 91ed45bb871bbcf4793d71d0559e74c1,
+    type: 3}
