@@ -15,8 +15,8 @@ public class ClickOnObject : MonoBehaviour
             {
                 if(touch.phase == TouchPhase.Began)
                 {
-                    Vector2Int gridPosition = HexagonCalculator.HexagonToWorldPosition(CameraController.camera.ScreenToWorldPoint(touch.position));
-                    Vector3 worldPosition = HexagonCalculator.WorldToHexagonPosition(gridPosition);
+                    Vector2Int gridPosition = HexagonCalculator.HexagonToGridPosition(CameraController.camera.ScreenToWorldPoint(touch.position));
+                    Vector3 worldPosition = HexagonCalculator.GridToHexagonPosition(gridPosition);
                     highlight.transform.position = new Vector3(worldPosition.x, worldPosition.y, 0);
 
                     if (SelectUnitMoveToPos.moveUnit) return;

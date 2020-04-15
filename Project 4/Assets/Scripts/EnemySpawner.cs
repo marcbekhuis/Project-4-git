@@ -30,16 +30,19 @@ public class EnemySpawner : MonoBehaviour
                 for (int i = 0; i < unitsPerWave; i++)
                 {
                     Vector2 cityLocation = playerData.cities[Random.Range(0, playerData.cities.Count)].originLocation;
-                    Vector2 position = HexagonCalculator.WorldToHexagonPosition(cityLocation);
+                    Vector2 position = HexagonCalculator.GridToHexagonPosition(cityLocation);
                     position = position + (Vector2)(Quaternion.Euler(0, 0, Random.Range(0f, 360f)) * new Vector3(10,0, 0));
 
-                    Vector2Int gridPosition = HexagonCalculator.HexagonToWorldPosition(position);
-                    position = HexagonCalculator.WorldToHexagonPosition(gridPosition);
+                    Vector2Int gridPosition = HexagonCalculator.HexagonToGridPosition(position);
+                    position = HexagonCalculator.GridToHexagonPosition(gridPosition);
 
                     GameObject spawnedUnit = Instantiate(unitBase, position, new Quaternion(0,0,0,0));
                     UnitPrefab unit = unitsToSpawn[Random.Range(0, unitsToSpawn.Length)];
                     spawnedUnit.GetComponent<SpriteRenderer>().sprite = unit.sprite;
-                    spawnedUnit.GetComponent<BasicMovement>().destination = HexagonCalculator.WorldToHexagonPosition(cityLocation);
+                    UnitMovement unitMovement = spawnedUnit.GetComponent<UnitMovement>();
+                    Units.units[gridPosition.x, gridPosition.y] = new UnitData(unit, unitMovement, spawnedUnit, gridPosition);
+                    unitMovement.unitData = Units.units[gridPosition.x, gridPosition.y];
+                    unitMovement.SetDestanationGrid(new Vector2Int((int)cityLocation.x, (int)cityLocation.y));
 
                     spawnCooldownSec = Time.time + spawnDelaySec;
                 }

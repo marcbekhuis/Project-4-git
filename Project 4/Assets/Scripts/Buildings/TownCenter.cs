@@ -8,7 +8,7 @@ public class TownCenter : MonoBehaviour
     public Vector2Int gridPosition;
     public TileBase borders;
 
-    float claimDelaySec = 120;
+    [SerializeField] private float claimDelaySec = 120;
     float claimCooldownSec = 0;
     CityData cityData = new CityData();
 
@@ -65,7 +65,15 @@ public class TownCenter : MonoBehaviour
         for (int i = 0; i < 100; i++)
         {
             int takenTile = Random.Range(1, cityData.takenTiles.Count);
-            Vector2Int nextTilePosition = new Vector2Int((int)cityData.takenTiles[takenTile].x + Random.Range(-1,2), (int)cityData.takenTiles[takenTile].y + Random.Range(-1, 2));
+            Vector2Int nextTilePosition;
+            if (cityData.takenTiles[takenTile].y % 2 == 1)
+            {
+                nextTilePosition = new Vector2Int((int)cityData.takenTiles[takenTile].x + Random.Range(0, 2), (int)cityData.takenTiles[takenTile].y + Random.Range(-1, 2));
+            }
+            else
+            {
+                nextTilePosition = new Vector2Int((int)cityData.takenTiles[takenTile].x + Random.Range(-1, 1), (int)cityData.takenTiles[takenTile].y + Random.Range(-1, 2));
+            }
             bool alreadyClaimed = false;
             foreach (var tile in cityData.takenTiles)
             {

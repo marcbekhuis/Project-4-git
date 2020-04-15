@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class HexagonCalculator
 {
-    public static Vector2 WorldToHexagonPosition(Vector2 position)
+    public static Vector2 GridToHexagonPosition(Vector2 position)
     {
         float col;
         if (position.y % 2 == 1)
@@ -19,7 +19,7 @@ public static class HexagonCalculator
         return new Vector2(col, row);
     }
 
-    public static Vector2Int HexagonToWorldPosition(Vector2 position)
+    public static Vector2Int HexagonToGridPosition(Vector2 position)
     {
         float col;
         if (position.y % 2 == 1)

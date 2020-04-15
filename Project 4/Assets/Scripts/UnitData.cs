@@ -5,16 +5,16 @@ using UnityEngine.UI;
 
 public class UnitData
 {
-    public UnitData(UnitPrefab unit, BasicMovement basicMovement, GameObject gameObject, Vector2Int positionGrid)
+    public UnitData(UnitPrefab unit, UnitMovement unitMovement, GameObject gameObject, Vector2Int positionGrid)
     {
         this.unit = unit;
-        this.basicMovement = basicMovement;
+        this.unitMovement = unitMovement;
         this.gameObject = gameObject;
         this.positionGrid = positionGrid;
     }
 
     public UnitPrefab unit;
-    public BasicMovement basicMovement;
+    public UnitMovement unitMovement;
     public GameObject gameObject;
     public Vector2Int positionGrid;
 

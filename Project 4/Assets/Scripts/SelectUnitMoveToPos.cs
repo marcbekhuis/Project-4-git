@@ -28,15 +28,9 @@ public class SelectUnitMoveToPos : MonoBehaviour
                 {
                     if (touch.phase == TouchPhase.Began)
                     {
-                        Vector2Int position = HexagonCalculator.HexagonToWorldPosition(CameraController.camera.ScreenToWorldPoint(touch.position));
+                        Vector2Int gridPosition = HexagonCalculator.HexagonToGridPosition(CameraController.camera.ScreenToWorldPoint(touch.position));
 
-                        Units.units[unitsData.positionGrid.x, unitsData.positionGrid.y] = null;
-                        Units.units[position.x, position.y] = unitsData;
-                        unitsData.positionGrid = position;
-
-                        Vector3 worldPosition = HexagonCalculator.WorldToHexagonPosition(position);
-
-                        unitsData.basicMovement.destination = worldPosition;
+                        unitsData.unitMovement.SetDestanationGrid(gridPosition);
                         moveUnit = false;
 
                         Destroy(UIElements.activeUnitPanel);
