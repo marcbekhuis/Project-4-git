@@ -14,6 +14,9 @@ public class TownCenter : MonoBehaviour
 
     private void Start()
     {
+        cityData.originLocation = gridPosition;
+        FindObjectOfType<PlayerData>().cities.Add(cityData);
+
         claimCooldownSec = Time.time + claimDelaySec;
         cityData.takenTiles.Add(gridPosition);
         UIElements.bordersTilemap.SetTile((Vector3Int)gridPosition, borders);
