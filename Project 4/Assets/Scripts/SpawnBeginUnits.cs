@@ -12,6 +12,7 @@ public class SpawnBeginUnits : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         SpawnUnits();
     }
 
@@ -22,6 +23,7 @@ public class SpawnBeginUnits : MonoBehaviour
 
         Vector2Int arrayposition = new Vector2Int((int)(generateMap.mapSize.x * 0.5f), (int)(generateMap.mapSize.y * 0.4f));
         Vector2 position = HexagonCalculator.WorldToHexagonPosition(arrayposition);
+        Camera.main.transform.position = (Vector3)position - new Vector3(0,0,10);
 
         GameObject spawnedUnit = Instantiate(baseUnit, position, new Quaternion(0,0,0,0));
         spawnedUnit.GetComponent<SpriteRenderer>().sprite = settler.sprite;
