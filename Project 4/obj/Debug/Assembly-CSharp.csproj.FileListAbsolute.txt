@@ -310,3 +310,7 @@ F:\GitHub\Project-4-git\Project 4\obj\Debug\Assembly-CSharp.csproj.CoreCompileIn
 F:\GitHub\Project-4-git\Project 4\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 F:\GitHub\Project-4-git\Project 4\obj\Debug\Assembly-CSharp.dll
 F:\GitHub\Project-4-git\Project 4\obj\Debug\Assembly-CSharp.pdb
+F:\GitHub\Project-4-git\Project 4\Temp\bin\Debug\Unity.2D.Tilemap.Extras.dll
+F:\GitHub\Project-4-git\Project 4\Temp\bin\Debug\Unity.2D.Tilemap.Extras.Editor.dll
+F:\GitHub\Project-4-git\Project 4\Temp\bin\Debug\Unity.2D.Tilemap.Extras.Editor.pdb
+F:\GitHub\Project-4-git\Project 4\Temp\bin\Debug\Unity.2D.Tilemap.Extras.pdb
