@@ -10,7 +10,7 @@ public class SaveSystem : MonoBehaviour
 
     void Awake()
     {
-        saveFolder = Application.dataPath + "/Saves/";
+        saveFolder = Application.persistentDataPath + "/Saves/";
         if (!Directory.Exists(saveFolder))
         {
             Directory.CreateDirectory(saveFolder);
@@ -28,17 +28,17 @@ public class SaveSystem : MonoBehaviour
         SavedData savedData = new SavedData(
             playerData.PlayerName,
             Time.timeSinceLevelLoad,
-            0,
-            new int[] { 0 },
-            0,
-            new int[] { 0 },
+            playerData.population,
+            playerData.populationOverTime.ToArray(),
+            playerData.units.Count,
+            playerData.unitsOverTime.ToArray(),
             playerData.cities.Count,
             playerData.citiesOverTime.ToArray()
             ) ;
 
         string json = JsonUtility.ToJson(savedData);
         Debug.LogError(json);
-        File.WriteAllText(saveFolder + saveName + ".txt", json);
+        File.WriteAllText(saveFolder + saveName + ".txt", Encryptor(json));
     }
 
     public SavedData LoadData(string saveName)
@@ -46,11 +46,20 @@ public class SaveSystem : MonoBehaviour
         if (File.Exists(saveFolder + saveName + ".txt"))
         {
             string json = File.ReadAllText(saveFolder + saveName + ".txt");
-            return JsonUtility.FromJson<SavedData>(json);
+            return JsonUtility.FromJson<SavedData>(Dencryptor(json));
         }
         else
         {
             return null;
+        }
+    }
+
+    public void LoadDataTest(string saveName)
+    {
+        if (File.Exists(saveFolder + saveName + ".txt"))
+        {
+            string json = File.ReadAllText(saveFolder + saveName + ".txt");
+            Debug.LogError(Dencryptor(json));
         }
     }
 
@@ -62,7 +71,7 @@ public class SaveSystem : MonoBehaviour
         for (int i = 0; i < fileNames.Length; i++)
         {
             string json = File.ReadAllText(saveFolder + fileNames[i] + ".txt");
-            savedDatas[i] = JsonUtility.FromJson<SavedData>(json);
+            savedDatas[i] = JsonUtility.FromJson<SavedData>(Dencryptor(json));
         }
 
         return savedDatas;
@@ -98,4 +107,27 @@ public class SaveSystem : MonoBehaviour
         public int[] citiesOverTime;
     }
 
+    private string Encryptor(string json)
+    {
+        string result = "";
+
+        for (int i = 0; i < json.Length; i++)
+        {
+            result += (char)(json[i] + json.Length - i);
+        }
+
+        return result;
+    }
+
+    private string Dencryptor(string json)
+    {
+        string result = "";
+
+        for (int i = 0; i < json.Length; i++)
+        {
+            result += (char)(json[i] - json.Length + i);
+        }
+
+        return result;
+    }
 }
