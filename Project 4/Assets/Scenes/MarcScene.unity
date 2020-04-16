@@ -378,12 +378,12 @@ GameObject:
   - component: {fileID: 235623056}
   - component: {fileID: 235623055}
   - component: {fileID: 235623054}
-  - component: {fileID: 235623053}
   - component: {fileID: 235623057}
   - component: {fileID: 235623058}
   - component: {fileID: 235623060}
   - component: {fileID: 235623059}
   - component: {fileID: 235623061}
+  - component: {fileID: 235623053}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -400,12 +400,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 235623052}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a82caf3692fc907498b2949e993f5be4, type: 3}
+  m_Script: {fileID: 11500000, guid: 766fb70a5f805e241b35cb866bfd049d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canves: {fileID: 1924856993}
-  buildingsTilemap: {fileID: 1644468869}
-  bordersTilemap: {fileID: 211023376}
+  players:
+  - {fileID: 235623060}
+  thisPlayer: {fileID: 235623060}
+  biomeTilemap: {fileID: 1584668666}
+  buildingTilemap: {fileID: 1644468869}
+  borderTilemap: {fileID: 211023376}
+  mapSize: {x: 300, y: 300}
+  canvas: {fileID: 1924856996}
 --- !u!114 &235623054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -466,7 +471,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4e15b1ed5975754d9f566d6e75c8710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generateMap: {fileID: 1584668667}
   settler: {fileID: 11400000, guid: 196e797caa6475e47a513da96e6e8c8e, type: 2}
   worker: {fileID: 11400000, guid: 04f9b683331b1504e8b5fcd00b38496e, type: 2}
   baseUnit: {fileID: 3626150143577605205, guid: 92465a45deb862b489e05c90d5343012,
@@ -517,8 +521,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerName: None
-  cities: []
   population: 0
+  cities: []
+  border: {fileID: 11400000, guid: 484e388c5cd919442b01135c18479247, type: 2}
+  inventory: {fileID: 0}
   citiesOverTime: 
   unitsOverTime: 
   populationOverTime: 
@@ -1076,8 +1082,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6ef1146854f4d643ad87a1c800978c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilemap: {fileID: 1584668666}
-  mapSize: {x: 300, y: 300}
   biomes:
   - biomeName: Plains
     tileType: 0

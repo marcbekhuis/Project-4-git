@@ -11,23 +11,23 @@ public class PlaceBuilding : MonoBehaviour
 
     public void PlaceBuildingInGame()
     {
-        UIElements.buildingsTilemap.SetTile((Vector3Int)unit.positionGrid, building.tile);
+        GameData.buildingTilemap.SetTile((Vector3Int)unit.gridPosition, building.tile);
         GameObject spawnedBuilding = Instantiate(building.buildingScripts);
-        spawnedBuilding.GetComponent<TownCenter>().gridPosition = unit.positionGrid;
 
-        Buildings.buildings[unit.positionGrid.x, unit.positionGrid.y] = new BuildingData(building, spawnedBuilding, unit.positionGrid);
+        GameData.buildings[unit.gridPosition.x, unit.gridPosition.y] = new BuildingData(building, spawnedBuilding, unit.gridPosition, unit.ownedByPlayer);
+        spawnedBuilding.GetComponent<TownCenter>().buildingData = GameData.buildings[unit.gridPosition.x, unit.gridPosition.y];
 
         if (destroysUnit)
         {
-            Destroy(UIElements.activeUnitPanel);
-            UIElements.selectedObject = null;
+            Destroy(GameData.activeActionPanel);
+            GameData.selectedUnit = null;
             Destroy(unit.gameObject);
-            Units.units[unit.positionGrid.x,unit.positionGrid.y] = null;
+            GameData.units[unit.gridPosition.x,unit.gridPosition.y] = null;
         }
         else
         {
-            Destroy(UIElements.activeUnitPanel);
-            UIElements.selectedObject = null;
+            Destroy(GameData.activeActionPanel);
+            GameData.selectedUnit = null;
         }
     }
 }

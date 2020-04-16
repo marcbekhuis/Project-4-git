@@ -5,20 +5,15 @@ using UnityEngine.Tilemaps;
 
 public class GenerateMap : MonoBehaviour
 {
-    [SerializeField] private Tilemap tilemap;
-    [SerializeField] public Vector2Int mapSize;
-    [Space]
     [SerializeField] [Tooltip("Biomes are generated in the orde of the array.")] private BiomeSettings[] biomes;
 
-
-    private TileTypes[,] tileTypes;
     FastNoise fastNoise = new FastNoise();
 
     [System.Serializable]
     public class BiomeSettings
     {
         public string biomeName = "New biome";
-        public TileTypes tileType = TileTypes.Plains;
+        public GameData.BiomeTypes tileType = GameData.BiomeTypes.Plains;
         public TilePrefab tilePrefab;
         [Space]
         [Header("Noise Settings")]
@@ -30,17 +25,6 @@ public class GenerateMap : MonoBehaviour
         public float lacunarity;
     }
 
-    public enum TileTypes
-    {
-        Plains,
-        Water,
-        Ocean,
-        Jungle,
-        Desert,
-        Mountain,
-        Forest
-    }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -49,8 +33,6 @@ public class GenerateMap : MonoBehaviour
 
     private void Generate()
     {
-        tileTypes = new TileTypes[mapSize.x, mapSize.y];
-
         foreach (var biome in biomes)
         {
             GenerateBiome(biome.octaves,biome.Frequency, biome.gain, biome.lacunarity, biome.returnValueAbove, biome.noiseType, biome.tileType);
@@ -61,94 +43,93 @@ public class GenerateMap : MonoBehaviour
 
     private void PlaceTiles()
     {
-        Tiles.tiles = new TileData[mapSize.x,mapSize.y];
-        for (int x = 0; x < mapSize.x; x++)
+        for (int x = 0; x < GameData.mapSize.x; x++)
         {
-            for (int y = 0; y < mapSize.y; y++)
+            for (int y = 0; y < GameData.mapSize.y; y++)
             {
                 foreach (var biome in biomes)
                 {
-                    if (tileTypes[x,y] == biome.tileType)
+                    if (GameData.biomes[x,y] == biome.tileType)
                     {
-                        tilemap.SetTile((Vector3Int)new Vector2Int(x, y), biome.tilePrefab.tiles[Random.Range(0, biome.tilePrefab.tiles.Length)]);
-                        Tiles.tiles[x, y] = new TileData(HexagonCalculator.GridToHexagonPosition(new Vector2(x, y)), biome.tilePrefab);
+                        GameData.biomeTilemap.SetTile((Vector3Int)new Vector2Int(x, y), biome.tilePrefab.tiles[Random.Range(0, biome.tilePrefab.tiles.Length)]);
+                        GameData.tiles[x, y] = new TileData(new Vector2Int(x, y), biome.tilePrefab, null);
                     }
                 }
             }
         }
     }
 
-    private void GenerateBiome(int octaves, float frequency, float gain, float lacunarity, float returnValueAbove, FastNoise.NoiseType noiseType,  TileTypes tileType)
+    private void GenerateBiome(int octaves, float frequency, float gain, float lacunarity, float returnValueAbove, FastNoise.NoiseType noiseType, GameData.BiomeTypes tileType)
     {
         fastNoise.SetSeed(Random.Range(-5000,5000));
         fastNoise.SetFractalOctaves(octaves);
         fastNoise.SetFrequency(frequency);
         fastNoise.SetFractalGain(gain);
         fastNoise.SetFractalLacunarity(lacunarity);
-        for (int x = 0; x < mapSize.x; x++)
+        for (int x = 0; x < GameData.mapSize.x; x++)
         {
-            for (int y = 0; y < mapSize.y; y++)
+            for (int y = 0; y < GameData.mapSize.y; y++)
             {
                 switch (noiseType)
                 {
                     case FastNoise.NoiseType.Value:
                         if (fastNoise.GetValue(x, y) >= returnValueAbove)
                         {
-                            tileTypes[x, y] = tileType;
+                            GameData.biomes[x, y] = tileType;
                         }
                         break;
                     case FastNoise.NoiseType.ValueFractal:
                         if (fastNoise.GetValueFractal(x, y) >= returnValueAbove)
                         {
-                            tileTypes[x, y] = tileType;
+                            GameData.biomes[x, y] = tileType;
                         }
                         break;
                     case FastNoise.NoiseType.Perlin:
                         if (fastNoise.GetPerlin(x, y) >= returnValueAbove)
                         {
-                            tileTypes[x, y] = tileType;
+                            GameData.biomes[x, y] = tileType;
                         }
                         break;
                     case FastNoise.NoiseType.PerlinFractal:
                         if (fastNoise.GetPerlinFractal(x, y) >= returnValueAbove)
                         {
-                            tileTypes[x, y] = tileType;
+                            GameData.biomes[x, y] = tileType;
                         }
                         break;
                     case FastNoise.NoiseType.Simplex:
                         if (fastNoise.GetSimplex(x, y) >= returnValueAbove)
                         {
-                            tileTypes[x, y] = tileType;
+                            GameData.biomes[x, y] = tileType;
                         }
                         break;
                     case FastNoise.NoiseType.SimplexFractal:
                         if (fastNoise.GetSimplexFractal(x, y) >= returnValueAbove)
                         {
-                            tileTypes[x, y] = tileType;
+                            GameData.biomes[x, y] = tileType;
                         }
                         break;
                     case FastNoise.NoiseType.Cellular:
                         if (fastNoise.GetCellular(x, y) >= returnValueAbove)
                         {
-                            tileTypes[x, y] = tileType;
+                            GameData.biomes[x, y] = tileType;
                         }
                         break;
                     case FastNoise.NoiseType.WhiteNoise:
                         if (fastNoise.GetWhiteNoise(x, y) >= returnValueAbove)
                         {
-                            tileTypes[x, y] = tileType;
+                            GameData.biomes[x, y] = tileType;
                         }
                         break;
                     case FastNoise.NoiseType.Cubic:
                         if (fastNoise.GetCubic(x, y) >= returnValueAbove)
                         {
-                            tileTypes[x, y] = tileType;
+                            GameData.biomes[x, y] = tileType;
                         }
                         break;
                     case FastNoise.NoiseType.CubicFractal:
                         if (fastNoise.GetCubicFractal(x, y) >= returnValueAbove)
                         {
-                            tileTypes[x, y] = tileType;
+                            GameData.biomes[x, y] = tileType;
                         }
                         break;
                     default:

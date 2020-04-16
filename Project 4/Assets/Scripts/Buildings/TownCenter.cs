@@ -5,49 +5,47 @@ using UnityEngine.Tilemaps;
 
 public class TownCenter : MonoBehaviour
 {
-    public Vector2Int gridPosition;
-    public TileBase borders;
-
     [SerializeField] private float claimDelaySec = 120;
     float claimCooldownSec = 0;
     CityData cityData = new CityData();
+    public BuildingData buildingData;
 
     private void Start()
     {
-        cityData.originLocation = gridPosition;
-        FindObjectOfType<PlayerData>().cities.Add(cityData);
+        cityData.originLocation = buildingData.gridPosition;
+        buildingData.ownedByPlayer.cities.Add(cityData);
 
         claimCooldownSec = Time.time + claimDelaySec;
-        cityData.takenTiles.Add(gridPosition);
-        UIElements.bordersTilemap.SetTile((Vector3Int)gridPosition, borders);
+        cityData.takenTiles.Add(buildingData.gridPosition);
+        GameData.borderTilemap.SetTile((Vector3Int)buildingData.gridPosition, buildingData.ownedByPlayer.border);
 
-        cityData.takenTiles.Add(gridPosition + new Vector2Int(0, 1));
-        UIElements.bordersTilemap.SetTile((Vector3Int)gridPosition + new Vector3Int(0, 1, 0), borders);
+        cityData.takenTiles.Add(buildingData.gridPosition + new Vector2Int(0, 1));
+        GameData.borderTilemap.SetTile((Vector3Int)buildingData.gridPosition + new Vector3Int(0, 1, 0), buildingData.ownedByPlayer.border);
 
-        cityData.takenTiles.Add(gridPosition + new Vector2Int(1, 0));
-        UIElements.bordersTilemap.SetTile((Vector3Int)gridPosition + new Vector3Int(1, 0, 0), borders);
+        cityData.takenTiles.Add(buildingData.gridPosition + new Vector2Int(1, 0));
+        GameData.borderTilemap.SetTile((Vector3Int)buildingData.gridPosition + new Vector3Int(1, 0, 0), buildingData.ownedByPlayer.border);
 
-        cityData.takenTiles.Add(gridPosition - new Vector2Int(0, 1));
-        UIElements.bordersTilemap.SetTile((Vector3Int)gridPosition - new Vector3Int(0, 1, 0), borders);
+        cityData.takenTiles.Add(buildingData.gridPosition - new Vector2Int(0, 1));
+        GameData.borderTilemap.SetTile((Vector3Int)buildingData.gridPosition - new Vector3Int(0, 1, 0), buildingData.ownedByPlayer.border);
 
-        cityData.takenTiles.Add(gridPosition - new Vector2Int(1, 0));
-        UIElements.bordersTilemap.SetTile((Vector3Int)gridPosition - new Vector3Int(1, 0, 0), borders);
+        cityData.takenTiles.Add(buildingData.gridPosition - new Vector2Int(1, 0));
+        GameData.borderTilemap.SetTile((Vector3Int)buildingData.gridPosition - new Vector3Int(1, 0, 0), buildingData.ownedByPlayer.border);
 
-        if (gridPosition.y % 2 == 1)
+        if (buildingData.gridPosition.y % 2 == 1)
         {
-            cityData.takenTiles.Add(gridPosition + new Vector2Int(1, 1));
-            UIElements.bordersTilemap.SetTile((Vector3Int)gridPosition + new Vector3Int(1, 1, 0), borders);
+            cityData.takenTiles.Add(buildingData.gridPosition + new Vector2Int(1, 1));
+            GameData.borderTilemap.SetTile((Vector3Int)buildingData.gridPosition + new Vector3Int(1, 1, 0), buildingData.ownedByPlayer.border);
 
-            cityData.takenTiles.Add(gridPosition + new Vector2Int(1, -1));
-            UIElements.bordersTilemap.SetTile((Vector3Int)gridPosition + new Vector3Int(1, -1, 0), borders);
+            cityData.takenTiles.Add(buildingData.gridPosition + new Vector2Int(1, -1));
+            GameData.borderTilemap.SetTile((Vector3Int)buildingData.gridPosition + new Vector3Int(1, -1, 0), buildingData.ownedByPlayer.border);
         }
         else
         {
-            cityData.takenTiles.Add(gridPosition + new Vector2Int(-1, 1));
-            UIElements.bordersTilemap.SetTile((Vector3Int)gridPosition + new Vector3Int(-1, 1, 0), borders);
+            cityData.takenTiles.Add(buildingData.gridPosition + new Vector2Int(-1, 1));
+            GameData.borderTilemap.SetTile((Vector3Int)buildingData.gridPosition + new Vector3Int(-1, 1, 0), buildingData.ownedByPlayer.border);
 
-            cityData.takenTiles.Add(gridPosition + new Vector2Int(-1, -1));
-            UIElements.bordersTilemap.SetTile((Vector3Int)gridPosition + new Vector3Int(-1, -1, 0), borders);
+            cityData.takenTiles.Add(buildingData.gridPosition + new Vector2Int(-1, -1));
+            GameData.borderTilemap.SetTile((Vector3Int)buildingData.gridPosition + new Vector3Int(-1, -1, 0), buildingData.ownedByPlayer.border);
         }
 
     }
@@ -86,7 +84,7 @@ public class TownCenter : MonoBehaviour
             if (!alreadyClaimed)
             {
                 cityData.takenTiles.Add(nextTilePosition);
-                UIElements.bordersTilemap.SetTile((Vector3Int)nextTilePosition, borders);
+                GameData.borderTilemap.SetTile((Vector3Int)nextTilePosition, buildingData.ownedByPlayer.border);
                 claimCooldownSec = Time.time + claimDelaySec;
                 return;
             }

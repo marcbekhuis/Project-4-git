@@ -21,13 +21,19 @@ public class ClickOnObject : MonoBehaviour
 
                     if (SelectUnitMoveToPos.moveUnit) return;
 
-                    if (Units.units[gridPosition.x, gridPosition.y] != null)
+                    if (GameData.units[gridPosition.x, gridPosition.y] != null)
                     {
-                        Units.units[gridPosition.x, gridPosition.y].OpenActionPanel();
+                        if (GameData.units[gridPosition.x, gridPosition.y].ownedByPlayer == GameData.thisPlayer)
+                        {
+                            GameData.units[gridPosition.x, gridPosition.y].OpenActionPanel();
+                        }
                     }
-                    else if (Buildings.buildings[gridPosition.x, gridPosition.y] != null)
+                    else if (GameData.buildings[gridPosition.x, gridPosition.y] != null)
                     {
-                        Buildings.buildings[gridPosition.x, gridPosition.y].OpenActionPanel();
+                        if (GameData.units[gridPosition.x, gridPosition.y].ownedByPlayer == GameData.thisPlayer)
+                        {
+                            GameData.buildings[gridPosition.x, gridPosition.y].OpenActionPanel();
+                        }
                     }
                 }
             }

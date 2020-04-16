@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SpawnBeginUnits : MonoBehaviour
 {
-    [SerializeField] private GenerateMap generateMap;
     [SerializeField] private UnitPrefab settler;
     [SerializeField] private UnitPrefab worker;
     [SerializeField] private GameObject baseUnit;
@@ -12,24 +11,23 @@ public class SpawnBeginUnits : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
         SpawnUnits();
     }
 
     private void SpawnUnits()
     {
-        Units.units = new UnitData[generateMap.mapSize.x, generateMap.mapSize.y];
-        Buildings.buildings = new BuildingData[generateMap.mapSize.x, generateMap.mapSize.y];
+        GameData.units = new UnitData[GameData.mapSize.x, GameData.mapSize.y];
+        GameData.buildings = new BuildingData[GameData.mapSize.x, GameData.mapSize.y];
 
-        Vector2Int arrayposition = new Vector2Int((int)(generateMap.mapSize.x * 0.5f), (int)(generateMap.mapSize.y * 0.4f));
+        Vector2Int arrayposition = new Vector2Int((int)(GameData.mapSize.x * 0.5f), (int)(GameData.mapSize.y * 0.4f));
         Vector2 position = HexagonCalculator.GridToHexagonPosition(arrayposition);
         Camera.main.transform.position = (Vector3)position - new Vector3(0,0,10);
 
         GameObject spawnedUnit = Instantiate(baseUnit, position, new Quaternion(0,0,0,0));
         spawnedUnit.GetComponent<SpriteRenderer>().sprite = settler.sprite;
 
-        Units.units[arrayposition.x, arrayposition.y] = new UnitData(settler, spawnedUnit.GetComponent<UnitMovement>(), spawnedUnit, arrayposition);
-        spawnedUnit.GetComponent<UnitMovement>().unitData = Units.units[arrayposition.x, arrayposition.y];
+        GameData.units[arrayposition.x, arrayposition.y] = new UnitData(settler, spawnedUnit.GetComponent<UnitMovement>(), spawnedUnit, arrayposition, GameData.thisPlayer);
+        spawnedUnit.GetComponent<UnitMovement>().unitData = GameData.units[arrayposition.x, arrayposition.y];
 
 
         arrayposition = arrayposition - new Vector2Int(1,0);
@@ -38,7 +36,7 @@ public class SpawnBeginUnits : MonoBehaviour
         spawnedUnit = Instantiate(baseUnit, position, new Quaternion(0, 0, 0, 0));
         spawnedUnit.GetComponent<SpriteRenderer>().sprite = worker.sprite;
 
-        Units.units[arrayposition.x, arrayposition.y] = new UnitData(worker, spawnedUnit.GetComponent<UnitMovement>(), spawnedUnit, arrayposition);
-        spawnedUnit.GetComponent<UnitMovement>().unitData = Units.units[arrayposition.x, arrayposition.y];
+        GameData.units[arrayposition.x, arrayposition.y] = new UnitData(worker, spawnedUnit.GetComponent<UnitMovement>(), spawnedUnit, arrayposition, GameData.thisPlayer);
+        spawnedUnit.GetComponent<UnitMovement>().unitData = GameData.units[arrayposition.x, arrayposition.y];
     }
 }

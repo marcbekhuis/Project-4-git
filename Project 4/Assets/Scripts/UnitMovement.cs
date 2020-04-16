@@ -41,20 +41,20 @@ public class UnitMovement : MonoBehaviour
 
     private void CalculatePath()
     {
-        for (int i = unitData.positionGrid.y; i >= destanationGridPosition.y; i--)
+        for (int i = unitData.gridPosition.y; i >= destanationGridPosition.y; i--)
         {
-            path.Enqueue(new Vector2Int(unitData.positionGrid.x, i));
+            path.Enqueue(new Vector2Int(unitData.gridPosition.x, i));
         }
-        for (int i = unitData.positionGrid.y; i <= destanationGridPosition.y; i++)
+        for (int i = unitData.gridPosition.y; i <= destanationGridPosition.y; i++)
         {
-            path.Enqueue(new Vector2Int(unitData.positionGrid.x, i));
+            path.Enqueue(new Vector2Int(unitData.gridPosition.x, i));
         }
 
-        for (int i = unitData.positionGrid.x; i >= destanationGridPosition.x; i--)
+        for (int i = unitData.gridPosition.x; i >= destanationGridPosition.x; i--)
         {
             path.Enqueue(new Vector2Int(i, destanationGridPosition.y));
         }
-        for (int i = unitData.positionGrid.x; i <= destanationGridPosition.x; i++)
+        for (int i = unitData.gridPosition.x; i <= destanationGridPosition.x; i++)
         {
             path.Enqueue(new Vector2Int(i,  destanationGridPosition.y));
         }
@@ -69,20 +69,20 @@ public class UnitMovement : MonoBehaviour
         if (moving && path.Count > 0)
         {
             distanceBetweenTiles += Time.deltaTime * speed;
-            unitData.gameObject.transform.position = Vector2.Lerp(HexagonCalculator.GridToHexagonPosition(unitData.positionGrid), HexagonCalculator.GridToHexagonPosition(nextTileGridPosition), distanceBetweenTiles);
+            unitData.gameObject.transform.position = Vector2.Lerp(HexagonCalculator.GridToHexagonPosition(unitData.gridPosition), HexagonCalculator.GridToHexagonPosition(nextTileGridPosition), distanceBetweenTiles);
 
             if (distanceBetweenTiles > 0.5 && distanceBetweenTiles < 0.6)
             {
                 movedOnGrid = true;
-                Units.units[unitData.positionGrid.x, unitData.positionGrid.y] = null;
-                Units.units[nextTileGridPosition.x, nextTileGridPosition.y] = unitData;
-                unitData.positionGrid = nextTileGridPosition;
+                GameData.units[unitData.gridPosition.x, unitData.gridPosition.y] = null;
+                GameData.units[nextTileGridPosition.x, nextTileGridPosition.y] = unitData;
+                unitData.gridPosition = nextTileGridPosition;
             }
             else if (distanceBetweenTiles >= 1)
             {
-                Units.units[unitData.positionGrid.x, unitData.positionGrid.y] = null;
-                Units.units[nextTileGridPosition.x, nextTileGridPosition.y] = unitData;
-                unitData.positionGrid = nextTileGridPosition;
+                GameData.units[unitData.gridPosition.x, unitData.gridPosition.y] = null;
+                GameData.units[nextTileGridPosition.x, nextTileGridPosition.y] = unitData;
+                unitData.gridPosition = nextTileGridPosition;
                 unitData.gameObject.transform.position = HexagonCalculator.GridToHexagonPosition(nextTileGridPosition);
                 distanceBetweenTiles = 0;
                 nextTileGridPosition = path.Dequeue();

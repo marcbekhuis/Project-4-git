@@ -5,30 +5,34 @@ using UnityEngine.UI;
 
 public class UnitData
 {
-    public UnitData(UnitPrefab unit, UnitMovement unitMovement, GameObject gameObject, Vector2Int positionGrid)
+    public UnitData(UnitPrefab unit, UnitMovement unitMovement, GameObject gameObject, Vector2Int gridPosition, PlayerData OwnedByPlayer)
     {
         this.unit = unit;
         this.unitMovement = unitMovement;
         this.gameObject = gameObject;
-        this.positionGrid = positionGrid;
+        this.gridPosition = gridPosition;
+        ownedByPlayer = OwnedByPlayer;
     }
 
     public UnitPrefab unit;
     public UnitMovement unitMovement;
     public GameObject gameObject;
-    public Vector2Int positionGrid;
+    public Vector2Int gridPosition;
+    public PlayerData ownedByPlayer;
 
     public void OpenActionPanel()
     {
-        if (UIElements.activeUnitPanel)
+        if (GameData.activeActionPanel)
         {
-            GameObject.Destroy(UIElements.activeUnitPanel);
+            GameObject.Destroy(GameData.activeActionPanel);
         }
-        if (UIElements.selectedObject != gameObject)
+        if (GameData.selectedUnit != this)
         {
-            GameObject spawnedPanel = GameObject.Instantiate(unit.actionPanel, UIElements.canvas.transform);
-            UIElements.activeUnitPanel = spawnedPanel;
-            UIElements.selectedObject = gameObject;
+            GameObject spawnedPanel = GameObject.Instantiate(unit.actionPanel, GameData.canvas.transform);
+            GameData.activeActionPanel = spawnedPanel;
+            GameData.selectedBuilding = null;
+            GameData.selectedUnit = this;
+
             spawnedPanel.transform.Find("Move Unit").GetComponent<SelectUnitMoveToPos>().unitsData = this;
             if (spawnedPanel.transform.Find("Place Town center"))
             {
@@ -48,7 +52,8 @@ public class UnitData
         }
         else
         {
-            UIElements.selectedObject = null;
+            GameData.selectedBuilding = null;
+            GameData.selectedUnit = null;
         }
     }
 }

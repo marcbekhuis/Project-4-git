@@ -40,8 +40,8 @@ public class EnemySpawner : MonoBehaviour
                     UnitPrefab unit = unitsToSpawn[Random.Range(0, unitsToSpawn.Length)];
                     spawnedUnit.GetComponent<SpriteRenderer>().sprite = unit.sprite;
                     UnitMovement unitMovement = spawnedUnit.GetComponent<UnitMovement>();
-                    Units.units[gridPosition.x, gridPosition.y] = new UnitData(unit, unitMovement, spawnedUnit, gridPosition);
-                    unitMovement.unitData = Units.units[gridPosition.x, gridPosition.y];
+                    GameData.units[gridPosition.x, gridPosition.y] = new UnitData(unit, unitMovement, spawnedUnit, gridPosition, null);
+                    unitMovement.unitData = GameData.units[gridPosition.x, gridPosition.y];
                     unitMovement.SetDestanationGrid(new Vector2Int((int)cityLocation.x, (int)cityLocation.y));
 
                     spawnCooldownSec = Time.time + spawnDelaySec;

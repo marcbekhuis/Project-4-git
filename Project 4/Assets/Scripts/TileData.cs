@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class TileData
 {
-    public TileData(Vector2 Position, TilePrefab tile)
+    public TileData(Vector2Int GridPosition, TilePrefab tile, PlayerData OwnedByPlayer)
     {
-        position = Position;
+        gridPoitiom = GridPosition;
         this.tile = tile;
+        ownedByPlayer = OwnedByPlayer;
     }
 
     public TilePrefab tile;
-    public Vector2 position;
+    public Vector2Int gridPoitiom;
+    public PlayerData ownedByPlayer;
 }

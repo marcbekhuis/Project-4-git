@@ -33,8 +33,8 @@ public class SelectUnitMoveToPos : MonoBehaviour
                         unitsData.unitMovement.SetDestanationGrid(gridPosition);
                         moveUnit = false;
 
-                        Destroy(UIElements.activeUnitPanel);
-                        UIElements.selectedObject = null;
+                        Destroy(GameData.activeActionPanel);
+                        GameData.selectedUnit = null;
                     }
                 }
             }
