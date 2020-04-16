@@ -12,6 +12,7 @@ public class UnitMovement : MonoBehaviour
     public UnitData unitData;
 
     Vector2Int nextTileGridPosition;
+    Vector2Int previousTileGridPosition;
     float distanceBetweenTiles = 0;
     bool movedOnGrid = false;
 
@@ -41,57 +42,125 @@ public class UnitMovement : MonoBehaviour
 
     private void CalculatePath()
     {
-        for (int i = unitData.gridPosition.y; i >= destanationGridPosition.y; i--)
+        path.Clear();
+        Vector2Int lastPosition = unitData.gridPosition;
+        Debug.LogError("First last position: " + lastPosition);
+        int nextMoveToPositionY = lastPosition.y;
+        int nextMoveToPositionX = lastPosition.x;
+
+        while (lastPosition != destanationGridPosition)
         {
-            path.Enqueue(new Vector2Int(unitData.gridPosition.x, i));
-        }
-        for (int i = unitData.gridPosition.y; i <= destanationGridPosition.y; i++)
-        {
-            path.Enqueue(new Vector2Int(unitData.gridPosition.x, i));
+            if (lastPosition.y % 2 == 1)
+            {
+                if (lastPosition.x < destanationGridPosition.x && lastPosition.y < destanationGridPosition.y)
+                {
+                    nextMoveToPositionX = lastPosition.x + 1;
+                    nextMoveToPositionY = lastPosition.y + 1;
+                }
+                else if (lastPosition.x < destanationGridPosition.x && lastPosition.y > destanationGridPosition.y)
+                {
+                    nextMoveToPositionY = lastPosition.y - 1;
+                    nextMoveToPositionX = lastPosition.x + 1;
+                }
+                else if (lastPosition.y < destanationGridPosition.y)
+                {
+                    nextMoveToPositionY = lastPosition.y + 1;
+                }
+                else if (lastPosition.y > destanationGridPosition.y)
+                {
+                    nextMoveToPositionY = lastPosition.y - 1;
+                }
+                else if (lastPosition.x < destanationGridPosition.x)
+                {
+                    nextMoveToPositionX = lastPosition.x + 1;
+                }
+                else if (lastPosition.x > destanationGridPosition.x)
+                {
+                    nextMoveToPositionX = lastPosition.x - 1;
+                }
+            }
+            else
+            {
+                if (lastPosition.x > destanationGridPosition.x && lastPosition.y < destanationGridPosition.y)
+                {
+                    nextMoveToPositionX = lastPosition.x - 1;
+                    nextMoveToPositionY = lastPosition.y + 1;
+                }
+                else if (lastPosition.x > destanationGridPosition.x && lastPosition.y > destanationGridPosition.y)
+                {
+                    nextMoveToPositionY = lastPosition.y - 1;
+                    nextMoveToPositionX = lastPosition.x - 1;
+                }
+                else if (lastPosition.x < destanationGridPosition.x)
+                {
+                    nextMoveToPositionX = lastPosition.x + 1;
+                }
+                else if (lastPosition.x > destanationGridPosition.x)
+                {
+                    nextMoveToPositionX = lastPosition.x - 1;
+                }
+                else if (lastPosition.y < destanationGridPosition.y)
+                {
+                    nextMoveToPositionY = lastPosition.y + 1;
+                }
+                else if (lastPosition.y > destanationGridPosition.y)
+                {
+                    nextMoveToPositionY = lastPosition.y - 1;
+                }
+            }
+
+            Vector2Int nextMoveToPosition = new Vector2Int(nextMoveToPositionX, nextMoveToPositionY);
+            lastPosition = nextMoveToPosition;
+
+            path.Enqueue(nextMoveToPosition);
         }
 
-        for (int i = unitData.gridPosition.x; i >= destanationGridPosition.x; i--)
-        {
-            path.Enqueue(new Vector2Int(i, destanationGridPosition.y));
-        }
-        for (int i = unitData.gridPosition.x; i <= destanationGridPosition.x; i++)
-        {
-            path.Enqueue(new Vector2Int(i,  destanationGridPosition.y));
-        }
+        Debug.LogError("Path length: " + path.Count);
 
         nextTileGridPosition = path.Dequeue();
+        previousTileGridPosition = unitData.gridPosition;
+        distanceBetweenTiles = 0;
         movedOnGrid = false;
         moving = true;
     }
 
     private void MoveFromTileToTile()
     {
-        if (moving && path.Count > 0)
+        if (moving)
         {
-            distanceBetweenTiles += Time.deltaTime * speed;
-            unitData.gameObject.transform.position = Vector2.Lerp(HexagonCalculator.GridToHexagonPosition(unitData.gridPosition), HexagonCalculator.GridToHexagonPosition(nextTileGridPosition), distanceBetweenTiles);
+            distanceBetweenTiles += Time.deltaTime / speed;
+            //Debug.LogError("distance: " + distanceBetweenTiles);
+            unitData.gameObject.transform.position = Vector2.Lerp(HexagonCalculator.GridToHexagonPosition(previousTileGridPosition), HexagonCalculator.GridToHexagonPosition(nextTileGridPosition), distanceBetweenTiles);
 
-            if (distanceBetweenTiles > 0.5 && distanceBetweenTiles < 0.6)
+            if (distanceBetweenTiles > 0.5 && distanceBetweenTiles < 0.6 && !movedOnGrid)
             {
                 movedOnGrid = true;
-                GameData.units[unitData.gridPosition.x, unitData.gridPosition.y] = null;
+                GameData.units[previousTileGridPosition.x, previousTileGridPosition.y] = null;
                 GameData.units[nextTileGridPosition.x, nextTileGridPosition.y] = unitData;
                 unitData.gridPosition = nextTileGridPosition;
             }
             else if (distanceBetweenTiles >= 1)
             {
-                GameData.units[unitData.gridPosition.x, unitData.gridPosition.y] = null;
+                GameData.units[previousTileGridPosition.x, previousTileGridPosition.y] = null;
                 GameData.units[nextTileGridPosition.x, nextTileGridPosition.y] = unitData;
                 unitData.gridPosition = nextTileGridPosition;
                 unitData.gameObject.transform.position = HexagonCalculator.GridToHexagonPosition(nextTileGridPosition);
                 distanceBetweenTiles = 0;
-                nextTileGridPosition = path.Dequeue();
+
+                previousTileGridPosition = unitData.gridPosition;
                 movedOnGrid = false;
+
+                GameData.fogOfWar.UpdateVisibility();
+
                 if (path.Count == 0)
                 {
                     Debug.Log("Finsihed moving");
                     moving = false;
+                    return;
                 }
+
+                nextTileGridPosition = path.Dequeue();
+                Debug.LogError("Path length: " + path.Count);
             }
         }
     }

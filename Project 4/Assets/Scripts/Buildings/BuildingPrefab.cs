@@ -9,4 +9,6 @@ public class BuildingPrefab : ScriptableObject
     public TileBase tile;
     public GameObject buildingScripts;
     public GameObject actionPanel;
+    public bool mustBePlaceInClaim = true;
+    public bool destroysUnit = false;
 }

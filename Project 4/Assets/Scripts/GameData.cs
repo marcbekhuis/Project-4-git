@@ -12,12 +12,15 @@ public static class GameData
     public static Tilemap biomeTilemap;
     public static Tilemap buildingTilemap;
     public static Tilemap borderTilemap;
+    public static Tilemap undiscoveredFogTilemap;
+    public static Tilemap hidenFogTilemap;
 
     public static Vector2Int mapSize;
     public static BiomeTypes[,] biomes;
     public static TileData[,] tiles;
     public static UnitData[,] units;
     public static BuildingData[,] buildings;
+    public static FogOfWar fogOfWar;
 
     public static GameObject activeActionPanel;
     public static BuildingData selectedBuilding;
@@ -38,8 +41,8 @@ public static class GameData
 
     public enum TileVisibility
     {
+        Undiscovered,
         Visible,
         Hiden,
-        Undiscovered
     }
 }

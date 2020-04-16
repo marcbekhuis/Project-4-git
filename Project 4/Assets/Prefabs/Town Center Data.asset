@@ -15,3 +15,6 @@ MonoBehaviour:
   tile: {fileID: 11400000, guid: 450fdc36bec78a94bb317f1a69df297f, type: 2}
   buildingScripts: {fileID: 6322924576314203408, guid: 91ed45bb871bbcf4793d71d0559e74c1,
     type: 3}
+  actionPanel: {fileID: 0}
+  mustBePlaceInClaim: 0
+  destroysUnit: 1
