@@ -15,7 +15,7 @@ public class PlayerData : MonoBehaviour
 
     [HideInInspector] public GameData.TileVisibility[,] tileVisibility;
 
-    [HideInInspector] public Inventory inventory;
+    [HideInInspector] public Inventory inventory = new Inventory();
 
     [HideInInspector] public List<int> citiesOverTime = new List<int>();
     [HideInInspector] public List<int> unitsOverTime = new List<int>();

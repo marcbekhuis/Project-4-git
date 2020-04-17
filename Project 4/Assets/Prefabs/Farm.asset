@@ -13,7 +13,17 @@ MonoBehaviour:
   m_Name: Farm
   m_EditorClassIdentifier: 
   tile: {fileID: 11400000, guid: 74a2b3d395e56c046bb90096d758ca51, type: 2}
-  buildingScripts: {fileID: 0}
   actionPanel: {fileID: 0}
+  townCenter: 0
+  producesResources: 1
+  itemToProduce:
+    name: Wheat
+    discription: 
+    itemImage: {fileID: 0}
+    gameObject: {fileID: 0}
+    amount: 0
+  amount: 1
+  productionDelay: 60
+  maxNumberOfResidence: 0
   mustBePlaceInClaim: 1
   destroysUnit: 0

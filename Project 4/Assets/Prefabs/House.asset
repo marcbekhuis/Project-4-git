@@ -13,7 +13,17 @@ MonoBehaviour:
   m_Name: House
   m_EditorClassIdentifier: 
   tile: {fileID: 11400000, guid: 66c4d84c2084c18418a0a1540a519b80, type: 2}
-  buildingScripts: {fileID: 0}
   actionPanel: {fileID: 0}
+  townCenter: 0
+  producesResources: 0
+  itemToProduce:
+    name: 
+    discription: 
+    itemImage: {fileID: 0}
+    gameObject: {fileID: 0}
+    amount: 0
+  amount: 1
+  productionDelay: 60
+  maxNumberOfResidence: 2
   mustBePlaceInClaim: 1
   destroysUnit: 0

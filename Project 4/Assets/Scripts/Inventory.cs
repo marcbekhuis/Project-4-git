@@ -12,7 +12,7 @@ public class Inventory : MonoBehaviour
     int inventoryMaxSize = 10;
     int fullStack = 99;
 
-    public void PickUpItem(Item item)
+    public void PickUpItem(Item item, int amount)
     {
         bool foundItem = false;
         //Checks if the player already has the item
@@ -21,9 +21,9 @@ public class Inventory : MonoBehaviour
             if (currentItem.name == item.name)
             {
                 //Checks if the item in the inventory isn't already full
-                if (currentItem.amount < fullStack)
+                if (currentItem.amount + amount <= fullStack)
                 {
-                    currentItem.amount++;
+                    currentItem.amount += amount;
                     foundItem = true;
                     break;
                 }

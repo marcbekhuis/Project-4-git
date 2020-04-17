@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class BuildingData : MonoBehaviour
 {
-    public BuildingData(BuildingPrefab building, GameObject gameObject, Vector2Int gridPosition, PlayerData OwnedByPlayer)
+    public BuildingData(BuildingPrefab building, Vector2Int gridPosition, PlayerData OwnedByPlayer, GameObject ScriptGameObject = null)
     {
         this.building = building;
-        this.gameObject = gameObject;
+        this.scriptGameObject = ScriptGameObject;
         this.gridPosition = gridPosition;
         ownedByPlayer = OwnedByPlayer;
     }
 
     public BuildingPrefab building;
-    public GameObject gameObject;
+    public GameObject scriptGameObject;
     public Vector2Int gridPosition;
     public PlayerData ownedByPlayer;
 

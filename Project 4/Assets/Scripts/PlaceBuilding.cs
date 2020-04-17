@@ -12,57 +12,55 @@ public class PlaceBuilding : MonoBehaviour
     {
         if (building.mustBePlaceInClaim && GameData.tiles[unit.gridPosition.x, unit.gridPosition.y].ownedByPlayer == GameData.thisPlayer)
         {
-            GameData.buildingTilemap.SetTile((Vector3Int)unit.gridPosition, building.tile);
-
-            if (building.buildingScripts)
-            {
-                GameObject spawnedBuilding = Instantiate(building.buildingScripts);
-
-                GameData.buildings[unit.gridPosition.x, unit.gridPosition.y] = new BuildingData(building, spawnedBuilding, unit.gridPosition, unit.ownedByPlayer);
-                spawnedBuilding.GetComponent<TownCenter>().buildingData = GameData.buildings[unit.gridPosition.x, unit.gridPosition.y];
-            }
-            else
-            {
-                GameData.buildings[unit.gridPosition.x, unit.gridPosition.y] = new BuildingData(building, null, unit.gridPosition, unit.ownedByPlayer);
-            }
-
-            if (building.destroysUnit)
-            {
-                Destroy(GameData.activeActionPanel);
-                GameData.selectedUnit = null;
-                Destroy(unit.gameObject);
-                GameData.units[unit.gridPosition.x, unit.gridPosition.y] = null;
-                GameData.thisPlayer.units.Remove(unit);
-                GameData.fogOfWar.UpdateVisibility();
-            }
-            else
-            {
-                Destroy(GameData.activeActionPanel);
-                GameData.selectedUnit = null;
-            }
+            PlaceBuildingInGame2();
         }
         else if (!building.mustBePlaceInClaim)
         {
-            GameData.buildingTilemap.SetTile((Vector3Int)unit.gridPosition, building.tile);
-            GameObject spawnedBuilding = Instantiate(building.buildingScripts);
+            PlaceBuildingInGame2();
+        }
+    }
 
-            GameData.buildings[unit.gridPosition.x, unit.gridPosition.y] = new BuildingData(building, spawnedBuilding, unit.gridPosition, unit.ownedByPlayer);
-            spawnedBuilding.GetComponent<TownCenter>().buildingData = GameData.buildings[unit.gridPosition.x, unit.gridPosition.y];
+    private void PlaceBuildingInGame2()
+    {
+        GameData.buildingTilemap.SetTile((Vector3Int)unit.gridPosition, building.tile);
 
-            if (building.destroysUnit)
+        if (building.townCenter || building.producesResources)
+        {
+            GameObject spawnedBuilding = new GameObject();
+            spawnedBuilding.name = building.name;
+
+            GameData.buildings[unit.gridPosition.x, unit.gridPosition.y] = new BuildingData(building, unit.gridPosition, unit.ownedByPlayer, spawnedBuilding);
+
+            if (building.townCenter)
             {
-                Destroy(GameData.activeActionPanel);
-                GameData.selectedUnit = null;
-                Destroy(unit.gameObject);
-                GameData.units[unit.gridPosition.x, unit.gridPosition.y] = null;
-                GameData.thisPlayer.units.Remove(unit);
-                GameData.fogOfWar.UpdateVisibility();
+                TownCenter townCenter = spawnedBuilding.AddComponent<TownCenter>();
+                townCenter.buildingData = GameData.buildings[unit.gridPosition.x, unit.gridPosition.y];
             }
-            else
+            if (building.producesResources)
             {
-                Destroy(GameData.activeActionPanel);
-                GameData.selectedUnit = null;
+                BuildingResourceGeneration buildingResourceGeneration = spawnedBuilding.AddComponent<BuildingResourceGeneration>();
+                buildingResourceGeneration.buildingData = GameData.buildings[unit.gridPosition.x, unit.gridPosition.y];
+
             }
+        }
+        else
+        {
+            GameData.buildings[unit.gridPosition.x, unit.gridPosition.y] = new BuildingData(building, unit.gridPosition, unit.ownedByPlayer);
+        }
+
+        if (building.destroysUnit)
+        {
+            Destroy(GameData.activeActionPanel);
+            GameData.selectedUnit = null;
+            Destroy(unit.gameObject);
+            GameData.units[unit.gridPosition.x, unit.gridPosition.y] = null;
+            GameData.thisPlayer.units.Remove(unit);
+            GameData.fogOfWar.UpdateVisibility();
+        }
+        else
+        {
+            Destroy(GameData.activeActionPanel);
+            GameData.selectedUnit = null;
         }
     }
 }
