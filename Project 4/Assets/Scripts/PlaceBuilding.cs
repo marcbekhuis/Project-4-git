@@ -29,11 +29,13 @@ public class PlaceBuilding : MonoBehaviour
             GameObject spawnedBuilding = new GameObject();
             spawnedBuilding.name = building.name;
 
-            GameData.buildings[unit.gridPosition.x, unit.gridPosition.y] = new BuildingData(building, unit.gridPosition, unit.ownedByPlayer, spawnedBuilding);
+            GameData.buildings[unit.gridPosition.x, unit.gridPosition.y] = new BuildingData(building, unit.gridPosition, unit.ownedByPlayer, GameData.tiles[unit.gridPosition.x, unit.gridPosition.y].ownedByCity, spawnedBuilding);
+            GameData.thisPlayer.buildings.Add(GameData.buildings[unit.gridPosition.x, unit.gridPosition.y]);
 
+            TownCenter townCenter = new TownCenter();
             if (building.townCenter)
             {
-                TownCenter townCenter = spawnedBuilding.AddComponent<TownCenter>();
+                townCenter = spawnedBuilding.AddComponent<TownCenter>();
                 townCenter.buildingData = GameData.buildings[unit.gridPosition.x, unit.gridPosition.y];
             }
             if (building.producesResources)
@@ -42,10 +44,28 @@ public class PlaceBuilding : MonoBehaviour
                 buildingResourceGeneration.buildingData = GameData.buildings[unit.gridPosition.x, unit.gridPosition.y];
 
             }
+
+            if (building.maxNumberOfResidence > 0 && building.townCenter)
+            {
+                townCenter.cityData.residenceBuildings.Add(GameData.buildings[unit.gridPosition.x, unit.gridPosition.y]);
+                townCenter.cityData.UpdateMaxPopulation();
+            }
+            else if (building.maxNumberOfResidence > 0)
+            {
+                GameData.tiles[unit.gridPosition.x, unit.gridPosition.y].ownedByCity.residenceBuildings.Add(GameData.buildings[unit.gridPosition.x, unit.gridPosition.y]);
+                GameData.tiles[unit.gridPosition.x, unit.gridPosition.y].ownedByCity.UpdateMaxPopulation();
+            }
         }
         else
         {
-            GameData.buildings[unit.gridPosition.x, unit.gridPosition.y] = new BuildingData(building, unit.gridPosition, unit.ownedByPlayer);
+            GameData.buildings[unit.gridPosition.x, unit.gridPosition.y] = new BuildingData(building, unit.gridPosition, unit.ownedByPlayer, GameData.tiles[unit.gridPosition.x, unit.gridPosition.y].ownedByCity);
+            GameData.thisPlayer.buildings.Add(GameData.buildings[unit.gridPosition.x, unit.gridPosition.y]);
+
+            if (building.maxNumberOfResidence > 0)
+            {
+                GameData.tiles[unit.gridPosition.x, unit.gridPosition.y].ownedByCity.residenceBuildings.Add(GameData.buildings[unit.gridPosition.x, unit.gridPosition.y]);
+                GameData.tiles[unit.gridPosition.x, unit.gridPosition.y].ownedByCity.UpdateMaxPopulation();
+            }
         }
 
         if (building.destroysUnit)

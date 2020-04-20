@@ -24,6 +24,6 @@ MonoBehaviour:
     amount: 0
   amount: 1
   productionDelay: 60
-  maxNumberOfResidence: 0
+  maxNumberOfResidence: 2
   mustBePlaceInClaim: 0
   destroysUnit: 1

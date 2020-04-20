@@ -44,7 +44,7 @@ public class UnitMovement : MonoBehaviour
     {
         path.Clear();
         Vector2Int lastPosition = unitData.gridPosition;
-        Debug.LogError("First last position: " + lastPosition);
+        //Debug.LogError("First last position: " + lastPosition);
         int nextMoveToPositionY = lastPosition.y;
         int nextMoveToPositionX = lastPosition.x;
 
@@ -115,7 +115,7 @@ public class UnitMovement : MonoBehaviour
             path.Enqueue(nextMoveToPosition);
         }
 
-        Debug.LogError("Path length: " + path.Count);
+        //Debug.LogError("Path length: " + path.Count);
 
         nextTileGridPosition = path.Dequeue();
         previousTileGridPosition = unitData.gridPosition;
@@ -154,13 +154,13 @@ public class UnitMovement : MonoBehaviour
 
                 if (path.Count == 0)
                 {
-                    Debug.Log("Finsihed moving");
+                    //Debug.Log("Finsihed moving");
                     moving = false;
                     return;
                 }
 
                 nextTileGridPosition = path.Dequeue();
-                Debug.LogError("Path length: " + path.Count);
+                //Debug.LogError("Path length: " + path.Count);
             }
         }
     }

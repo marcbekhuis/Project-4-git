@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    List<Item> playerInventory = new List<Item>();
+    public List<Item> playerInventory = new List<Item>();
 
     Item lastItem;
 
