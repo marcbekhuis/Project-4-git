@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CityData : MonoBehaviour
+public class CityData
 {
     public new string name = "New City";
     public Vector2 originLocation = new Vector2(0, 0);
@@ -39,7 +39,7 @@ public class CityData : MonoBehaviour
             maxPopulation += residenceBuilding.building.maxNumberOfResidence;
         }
     }
-
+    
     public void UpdatePopulation()
     {
         Item wheat = new Item();

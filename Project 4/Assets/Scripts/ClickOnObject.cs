@@ -20,6 +20,7 @@ public class ClickOnObject : MonoBehaviour
                     highlight.transform.position = new Vector3(worldPosition.x, worldPosition.y, 0);
 
                     if (SelectUnitMoveToPos.moveUnit) return;
+                    if (GameData.units[gridPosition.x, gridPosition.y] == null) return;
 
                     if (GameData.units[gridPosition.x, gridPosition.y] != null)
                     {

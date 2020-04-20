@@ -30,7 +30,6 @@ public class SpawnBeginUnits : MonoBehaviour
         spawnedUnit.GetComponent<UnitMovement>().unitData = GameData.units[arrayposition.x, arrayposition.y];
         GameData.thisPlayer.units.Add(GameData.units[arrayposition.x, arrayposition.y]);
 
-
         arrayposition = arrayposition - new Vector2Int(1,0);
         position = HexagonCalculator.GridToHexagonPosition(arrayposition);
 
