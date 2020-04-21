@@ -10,7 +10,7 @@ public class Inventory
     Item lastItem;
 
     int inventoryMaxSize = 10;
-    int fullStack = 99;
+    int fullStack = 1000;
 
     public void PickUpItem(Item item, int amount)
     {

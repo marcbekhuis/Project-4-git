@@ -42,22 +42,22 @@ public class CityData
     
     public void UpdatePopulation()
     {
-        Item wheat = new Item();
-        wheat.name = "Wheat";
+        Item bread = new Item();
+        bread.name = "Bread";
 
-        Item wheatInventory = new Item();
+        Item breadInventory = new Item();
 
         foreach (var item in GameData.thisPlayer.inventory.playerInventory)
         {
-            if (item.name == wheat.name)
+            if (item.name == bread.name)
             {
-                wheatInventory = item;
+                breadInventory = item;
                 break;
             }
         }
 
-        int newAmount = Mathf.Clamp(wheatInventory.amount, 0, maxPopulation);
+        int newAmount = Mathf.Clamp(breadInventory.amount, 0, maxPopulation);
         cityPopulation = newAmount;
-        wheatInventory.amount -= newAmount;
+        breadInventory.amount -= newAmount;
     }
 }

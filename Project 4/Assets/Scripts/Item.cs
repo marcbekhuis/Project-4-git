@@ -9,8 +9,8 @@ public class Item
     public string name;
     public string discription;
     public Image itemImage;
-    public GameObject gameObject;
-    public int amount;
+    public GameObject gameObject = null;
+    public int amount = 0;
 
     public void SetPicture(string objectName)
     {
