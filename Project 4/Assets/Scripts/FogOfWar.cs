@@ -8,13 +8,22 @@ public class FogOfWar : MonoBehaviour
     [SerializeField] private TileBase undiscoveredFog;
     [SerializeField] private TileBase hidenFog;
 
+    int TimesCalledPerUpdate = 0;
+
     // Start is called before the first frame update
     void Start()
     {
     }
 
+    private void Update()
+    {
+        TimesCalledPerUpdate = 0;
+    }
+
     public void UpdateVisibility()
     {
+        if (TimesCalledPerUpdate > 0) return;
+        TimesCalledPerUpdate++;
         for (int x = 0; x < GameData.mapSize.x; x++)
         {
             for (int y = 0; y < GameData.mapSize.x; y++)
@@ -57,6 +66,42 @@ public class FogOfWar : MonoBehaviour
                 GameData.thisPlayer.tileVisibility[position.x, position.y] = GameData.TileVisibility.Visible;
 
                 position = unit.gridPosition + new Vector2Int(-1, -1);
+                GameData.thisPlayer.tileVisibility[position.x, position.y] = GameData.TileVisibility.Visible;
+            }
+
+        }
+
+        foreach (var city in GameData.thisPlayer.cities)
+        {
+            Vector2Int position = city.originLocation;
+            GameData.thisPlayer.tileVisibility[position.x, position.y] = GameData.TileVisibility.Visible;
+
+            position = city.originLocation + new Vector2Int(0, 1);
+            GameData.thisPlayer.tileVisibility[position.x, position.y] = GameData.TileVisibility.Visible;
+
+            position = city.originLocation + new Vector2Int(1, 0);
+            GameData.thisPlayer.tileVisibility[position.x, position.y] = GameData.TileVisibility.Visible;
+
+            position = city.originLocation - new Vector2Int(0, 1);
+            GameData.thisPlayer.tileVisibility[position.x, position.y] = GameData.TileVisibility.Visible;
+
+            position = city.originLocation - new Vector2Int(1, 0);
+            GameData.thisPlayer.tileVisibility[position.x, position.y] = GameData.TileVisibility.Visible;
+
+            if (city.originLocation.y % 2 == 1)
+            {
+                position = city.originLocation + new Vector2Int(1, 1);
+                GameData.thisPlayer.tileVisibility[position.x, position.y] = GameData.TileVisibility.Visible;
+
+                position = city.originLocation + new Vector2Int(1, -1);
+                GameData.thisPlayer.tileVisibility[position.x, position.y] = GameData.TileVisibility.Visible;
+            }
+            else
+            {
+                position = city.originLocation + new Vector2Int(-1, 1);
+                GameData.thisPlayer.tileVisibility[position.x, position.y] = GameData.TileVisibility.Visible;
+
+                position = city.originLocation + new Vector2Int(-1, -1);
                 GameData.thisPlayer.tileVisibility[position.x, position.y] = GameData.TileVisibility.Visible;
             }
 

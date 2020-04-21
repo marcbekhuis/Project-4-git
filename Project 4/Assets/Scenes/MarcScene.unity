@@ -504,14 +504,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dbf2bd84de6ac242aee8fa00f6370c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData: {fileID: 235623060}
   unitsToSpawn:
   - {fileID: 11400000, guid: 00eadd6b5ab461249a257c29c625daf6, type: 2}
   unitBase: {fileID: 3626150143577605205, guid: 92465a45deb862b489e05c90d5343012,
     type: 3}
   unitsPerWave: 1
-  spawnDelaySec: 20
-  beginDelaySec: 20
+  spawnDelaySec: 60
+  beginDelaySec: 120
 --- !u!114 &235623060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -526,9 +525,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerName: None
   population: 0
-  cities: []
   border: {fileID: 11400000, guid: 484e388c5cd919442b01135c18479247, type: 2}
-  inventory: {fileID: 0}
   citiesOverTime: 
   unitsOverTime: 
   populationOverTime: 
@@ -1529,7 +1526,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2069674191
 Transform:
   m_ObjectHideFlags: 0
@@ -1646,7 +1643,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2123044709
 Transform:
   m_ObjectHideFlags: 0

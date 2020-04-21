@@ -67,6 +67,7 @@ public class TownCenter : MonoBehaviour
             GameData.tiles[buildingData.gridPosition.x - 1, buildingData.gridPosition.y - 1].ownedByCity = cityData;
         }
 
+        GameData.fogOfWar.UpdateVisibility();
     }
 
     private void Update()

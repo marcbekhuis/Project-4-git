@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Town Center Data
   m_EditorClassIdentifier: 
   tile: {fileID: 11400000, guid: 450fdc36bec78a94bb317f1a69df297f, type: 2}
-  actionPanel: {fileID: 0}
+  actionPanel: {fileID: 1157683879896118090, guid: 52d4ef6812bac5740a0402183f9bf6fa,
+    type: 3}
   townCenter: 1
   producesResources: 0
   itemToProduce:
