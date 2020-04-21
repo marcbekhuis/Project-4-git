@@ -24,6 +24,7 @@ public class SetUpGameData : MonoBehaviour
     {
         GameData.players = players;
         GameData.thisPlayer = thisPlayer;
+        thisPlayer.name = LobbyData.playerName;
 
         GameData.mapSize = mapSize;
         GameData.biomeTilemap = biomeTilemap;

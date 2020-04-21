@@ -17,11 +17,11 @@ MonoBehaviour:
   townCenter: 0
   producesResources: 1
   itemToProduce:
-    name: Wheat
+    name: Bread
     discription: 
     itemImage: {fileID: 0}
     gameObject: {fileID: 0}
-    amount: 92
+    amount: 0
   amount: 1
   productionDelay: 20
   maxNumberOfResidence: 0

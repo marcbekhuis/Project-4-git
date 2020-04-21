@@ -23,7 +23,7 @@ public class SaveSystem : MonoBehaviour
         
     }
 
-    public void SaveData(string saveName)
+    public void SaveData()
     {
         SavedData savedData = new SavedData(
             playerData.PlayerName,
@@ -38,7 +38,7 @@ public class SaveSystem : MonoBehaviour
 
         string json = JsonUtility.ToJson(savedData);
         Debug.LogError(json);
-        File.WriteAllText(saveFolder + saveName + ".txt", Encryptor(json));
+        File.WriteAllText(saveFolder + LobbyData.sessionName + ".txt", Encryptor(json));
     }
 
     public SavedData LoadData(string saveName)

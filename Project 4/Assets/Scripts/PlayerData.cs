@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class PlayerData : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class PlayerData : MonoBehaviour
     [HideInInspector] public GameData.TileVisibility[,] tileVisibility;
 
     public Inventory inventory = new Inventory();
+    public Text populationDisplay;
+    public Text breadDisplay;
 
     [HideInInspector] public List<int> citiesOverTime = new List<int>();
     [HideInInspector] public List<int> unitsOverTime = new List<int>();
@@ -47,6 +50,17 @@ public class PlayerData : MonoBehaviour
             populationOverTime.Add(population);
 
             cooldownSec = Time.time + delaySec;
+        }
+
+        populationDisplay.text = "Population: " + population;
+
+        foreach (var item in inventory.playerInventory)
+        {
+            if (item.name == "Bread")
+            {
+                breadDisplay.text = "Bread: " + item.amount;
+                break;
+            }
         }
     }
 }

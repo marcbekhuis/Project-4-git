@@ -34,19 +34,8 @@ public class UnitData
             GameData.selectedUnit = this;
 
             spawnedPanel.transform.Find("Move Unit").GetComponent<SelectUnitMoveToPos>().unitsData = this;
-            if (spawnedPanel.transform.Find("Place Town center"))
+            foreach (var placeBuilding in spawnedPanel.GetComponentsInChildren<PlaceBuilding>())
             {
-                PlaceBuilding placeBuilding = spawnedPanel.transform.Find("Place Town center").GetComponent<PlaceBuilding>();
-                placeBuilding.unit = this;
-            }
-            if (spawnedPanel.transform.Find("Place Farm"))
-            {
-                PlaceBuilding placeBuilding = spawnedPanel.transform.Find("Place Farm").GetComponent<PlaceBuilding>();
-                placeBuilding.unit = this;
-            }
-            if (spawnedPanel.transform.Find("Place House"))
-            {
-                PlaceBuilding placeBuilding = spawnedPanel.transform.Find("Place House").GetComponent<PlaceBuilding>();
                 placeBuilding.unit = this;
             }
         }
