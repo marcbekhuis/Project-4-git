@@ -31,5 +31,9 @@ public class SpawnUnit : MonoBehaviour
         GameData.thisPlayer.units.Add(GameData.units[buildingData.gridPosition.x, buildingData.gridPosition.y]);
 
         GameData.fogOfWar.UpdateVisibility();
+
+        Destroy(GameData.activeActionPanel);
+        GameData.selectedBuilding = null;
+        GameData.selectedUnit = null;
     }
 }
