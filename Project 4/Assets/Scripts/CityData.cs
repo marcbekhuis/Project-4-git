@@ -2,32 +2,62 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CityData : MonoBehaviour
+public class CityData
 {
     public new string name = "New City";
     public Vector2 originLocation = new Vector2(0, 0);
     public string discription = "Intresting Discription";
-    public int cityPopulation = 1;
+    public int cityPopulation = 2;
+    public int maxPopulation = 0;
     public List<Vector2> takenTiles = new List<Vector2>();
     public List<Vector2> availableUnits = new List<Vector2>();
     public List<Vector2> cityBuildings = new List<Vector2>();
-    public Inventory inventory = null;
+    [HideInInspector] public List<BuildingData> residenceBuildings = new List<BuildingData>();
 
-    public void SetNewCity(string cityName, Vector2 capitalLocation, string cityDiscription, int startPopulation, Inventory cityInventory)
+    public void SetNewCity(string cityName, Vector2 capitalLocation, string cityDiscription, int startPopulation)
     {
         name = cityName;
         originLocation = capitalLocation;
         discription = cityDiscription;
         cityPopulation = startPopulation;
-        inventory = cityInventory;
     }
 
-    public CityData CreateNewCity(string cityName, Vector2 capitalLocation, string cityDiscription, int startPopulation, Inventory cityInventory)
+    public CityData CreateNewCity(string cityName, Vector2 capitalLocation, string cityDiscription, int startPopulation)
     {
         CityData newCity = new CityData();
 
-        newCity.SetNewCity("New City", new Vector2(0, 0), "Intresting Discription", 1, null);
+        newCity.SetNewCity("New City", new Vector2(0, 0), "Intresting Discription", 1);
 
         return newCity;
+    }
+
+    public void UpdateMaxPopulation()
+    {
+        maxPopulation = 0;
+        foreach (var residenceBuilding in residenceBuildings)
+        {
+            maxPopulation += residenceBuilding.building.maxNumberOfResidence;
+        }
+    }
+    
+    public void UpdatePopulation()
+    {
+        Item wheat = new Item();
+        wheat.name = "Wheat";
+
+        Item wheatInventory = new Item();
+
+        foreach (var item in GameData.thisPlayer.inventory.playerInventory)
+        {
+            if (item.name == wheat.name)
+            {
+                wheatInventory = item;
+                break;
+            }
+        }
+
+        int newAmount = Mathf.Clamp(wheatInventory.amount, 0, maxPopulation);
+        cityPopulation = newAmount;
+        wheatInventory.amount -= newAmount;
     }
 }

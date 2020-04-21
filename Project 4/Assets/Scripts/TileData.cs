@@ -14,4 +14,5 @@ public class TileData
     public TilePrefab tile;
     public Vector2Int gridPoitiom;
     public PlayerData ownedByPlayer;
+    public CityData ownedByCity;
 }

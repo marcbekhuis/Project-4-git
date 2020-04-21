@@ -2,20 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildingData : MonoBehaviour
+public class BuildingData
 {
-    public BuildingData(BuildingPrefab building, GameObject gameObject, Vector2Int gridPosition, PlayerData OwnedByPlayer)
+    public BuildingData(BuildingPrefab building, Vector2Int gridPosition, PlayerData OwnedByPlayer, CityData OwnedByCity, GameObject ScriptGameObject = null)
     {
         this.building = building;
-        this.gameObject = gameObject;
+        this.scriptGameObject = ScriptGameObject;
         this.gridPosition = gridPosition;
         ownedByPlayer = OwnedByPlayer;
+        ownedByCity = OwnedByCity;
     }
 
     public BuildingPrefab building;
-    public GameObject gameObject;
+    public GameObject scriptGameObject;
     public Vector2Int gridPosition;
     public PlayerData ownedByPlayer;
+    public CityData ownedByCity;
 
     public void OpenActionPanel()
     {

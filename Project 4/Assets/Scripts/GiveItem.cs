@@ -26,7 +26,7 @@ public class GiveItem : MonoBehaviour
 
     void TranferItem(Item thisItem)
     {
-        playerInv.PickUpItem(thisItem);
+        playerInv.PickUpItem(thisItem, 1);
         playerInv.CheckInventory();
     }
 }

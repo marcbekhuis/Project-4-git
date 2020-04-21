@@ -9,7 +9,7 @@ public static class HexagonCalculator
         float col;
         if (position.y % 2 == 1)
         {
-            col = position.x - 0.5f;
+            col = position.x + 0.5f;
         }
         else
         {
@@ -24,7 +24,7 @@ public static class HexagonCalculator
         float col;
         if (position.y % 2 == 1)
         {
-            col = position.x + 0.5f;
+            col = position.x - 0.5f;
         }
         else
         {

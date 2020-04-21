@@ -28,7 +28,7 @@ public class SpawnBeginUnits : MonoBehaviour
 
         GameData.units[arrayposition.x, arrayposition.y] = new UnitData(settler, spawnedUnit.GetComponent<UnitMovement>(), spawnedUnit, arrayposition, GameData.thisPlayer);
         spawnedUnit.GetComponent<UnitMovement>().unitData = GameData.units[arrayposition.x, arrayposition.y];
-
+        GameData.thisPlayer.units.Add(GameData.units[arrayposition.x, arrayposition.y]);
 
         arrayposition = arrayposition - new Vector2Int(1,0);
         position = HexagonCalculator.GridToHexagonPosition(arrayposition);
@@ -38,5 +38,8 @@ public class SpawnBeginUnits : MonoBehaviour
 
         GameData.units[arrayposition.x, arrayposition.y] = new UnitData(worker, spawnedUnit.GetComponent<UnitMovement>(), spawnedUnit, arrayposition, GameData.thisPlayer);
         spawnedUnit.GetComponent<UnitMovement>().unitData = GameData.units[arrayposition.x, arrayposition.y];
+        GameData.thisPlayer.units.Add(GameData.units[arrayposition.x, arrayposition.y]);
+
+        GameData.fogOfWar.UpdateVisibility();
     }
 }

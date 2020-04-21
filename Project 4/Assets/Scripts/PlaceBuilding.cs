@@ -6,23 +6,76 @@ using UnityEngine.Tilemaps;
 public class PlaceBuilding : MonoBehaviour
 {
     public BuildingPrefab building;
-    public bool destroysUnit = false;
     public UnitData unit;
 
     public void PlaceBuildingInGame()
     {
+        if (building.mustBePlaceInClaim && GameData.tiles[unit.gridPosition.x, unit.gridPosition.y].ownedByPlayer == GameData.thisPlayer)
+        {
+            PlaceBuildingInGame2();
+        }
+        else if (!building.mustBePlaceInClaim)
+        {
+            PlaceBuildingInGame2();
+        }
+    }
+
+    private void PlaceBuildingInGame2()
+    {
         GameData.buildingTilemap.SetTile((Vector3Int)unit.gridPosition, building.tile);
-        GameObject spawnedBuilding = Instantiate(building.buildingScripts);
 
-        GameData.buildings[unit.gridPosition.x, unit.gridPosition.y] = new BuildingData(building, spawnedBuilding, unit.gridPosition, unit.ownedByPlayer);
-        spawnedBuilding.GetComponent<TownCenter>().buildingData = GameData.buildings[unit.gridPosition.x, unit.gridPosition.y];
+        if (building.townCenter || building.producesResources)
+        {
+            GameObject spawnedBuilding = new GameObject();
+            spawnedBuilding.name = building.name;
 
-        if (destroysUnit)
+            GameData.buildings[unit.gridPosition.x, unit.gridPosition.y] = new BuildingData(building, unit.gridPosition, unit.ownedByPlayer, GameData.tiles[unit.gridPosition.x, unit.gridPosition.y].ownedByCity, spawnedBuilding);
+            GameData.thisPlayer.buildings.Add(GameData.buildings[unit.gridPosition.x, unit.gridPosition.y]);
+
+            TownCenter townCenter = new TownCenter();
+            if (building.townCenter)
+            {
+                townCenter = spawnedBuilding.AddComponent<TownCenter>();
+                townCenter.buildingData = GameData.buildings[unit.gridPosition.x, unit.gridPosition.y];
+            }
+            if (building.producesResources)
+            {
+                BuildingResourceGeneration buildingResourceGeneration = spawnedBuilding.AddComponent<BuildingResourceGeneration>();
+                buildingResourceGeneration.buildingData = GameData.buildings[unit.gridPosition.x, unit.gridPosition.y];
+
+            }
+
+            if (building.maxNumberOfResidence > 0 && building.townCenter)
+            {
+                townCenter.cityData.residenceBuildings.Add(GameData.buildings[unit.gridPosition.x, unit.gridPosition.y]);
+                townCenter.cityData.UpdateMaxPopulation();
+            }
+            else if (building.maxNumberOfResidence > 0)
+            {
+                GameData.tiles[unit.gridPosition.x, unit.gridPosition.y].ownedByCity.residenceBuildings.Add(GameData.buildings[unit.gridPosition.x, unit.gridPosition.y]);
+                GameData.tiles[unit.gridPosition.x, unit.gridPosition.y].ownedByCity.UpdateMaxPopulation();
+            }
+        }
+        else
+        {
+            GameData.buildings[unit.gridPosition.x, unit.gridPosition.y] = new BuildingData(building, unit.gridPosition, unit.ownedByPlayer, GameData.tiles[unit.gridPosition.x, unit.gridPosition.y].ownedByCity);
+            GameData.thisPlayer.buildings.Add(GameData.buildings[unit.gridPosition.x, unit.gridPosition.y]);
+
+            if (building.maxNumberOfResidence > 0)
+            {
+                GameData.tiles[unit.gridPosition.x, unit.gridPosition.y].ownedByCity.residenceBuildings.Add(GameData.buildings[unit.gridPosition.x, unit.gridPosition.y]);
+                GameData.tiles[unit.gridPosition.x, unit.gridPosition.y].ownedByCity.UpdateMaxPopulation();
+            }
+        }
+
+        if (building.destroysUnit)
         {
             Destroy(GameData.activeActionPanel);
             GameData.selectedUnit = null;
             Destroy(unit.gameObject);
-            GameData.units[unit.gridPosition.x,unit.gridPosition.y] = null;
+            GameData.units[unit.gridPosition.x, unit.gridPosition.y] = null;
+            GameData.thisPlayer.units.Remove(unit);
+            GameData.fogOfWar.UpdateVisibility();
         }
         else
         {

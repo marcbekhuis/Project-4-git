@@ -11,6 +11,7 @@ public class ShowData : MonoBehaviour
 
     string playerName;
     float timePlayed;
+    float previouslyChosen = 0;
 
     [SerializeField, Range(1,3)]int chosen = 1;
 
@@ -30,6 +31,14 @@ public class ShowData : MonoBehaviour
         DisplayData(chosen);
     }
 
+    private void Update()
+    {
+        if (chosen != previouslyChosen)
+        {
+            DisplayData(chosen);
+        }
+    }
+
     public void DisplayData(int number)
     {
         switch (number)
@@ -44,6 +53,8 @@ public class ShowData : MonoBehaviour
                 ShowSpecific(saveData.citiesOverTime);
                 break;
         }
+
+        previouslyChosen = chosen;
     }
 
     void ShowSpecific(int[] list)

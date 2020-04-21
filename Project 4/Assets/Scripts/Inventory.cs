@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Inventory : MonoBehaviour
+public class Inventory
 {
-    List<Item> playerInventory = new List<Item>();
+    public List<Item> playerInventory = new List<Item>();
 
     Item lastItem;
 
     int inventoryMaxSize = 10;
     int fullStack = 99;
 
-    public void PickUpItem(Item item)
+    public void PickUpItem(Item item, int amount)
     {
         bool foundItem = false;
         //Checks if the player already has the item
@@ -21,9 +21,9 @@ public class Inventory : MonoBehaviour
             if (currentItem.name == item.name)
             {
                 //Checks if the item in the inventory isn't already full
-                if (currentItem.amount < fullStack)
+                if (currentItem.amount + amount <= fullStack)
                 {
-                    currentItem.amount++;
+                    currentItem.amount += amount;
                     foundItem = true;
                     break;
                 }
@@ -60,9 +60,9 @@ public class Inventory : MonoBehaviour
         int timesRun = 0;
         foreach (var item in playerInventory)
         {
-            print(timesRun + " - " + item.amount);
+            //print(timesRun + " - " + item.amount);
             timesRun++;
         }
-        print("Last Item: " + lastItem.amount);
+        //print("Last Item: " + lastItem.amount);
     }
 }

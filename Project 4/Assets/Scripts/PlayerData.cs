@@ -11,11 +11,14 @@ public class PlayerData : MonoBehaviour
     [HideInInspector] public List<CityData> cities = new List<CityData>();
     [HideInInspector] public List<UnitData> units = new List<UnitData>();
     [HideInInspector] public List<TileData> claimedTiles = new List<TileData>();
+
+    [HideInInspector] public List<BuildingData> buildings = new List<BuildingData>();
+
     public TileBase border;
 
     [HideInInspector] public GameData.TileVisibility[,] tileVisibility;
 
-    [HideInInspector] public Inventory inventory;
+    public Inventory inventory = new Inventory();
 
     [HideInInspector] public List<int> citiesOverTime = new List<int>();
     [HideInInspector] public List<int> unitsOverTime = new List<int>();
@@ -28,6 +31,11 @@ public class PlayerData : MonoBehaviour
     {
         if (Time.time > cooldownSec)
         {
+            foreach (var city in cities)
+            {
+                city.UpdatePopulation();
+            }
+
             population = 0;
             foreach (var city in cities)
             {
