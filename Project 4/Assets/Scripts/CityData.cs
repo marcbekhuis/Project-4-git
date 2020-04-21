@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CityData : MonoBehaviour
+public class CityData
 {
     public new string name = "New City";
-    public Vector2 originLocation = new Vector2(0, 0);
+    public Vector2Int originLocation;
     public string discription = "Intresting Discription";
     public int cityPopulation = 2;
     public int maxPopulation = 0;
@@ -14,7 +14,7 @@ public class CityData : MonoBehaviour
     public List<Vector2> cityBuildings = new List<Vector2>();
     [HideInInspector] public List<BuildingData> residenceBuildings = new List<BuildingData>();
 
-    public void SetNewCity(string cityName, Vector2 capitalLocation, string cityDiscription, int startPopulation)
+    public void SetNewCity(string cityName, Vector2Int capitalLocation, string cityDiscription, int startPopulation)
     {
         name = cityName;
         originLocation = capitalLocation;
@@ -26,7 +26,7 @@ public class CityData : MonoBehaviour
     {
         CityData newCity = new CityData();
 
-        newCity.SetNewCity("New City", new Vector2(0, 0), "Intresting Discription", 1);
+        newCity.SetNewCity("New City", Vector2Int.zero, "Intresting Discription", 1);
 
         return newCity;
     }
@@ -39,7 +39,7 @@ public class CityData : MonoBehaviour
             maxPopulation += residenceBuilding.building.maxNumberOfResidence;
         }
     }
-
+    
     public void UpdatePopulation()
     {
         Item wheat = new Item();

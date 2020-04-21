@@ -22,6 +22,22 @@ public class PlaceBuilding : MonoBehaviour
 
     private void PlaceBuildingInGame2()
     {
+        if (GameData.buildings[unit.gridPosition.x, unit.gridPosition.y] != null)
+        {
+            if (GameData.buildings[unit.gridPosition.x, unit.gridPosition.y].building.townCenter)
+            {
+                return;
+            }
+
+            Destroy(GameData.buildings[unit.gridPosition.x, unit.gridPosition.y].scriptGameObject);
+            GameData.thisPlayer.buildings.Remove(GameData.buildings[unit.gridPosition.x, unit.gridPosition.y]);
+            
+            if(GameData.buildings[unit.gridPosition.x, unit.gridPosition.y].building.maxNumberOfResidence > 0)
+            {
+                GameData.buildings[unit.gridPosition.x, unit.gridPosition.y].ownedByCity.residenceBuildings.Remove(GameData.buildings[unit.gridPosition.x, unit.gridPosition.y]);
+            }
+        }
+
         GameData.buildingTilemap.SetTile((Vector3Int)unit.gridPosition, building.tile);
 
         if (building.townCenter || building.producesResources)

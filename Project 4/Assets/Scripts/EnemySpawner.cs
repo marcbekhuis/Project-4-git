@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private PlayerData playerData;
     [SerializeField] private UnitPrefab[] unitsToSpawn;
     [SerializeField] private GameObject unitBase;
 
@@ -23,13 +22,13 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerData.cities.Count > 0)
+        if (GameData.thisPlayer.cities.Count > 0)
         {
             if (Time.time > spawnCooldownSec)
             {
                 for (int i = 0; i < unitsPerWave; i++)
                 {
-                    Vector2 cityLocation = playerData.cities[Random.Range(0, playerData.cities.Count)].originLocation;
+                    Vector2 cityLocation = GameData.thisPlayer.cities[Random.Range(0, GameData.thisPlayer.cities.Count)].originLocation;
                     Vector2 position = HexagonCalculator.GridToHexagonPosition(cityLocation);
                     position = position + (Vector2)(Quaternion.Euler(0, 0, Random.Range(0f, 360f)) * new Vector3(10,0, 0));
 

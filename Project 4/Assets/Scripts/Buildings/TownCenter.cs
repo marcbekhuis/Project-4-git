@@ -67,6 +67,7 @@ public class TownCenter : MonoBehaviour
             GameData.tiles[buildingData.gridPosition.x - 1, buildingData.gridPosition.y - 1].ownedByCity = cityData;
         }
 
+        GameData.fogOfWar.UpdateVisibility();
     }
 
     private void Update()
@@ -91,19 +92,10 @@ public class TownCenter : MonoBehaviour
             {
                 nextTilePosition = new Vector2Int((int)cityData.takenTiles[takenTile].x + Random.Range(-1, 1), (int)cityData.takenTiles[takenTile].y + Random.Range(-1, 2));
             }
-            bool alreadyClaimed = false;
-            foreach (var tile in cityData.takenTiles)
-            {
-                if (tile == nextTilePosition)
-                {
-                    alreadyClaimed = true;
-                    break;
-                }
-            }
-            if (!alreadyClaimed)
+            if (GameData.tiles[nextTilePosition.x, nextTilePosition.y].ownedByCity == null)
             {
                 cityData.takenTiles.Add(nextTilePosition);
-                GameData.borderTilemap.SetTile((Vector3Int)nextTilePosition, buildingData.ownedByPlayer.border);
+                GameData.borderTilemap.SetTile((Vector3Int)nextTilePosition, GameData.thisPlayer.border);
                 GameData.tiles[nextTilePosition.x, nextTilePosition.y].ownedByPlayer = buildingData.ownedByPlayer;
                 claimCooldownSec = Time.time + claimDelaySec;
                 return;

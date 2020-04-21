@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildingData : MonoBehaviour
+public class BuildingData
 {
     public BuildingData(BuildingPrefab building, Vector2Int gridPosition, PlayerData OwnedByPlayer, CityData OwnedByCity, GameObject ScriptGameObject = null)
     {
@@ -28,6 +28,12 @@ public class BuildingData : MonoBehaviour
         if (GameData.selectedBuilding != this)
         {
             GameObject spawnedPanel = GameObject.Instantiate(building.actionPanel, GameData.canvas.transform);
+
+            foreach (var spawnUnit in spawnedPanel.GetComponentsInChildren<SpawnUnit>())
+            {
+                spawnUnit.buildingData = this;
+            }
+
             GameData.activeActionPanel = spawnedPanel;
             GameData.selectedBuilding = this;
             GameData.selectedUnit = null;

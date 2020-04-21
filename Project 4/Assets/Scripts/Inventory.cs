@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Inventory : MonoBehaviour
+public class Inventory
 {
     public List<Item> playerInventory = new List<Item>();
 
@@ -60,9 +60,9 @@ public class Inventory : MonoBehaviour
         int timesRun = 0;
         foreach (var item in playerInventory)
         {
-            print(timesRun + " - " + item.amount);
+            //print(timesRun + " - " + item.amount);
             timesRun++;
         }
-        print("Last Item: " + lastItem.amount);
+        //print("Last Item: " + lastItem.amount);
     }
 }

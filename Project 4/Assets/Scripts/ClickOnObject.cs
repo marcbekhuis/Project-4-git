@@ -20,9 +20,14 @@ public class ClickOnObject : MonoBehaviour
                     highlight.transform.position = new Vector3(worldPosition.x, worldPosition.y, 0);
 
                     if (SelectUnitMoveToPos.moveUnit) return;
+                    if (gridPosition.x < 0) return;
+                    if (gridPosition.y < 0) return;
+                    if (gridPosition.x > GameData.mapSize.x) return;
+                    if (gridPosition.y > GameData.mapSize.y) return;
 
                     if (GameData.units[gridPosition.x, gridPosition.y] != null)
                     {
+                        if (!GameData.units[gridPosition.x, gridPosition.y].unit.actionPanel) return;
                         if (GameData.units[gridPosition.x, gridPosition.y].ownedByPlayer == GameData.thisPlayer)
                         {
                             GameData.units[gridPosition.x, gridPosition.y].OpenActionPanel();
@@ -30,7 +35,8 @@ public class ClickOnObject : MonoBehaviour
                     }
                     else if (GameData.buildings[gridPosition.x, gridPosition.y] != null)
                     {
-                        if (GameData.units[gridPosition.x, gridPosition.y].ownedByPlayer == GameData.thisPlayer)
+                        if (!GameData.buildings[gridPosition.x, gridPosition.y].building.actionPanel) return;
+                        if (GameData.buildings[gridPosition.x, gridPosition.y].ownedByPlayer == GameData.thisPlayer)
                         {
                             GameData.buildings[gridPosition.x, gridPosition.y].OpenActionPanel();
                         }

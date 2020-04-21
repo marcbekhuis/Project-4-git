@@ -21,9 +21,9 @@ MonoBehaviour:
     discription: 
     itemImage: {fileID: 0}
     gameObject: {fileID: 0}
-    amount: 0
+    amount: 92
   amount: 1
-  productionDelay: 60
+  productionDelay: 20
   maxNumberOfResidence: 0
   mustBePlaceInClaim: 1
   destroysUnit: 0

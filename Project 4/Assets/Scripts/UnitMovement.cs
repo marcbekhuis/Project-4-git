@@ -150,7 +150,10 @@ public class UnitMovement : MonoBehaviour
                 previousTileGridPosition = unitData.gridPosition;
                 movedOnGrid = false;
 
-                GameData.fogOfWar.UpdateVisibility();
+                if (unitData.ownedByPlayer)
+                {
+                    GameData.fogOfWar.UpdateVisibility();
+                }
 
                 if (path.Count == 0)
                 {
