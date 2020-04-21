@@ -78,7 +78,7 @@ public class ShowData : MonoBehaviour
             timesRan--;
             position++;
 
-            lr.SetPosition(position, new Vector3(time, item, 0));
+            lr.SetPosition(position, new Vector3((time / (list.Length * 500)) * 9, (item / list.Length), 0));
         }
     }
 }
