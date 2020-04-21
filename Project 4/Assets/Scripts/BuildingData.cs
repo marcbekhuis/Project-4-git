@@ -28,6 +28,12 @@ public class BuildingData
         if (GameData.selectedBuilding != this)
         {
             GameObject spawnedPanel = GameObject.Instantiate(building.actionPanel, GameData.canvas.transform);
+
+            foreach (var spawnUnit in spawnedPanel.GetComponentsInChildren<SpawnUnit>())
+            {
+                spawnUnit.buildingData = this;
+            }
+
             GameData.activeActionPanel = spawnedPanel;
             GameData.selectedBuilding = this;
             GameData.selectedUnit = null;
