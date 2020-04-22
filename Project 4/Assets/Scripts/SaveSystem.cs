@@ -70,7 +70,7 @@ public class SaveSystem : MonoBehaviour
 
         for (int i = 0; i < fileNames.Length; i++)
         {
-            string json = File.ReadAllText(saveFolder + fileNames[i] + ".txt");
+            string json = File.ReadAllText(fileNames[i]);
             savedDatas[i] = JsonUtility.FromJson<SavedData>(Dencryptor(json));
         }
 
@@ -81,6 +81,7 @@ public class SaveSystem : MonoBehaviour
     {
         public SavedData(string PlayerName, float TimePlayed, int EndPopulation, int[] PopulationOverTime, int EndUnitAmount, int[] UnitsOverTime, int EndCityAmount, int[] CitiesOverTime)
         {
+            sessionName = LobbyData.sessionName;
             playerName = PlayerName;
             timePlayed = TimePlayed;
 
@@ -94,6 +95,7 @@ public class SaveSystem : MonoBehaviour
             citiesOverTime = CitiesOverTime;
         }
 
+        public string sessionName;
         public string playerName;
         public float timePlayed;
 
