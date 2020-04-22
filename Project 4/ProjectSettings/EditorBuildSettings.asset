@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MarcScene.unity
     guid: ff7f8c257cc7c7346b3a142124357e6b
+  - enabled: 1
+    path: Assets/Scenes/TestScenes/Wesley's Scenes/ShowData.unity
+    guid: 592bb1e020277f54b82c2b24aa49a54f
   m_configObjects: {}

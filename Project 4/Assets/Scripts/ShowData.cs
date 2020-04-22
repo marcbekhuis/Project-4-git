@@ -2,18 +2,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShowData : MonoBehaviour
 {
     SaveSystem.SavedData saveData;
+    SaveSystem.SavedData[] saveDatas;
     SaveSystem sSystem;
     LineRenderer lr;
+
+    [SerializeField] private Text playerText;
+    [SerializeField] private Dropdown sessionDropdown;
+    [SerializeField] private Dropdown typeDropdown;
 
     string playerName;
     float timePlayed;
     float previouslyChosen = 0;
 
-    [SerializeField, Range(1,3)]int chosen = 1;
+    //[SerializeField, Range(1,3)]int chosen = 1;
 
 
 
@@ -23,38 +29,46 @@ public class ShowData : MonoBehaviour
         sSystem = this.GetComponent<SaveSystem>();
         lr = this.GetComponent<LineRenderer>();
 
-        saveData = sSystem.LoadData("TestSave");
+        saveDatas = sSystem.LoadAllData();
+
+        List<Dropdown.OptionData> options = new List<Dropdown.OptionData>();
+
+        foreach (var item in saveDatas)
+        {
+            options.Add(new Dropdown.OptionData(item.sessionName));
+        }
+
+        sessionDropdown.options = options;
+
+        SetData();
+    }
+
+    public void SetData()
+    {
+        saveData = saveDatas[sessionDropdown.value];
+
+        playerText.text = "Player name: " + saveData.playerName;
 
         playerName = saveData.playerName;
         timePlayed = saveData.timePlayed;
 
-        DisplayData(chosen);
+        DisplayData();
     }
 
-    private void Update()
+    public void DisplayData()
     {
-        if (chosen != previouslyChosen)
+        switch (typeDropdown.value)
         {
-            DisplayData(chosen);
-        }
-    }
-
-    public void DisplayData(int number)
-    {
-        switch (number)
-        {
-            case 1:
+            case 0:
                 ShowSpecific(saveData.populationOverTime);
                 break;
-            case 2:
+            case 1:
                 ShowSpecific(saveData.unitsOverTime);
                 break;
-            case 3:
+            case 2:
                 ShowSpecific(saveData.citiesOverTime);
                 break;
         }
-
-        previouslyChosen = chosen;
     }
 
     void ShowSpecific(int[] list)
