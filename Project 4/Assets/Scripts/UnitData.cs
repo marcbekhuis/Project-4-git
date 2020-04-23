@@ -5,20 +5,24 @@ using UnityEngine.UI;
 
 public class UnitData
 {
-    public UnitData(UnitPrefab unit, UnitMovement unitMovement, GameObject gameObject, Vector2Int gridPosition, PlayerData OwnedByPlayer)
+    public UnitData(UnitPrefab unit, UnitMovement unitMovement, GameObject gameObject, Vector2Int gridPosition, PlayerData OwnedByPlayer, UnitCombat unitCombat)
     {
         this.unit = unit;
         this.unitMovement = unitMovement;
         this.gameObject = gameObject;
         this.gridPosition = gridPosition;
         ownedByPlayer = OwnedByPlayer;
+        health = unit.maxHealth;
+        this.unitCombat = unitCombat;
     }
 
     public UnitPrefab unit;
     public UnitMovement unitMovement;
+    public UnitCombat unitCombat;
     public GameObject gameObject;
     public Vector2Int gridPosition;
     public PlayerData ownedByPlayer;
+    public float health;
 
     public void OpenActionPanel()
     {
@@ -43,6 +47,18 @@ public class UnitData
         {
             GameData.selectedBuilding = null;
             GameData.selectedUnit = null;
+        }
+    }
+
+    public void UpdateHealth(float amount)
+    {
+        health += amount;
+
+        if (health <= 0)
+        {
+            GameData.units[gridPosition.x, gridPosition.y] = null;
+            ownedByPlayer.units.Remove(this);
+            GameObject.Destroy(gameObject);
         }
     }
 }

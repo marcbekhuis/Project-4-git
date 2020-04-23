@@ -11,6 +11,7 @@ public class BuildingData
         this.gridPosition = gridPosition;
         ownedByPlayer = OwnedByPlayer;
         ownedByCity = OwnedByCity;
+        health = building.maxHealth;
     }
 
     public BuildingPrefab building;
@@ -18,6 +19,7 @@ public class BuildingData
     public Vector2Int gridPosition;
     public PlayerData ownedByPlayer;
     public CityData ownedByCity;
+    public float health;
 
     public void OpenActionPanel()
     {
@@ -42,6 +44,57 @@ public class BuildingData
         {
             GameData.selectedBuilding = null;
             GameData.selectedUnit = null;
+        }
+    }
+
+    public void UpdateHealth(float amount)
+    {
+        health += amount;
+
+        if (health <= 0)
+        {
+            GameData.buildings[gridPosition.x, gridPosition.y] = null;
+            GameData.buildingTilemap.SetTile((Vector3Int)gridPosition, null);
+            ownedByPlayer.buildings.Remove(this);
+
+            if (building.maxNumberOfResidence > 0)
+            {
+                ownedByCity.residenceBuildings.Remove(this);
+            }
+
+            if (building.townCenter)
+            {
+                TownCenter townCenter = scriptGameObject.GetComponent<TownCenter>();
+                foreach (var takenTile in townCenter.cityData.takenTiles)
+                {
+                    GameData.tiles[(int)takenTile.x, (int)takenTile.y].ownedByCity = null;
+                    GameData.tiles[(int)takenTile.x, (int)takenTile.y].ownedByPlayer = null;
+
+                    if (GameData.buildings[(int)takenTile.x, (int)takenTile.y] != null)
+                    {
+                        if (GameData.buildings[(int)takenTile.x, (int)takenTile.y].scriptGameObject)
+                        {
+                            GameObject.Destroy(GameData.buildings[(int)takenTile.x, (int)takenTile.y].scriptGameObject);
+                        }
+
+                        GameData.thisPlayer.buildings.Remove(GameData.buildings[(int)takenTile.x, (int)takenTile.y]);
+                        GameData.buildings[(int)takenTile.x, (int)takenTile.y] = null;
+                    }
+
+                    Vector2Int position = new Vector2Int((int)takenTile.x, (int)takenTile.y);
+
+                    GameData.buildingTilemap.SetTile((Vector3Int)position, null);
+                    GameData.borderTilemap.SetTile((Vector3Int)position, null);
+                }
+
+                GameData.thisPlayer.cities.Remove(townCenter.cityData);
+                GameData.fogOfWar.UpdateVisibility();
+            }
+
+            if (scriptGameObject)
+            {
+                GameObject.Destroy(scriptGameObject);
+            }
         }
     }
 }

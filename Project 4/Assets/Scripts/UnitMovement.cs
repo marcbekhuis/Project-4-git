@@ -7,7 +7,7 @@ public class UnitMovement : MonoBehaviour
     public bool moving = false;
     public float speed = 1;
 
-    Queue<Vector2Int> path = new Queue<Vector2Int>();
+    public Queue<Vector2Int> path = new Queue<Vector2Int>();
     Vector2Int destanationGridPosition;
     public UnitData unitData;
 
@@ -42,6 +42,7 @@ public class UnitMovement : MonoBehaviour
 
     private void CalculatePath()
     {
+        moving = false;
         path.Clear();
         Vector2Int lastPosition = unitData.gridPosition;
         //Debug.LogError("First last position: " + lastPosition);
@@ -159,11 +160,36 @@ public class UnitMovement : MonoBehaviour
                 {
                     //Debug.Log("Finsihed moving");
                     moving = false;
+
+                    if (GameData.buildings[unitData.gridPosition.x, unitData.gridPosition.y] != null)
+                    {
+                        if (GameData.buildings[unitData.gridPosition.x, unitData.gridPosition.y].ownedByPlayer != unitData.ownedByPlayer)
+                        {
+                            if (unitData.unit.damage > 0)
+                            {
+                                unitData.unitCombat.SetBuildingTarget(GameData.buildings[unitData.gridPosition.x, unitData.gridPosition.y], moving);
+                            }
+                        }
+                    }
                     return;
                 }
 
                 nextTileGridPosition = path.Dequeue();
                 //Debug.LogError("Path length: " + path.Count);
+
+                if (GameData.buildings[unitData.gridPosition.x, unitData.gridPosition.y] != null)
+                {
+                    if (GameData.buildings[unitData.gridPosition.x, unitData.gridPosition.y].ownedByPlayer != unitData.ownedByPlayer)
+                    {
+                        if (unitData.unit.damage > 0)
+                        {
+                            if (Random.Range(0f, 100f) < 50f)
+                            {
+                                unitData.unitCombat.SetBuildingTarget(GameData.buildings[unitData.gridPosition.x, unitData.gridPosition.y], moving);
+                            }
+                        }
+                    }
+                }
             }
         }
     }

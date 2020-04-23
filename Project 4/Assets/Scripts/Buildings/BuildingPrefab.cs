@@ -8,6 +8,7 @@ public class BuildingPrefab : ScriptableObject
 {
     public TileBase tile;
     public GameObject actionPanel;
+    public float maxHealth = 100;
     [Space]
     public bool townCenter = false;
     [Space]

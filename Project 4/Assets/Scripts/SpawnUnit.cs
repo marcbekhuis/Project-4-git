@@ -26,8 +26,13 @@ public class SpawnUnit : MonoBehaviour
         GameObject spawnedUnit = Instantiate(baseUnit, position, new Quaternion(0, 0, 0, 0));
         spawnedUnit.GetComponent<SpriteRenderer>().sprite = unitPrefab.sprite;
 
-        GameData.units[buildingData.gridPosition.x, buildingData.gridPosition.y] = new UnitData(unitPrefab, spawnedUnit.GetComponent<UnitMovement>(), spawnedUnit, buildingData.gridPosition, GameData.thisPlayer);
-        spawnedUnit.GetComponent<UnitMovement>().unitData = GameData.units[buildingData.gridPosition.x, buildingData.gridPosition.y];
+        UnitMovement unitMovement = spawnedUnit.GetComponent<UnitMovement>();
+        UnitCombat unitCombat = spawnedUnit.GetComponent<UnitCombat>();
+
+        GameData.units[buildingData.gridPosition.x, buildingData.gridPosition.y] = new UnitData(unitPrefab, unitMovement, spawnedUnit, buildingData.gridPosition, GameData.thisPlayer,unitCombat);
+        unitMovement.unitData = GameData.units[buildingData.gridPosition.x, buildingData.gridPosition.y];
+        unitCombat.unit = GameData.units[buildingData.gridPosition.x, buildingData.gridPosition.y];
+
         GameData.thisPlayer.units.Add(GameData.units[buildingData.gridPosition.x, buildingData.gridPosition.y]);
 
         GameData.fogOfWar.UpdateVisibility();

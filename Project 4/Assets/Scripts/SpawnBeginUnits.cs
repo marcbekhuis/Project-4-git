@@ -26,8 +26,13 @@ public class SpawnBeginUnits : MonoBehaviour
         GameObject spawnedUnit = Instantiate(baseUnit, position, new Quaternion(0,0,0,0));
         spawnedUnit.GetComponent<SpriteRenderer>().sprite = settler.sprite;
 
-        GameData.units[arrayposition.x, arrayposition.y] = new UnitData(settler, spawnedUnit.GetComponent<UnitMovement>(), spawnedUnit, arrayposition, GameData.thisPlayer);
-        spawnedUnit.GetComponent<UnitMovement>().unitData = GameData.units[arrayposition.x, arrayposition.y];
+        UnitMovement unitMovement = spawnedUnit.GetComponent<UnitMovement>();
+        UnitCombat unitCombat = spawnedUnit.GetComponent<UnitCombat>();
+
+        GameData.units[arrayposition.x, arrayposition.y] = new UnitData(settler, unitMovement, spawnedUnit, arrayposition, GameData.thisPlayer, unitCombat);
+        unitMovement.unitData = GameData.units[arrayposition.x, arrayposition.y];
+        unitCombat.unit = GameData.units[arrayposition.x, arrayposition.y];
+
         GameData.thisPlayer.units.Add(GameData.units[arrayposition.x, arrayposition.y]);
 
         arrayposition = arrayposition - new Vector2Int(1,0);
@@ -36,8 +41,13 @@ public class SpawnBeginUnits : MonoBehaviour
         spawnedUnit = Instantiate(baseUnit, position, new Quaternion(0, 0, 0, 0));
         spawnedUnit.GetComponent<SpriteRenderer>().sprite = worker.sprite;
 
-        GameData.units[arrayposition.x, arrayposition.y] = new UnitData(worker, spawnedUnit.GetComponent<UnitMovement>(), spawnedUnit, arrayposition, GameData.thisPlayer);
-        spawnedUnit.GetComponent<UnitMovement>().unitData = GameData.units[arrayposition.x, arrayposition.y];
+        unitMovement = spawnedUnit.GetComponent<UnitMovement>();
+        unitCombat = spawnedUnit.GetComponent<UnitCombat>();
+
+        GameData.units[arrayposition.x, arrayposition.y] = new UnitData(worker, unitMovement, spawnedUnit, arrayposition, GameData.thisPlayer, unitCombat);
+        unitMovement.unitData = GameData.units[arrayposition.x, arrayposition.y];
+        unitCombat.unit = GameData.units[arrayposition.x, arrayposition.y];
+
         GameData.thisPlayer.units.Add(GameData.units[arrayposition.x, arrayposition.y]);
 
         GameData.fogOfWar.UpdateVisibility();

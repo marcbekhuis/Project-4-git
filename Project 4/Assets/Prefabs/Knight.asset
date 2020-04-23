@@ -16,3 +16,6 @@ MonoBehaviour:
   movementSpeedSec: 10
   actionPanel: {fileID: 1157683879896118090, guid: cae83f19037d21c43b9b2b7aa6631bee,
     type: 3}
+  maxHealth: 100
+  damage: 10
+  attackDelaySec: 1
