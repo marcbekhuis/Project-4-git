@@ -18,6 +18,7 @@ public class SetUpGameData : MonoBehaviour
 
     [SerializeField] private Vector2Int mapSize = new Vector2Int(100,100);
     [SerializeField] private Canvas canvas;
+    [SerializeField] private GameObject gameOverScreen;
 
     // Start is called before the first frame update
     void Awake()
@@ -33,6 +34,7 @@ public class SetUpGameData : MonoBehaviour
         GameData.undiscoveredFogTilemap = undiscoveredFogTilemap;
         GameData.hidenFogTilemap = hidenFogTilemap;
         GameData.fogOfWar = fogOfWar;
+        GameData.gameOverScreen = gameOverScreen;
 
         GameData.biomes = new GameData.BiomeTypes[mapSize.x, mapSize.y];
         GameData.tiles = new TileData[mapSize.x, mapSize.y];

@@ -56,9 +56,12 @@ public class UnitData
 
         if (health <= 0)
         {
-            GameData.units[gridPosition.x, gridPosition.y] = null;
-            ownedByPlayer.units.Remove(this);
+            if (ownedByPlayer)
+            {
+                ownedByPlayer.units.Remove(this);
+            }
             GameObject.Destroy(gameObject);
+            GameData.units[gridPosition.x, gridPosition.y] = null;
         }
     }
 }

@@ -6,8 +6,11 @@ public class UnitCombat : MonoBehaviour
 {
     public UnitData unit;
     public bool attackingTile = false;
+    public bool attackingUnit = false;
 
     private BuildingData buildingTarget;
+    private UnitData unitTarget;
+    private Vector2Int unitTargetPosition;
     private float attackCooldownSec;
     private bool wasMoving = false;
 
@@ -20,7 +23,11 @@ public class UnitCombat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (attackingTile)
+        if (attackingUnit)
+        {
+            AttackUnit();
+        }
+        else if (attackingTile)
         {
             AttackBuilding();
         }
@@ -36,11 +43,10 @@ public class UnitCombat : MonoBehaviour
             if (buildingTarget.health <= 0)
             {
                 attackingTile = false;
-                if (wasMoving)
-                {
-                    unit.unitMovement.moving = true;
-                }
-                else if (unit.ownedByPlayer == null)
+
+                unit.unitMovement.moving = wasMoving;
+
+                if (unit.ownedByPlayer == null)
                 {
                     if (GameData.thisPlayer.cities.Count > 0)
                     {
@@ -52,11 +58,42 @@ public class UnitCombat : MonoBehaviour
         }
     }
 
+    private void AttackUnit()
+    {
+        if (unitTarget.gridPosition != unitTargetPosition)
+        {
+            unit.unitMovement.moving = wasMoving;
+            return;
+        }
+        else if (Time.time > attackCooldownSec)
+        {
+            unitTarget.UpdateHealth(-unit.unit.damage);
+            unit.UpdateHealth(-unitTarget.unit.damage);
+            attackCooldownSec = Time.time + unit.unit.attackDelaySec;
+
+            if (unitTarget.health <= 0)
+            {
+                attackingUnit = false;
+
+                unit.unitMovement.moving = wasMoving;
+            }
+        }
+    }
+
     public void SetBuildingTarget(BuildingData target, bool moving)
     {
         wasMoving = moving;
         unit.unitMovement.moving = false;
         buildingTarget = target;
         attackingTile = true;
+    }
+
+    public void SetUnitTarget(UnitData target, bool moving, Vector2Int targetPosition)
+    {
+        wasMoving = moving;
+        unit.unitMovement.moving = false;
+        unitTarget = target;
+        attackingUnit = true;
+        unitTargetPosition = targetPosition;
     }
 }

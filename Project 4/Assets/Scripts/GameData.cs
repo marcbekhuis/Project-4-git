@@ -26,6 +26,7 @@ public static class GameData
     public static BuildingData selectedBuilding;
     public static UnitData selectedUnit;
     public static Canvas canvas;
+    public static GameObject gameOverScreen;
 
 
     public enum BiomeTypes

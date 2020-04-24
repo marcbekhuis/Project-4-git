@@ -88,13 +88,28 @@ public class BuildingData
                 }
 
                 GameData.thisPlayer.cities.Remove(townCenter.cityData);
+
+                if (scriptGameObject)
+                {
+                    GameObject.Destroy(scriptGameObject);
+                }
+
                 GameData.fogOfWar.UpdateVisibility();
+
+                foreach (var unit in GameData.thisPlayer.units)
+                {
+                    if (unit.unit.name == "Settler")
+                    {
+                        return;
+                    }
+                }
+
+                if (GameData.thisPlayer.cities.Count == 0)
+                {
+                    GameData.gameOverScreen.SetActive(true);
+                }
             }
 
-            if (scriptGameObject)
-            {
-                GameObject.Destroy(scriptGameObject);
-            }
         }
     }
 }

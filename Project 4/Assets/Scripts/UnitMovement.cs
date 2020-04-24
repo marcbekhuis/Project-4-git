@@ -123,6 +123,18 @@ public class UnitMovement : MonoBehaviour
         distanceBetweenTiles = 0;
         movedOnGrid = false;
         moving = true;
+
+        if (GameData.units[nextTileGridPosition.x, nextTileGridPosition.y] != null)
+        {
+            if (GameData.units[nextTileGridPosition.x, nextTileGridPosition.y].ownedByPlayer == unitData.ownedByPlayer)
+            {
+                moving = false;
+            }
+            else
+            {
+                unitData.unitCombat.SetUnitTarget(GameData.units[nextTileGridPosition.x, nextTileGridPosition.y], moving, nextTileGridPosition);
+            }
+        }
     }
 
     private void MoveFromTileToTile()
@@ -174,8 +186,20 @@ public class UnitMovement : MonoBehaviour
                     return;
                 }
 
-                nextTileGridPosition = path.Dequeue();
+                    nextTileGridPosition = path.Dequeue();
                 //Debug.LogError("Path length: " + path.Count);
+
+                if (GameData.units[nextTileGridPosition.x, nextTileGridPosition.y] != null)
+                {
+                    if (GameData.units[nextTileGridPosition.x, nextTileGridPosition.y].ownedByPlayer == unitData.ownedByPlayer)
+                    {
+                        moving = false;
+                    }
+                    else
+                    {
+                        unitData.unitCombat.SetUnitTarget(GameData.units[nextTileGridPosition.x, nextTileGridPosition.y], moving, nextTileGridPosition);
+                    }
+                }
 
                 if (GameData.buildings[unitData.gridPosition.x, unitData.gridPosition.y] != null)
                 {
