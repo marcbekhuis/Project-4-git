@@ -77,21 +77,30 @@ public class ShowData : MonoBehaviour
     {
         lr.SetVertexCount(list.Length);
 
-        int highestValue = list.Length / 2;
+        int highestY = 0;
 
         foreach (var item in list)
         {
-            if (item > highestValue)
+            if (item > highestY)
             {
-                highestValue = item;
+                highestY = item;
             }
         }
 
-        camera.orthographicSize = highestValue * 0.7f;
+        if (highestY > list.Length / 2)
+        {
+            camera.orthographicSize = highestY * 0.7f;
+        }
+        else
+        {
+            camera.orthographicSize = list.Length / 2 * 0.7f;
+        }
+
+        camera.transform.position = new Vector3(list.Length / 2f, highestY / 2f,-10);
 
         for (int i = 0; i < list.Length; i++)
         {
-            lr.SetPosition(i, new Vector3(-camera.orthographicSize * 2 + 0.1f * camera.orthographicSize + i, -camera.orthographicSize + 0.1f * camera.orthographicSize + list[i],0));
+            lr.SetPosition(i, new Vector3(i, list[i],0));
         }
 
         //int timesRan = 0;
