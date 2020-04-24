@@ -18,6 +18,7 @@ public class ShowData : MonoBehaviour
     string playerName;
     float timePlayed;
     float previouslyChosen = 0;
+    Camera camera;
 
     //[SerializeField, Range(1,3)]int chosen = 1;
 
@@ -28,6 +29,7 @@ public class ShowData : MonoBehaviour
     {
         sSystem = this.GetComponent<SaveSystem>();
         lr = this.GetComponent<LineRenderer>();
+        camera = Camera.main;
 
         saveDatas = sSystem.LoadAllData();
 
@@ -73,26 +75,45 @@ public class ShowData : MonoBehaviour
 
     void ShowSpecific(int[] list)
     {
-        int timesRan = 0;
-        int position = 0;
-        timesRan = list.Length;
-        lr.positionCount = list.Length + 1;
+        lr.SetVertexCount(list.Length);
+
+        int highestValue = list.Length / 2;
+
         foreach (var item in list)
         {
-            float time = 0;
-            if (timesRan <= 0)
+            if (item > highestValue)
             {
-                time = 0;
+                highestValue = item;
             }
-            else
-            {
-                time = timePlayed / timesRan;
-            }
-            print(item + " | " + time);
-            timesRan--;
-            position++;
-
-            lr.SetPosition(position, new Vector3((time / (list.Length * 500)) * 9, (item / list.Length), 0));
         }
+
+        camera.orthographicSize = highestValue * 0.7f;
+
+        for (int i = 0; i < list.Length; i++)
+        {
+            lr.SetPosition(i, new Vector3(-camera.orthographicSize * 2 + 0.1f * camera.orthographicSize + i, -camera.orthographicSize + 0.1f * camera.orthographicSize + list[i],0));
+        }
+
+        //int timesRan = 0;
+        //int position = 0;
+        //timesRan = list.Length;
+        //lr.positionCount = list.Length + 1;
+        //foreach (var item in list)
+        //{
+        //    float time = 0;
+        //    if (timesRan <= 0)
+        //    {
+        //        time = 0;
+        //    }
+        //    else
+        //    {
+        //        time = timePlayed / timesRan;
+        //    }
+        //    print(item + " | " + time);
+        //    timesRan--;
+        //    position++;
+
+        //    lr.SetPosition(position, new Vector3((time / (list.Length * 500)) * 9, (item / list.Length), 0));
+        //}
     }
 }
