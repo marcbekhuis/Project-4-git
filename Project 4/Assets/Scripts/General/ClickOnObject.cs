@@ -1,10 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class ClickOnObject : MonoBehaviour
 {
     [SerializeField] private GameObject highlight;
+    private EventSystem eventSystem;
+
+    private void Awake()
+    {
+        eventSystem = GetComponent<EventSystem>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -15,6 +23,8 @@ public class ClickOnObject : MonoBehaviour
             {
                 if(touch.phase == TouchPhase.Began)
                 {
+                    if (eventSystem.currentSelectedGameObject != null) return;
+
                     Vector2Int gridPosition = HexagonCalculator.HexagonToGridPosition(CameraController.camera.ScreenToWorldPoint(touch.position));
                     Vector3 worldPosition = HexagonCalculator.GridToHexagonPosition(gridPosition);
                     highlight.transform.position = new Vector3(worldPosition.x, worldPosition.y, 0);
