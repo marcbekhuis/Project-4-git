@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.Audio;
 
 public class PlaceBuilding : MonoBehaviour
 {
@@ -39,6 +40,7 @@ public class PlaceBuilding : MonoBehaviour
         }
 
         GameData.buildingTilemap.SetTile((Vector3Int)unit.gridPosition, building.tile);
+        GameObject.FindGameObjectWithTag("SFX").GetComponent<AudioSource>().Play();
 
         if (building.townCenter || building.producesResources)
         {

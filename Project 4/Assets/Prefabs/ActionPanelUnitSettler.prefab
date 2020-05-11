@@ -540,5 +540,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   building: {fileID: 11400000, guid: 6674faa73b430a24bbb45bab8a900a25, type: 2}
-  gridPosition: {x: 0, y: 0}
-  destroysUnit: 1
