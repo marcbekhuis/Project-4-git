@@ -77,6 +77,8 @@ public class ShowData : MonoBehaviour
     {
         lr.SetVertexCount(list.Length);
 
+        // Set camera position and size.
+
         int highestY = 0;
 
         foreach (var item in list)
@@ -98,31 +100,11 @@ public class ShowData : MonoBehaviour
 
         camera.transform.position = new Vector3(list.Length / 2f, highestY / 2f,-10);
 
+        // sets the position for each point in the graf.
+
         for (int i = 0; i < list.Length; i++)
         {
             lr.SetPosition(i, new Vector3(i, list[i],0));
         }
-
-        //int timesRan = 0;
-        //int position = 0;
-        //timesRan = list.Length;
-        //lr.positionCount = list.Length + 1;
-        //foreach (var item in list)
-        //{
-        //    float time = 0;
-        //    if (timesRan <= 0)
-        //    {
-        //        time = 0;
-        //    }
-        //    else
-        //    {
-        //        time = timePlayed / timesRan;
-        //    }
-        //    print(item + " | " + time);
-        //    timesRan--;
-        //    position++;
-
-        //    lr.SetPosition(position, new Vector3((time / (list.Length * 500)) * 9, (item / list.Length), 0));
-        //}
     }
 }

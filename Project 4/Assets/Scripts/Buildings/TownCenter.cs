@@ -17,57 +17,40 @@ public class TownCenter : MonoBehaviour
         buildingData.ownedByCity = cityData;
 
         claimCooldownSec = Time.time + claimDelaySec;
-        cityData.takenTiles.Add(buildingData.gridPosition);
-        GameData.borderTilemap.SetTile((Vector3Int)buildingData.gridPosition, buildingData.ownedByPlayer.border);
-        GameData.tiles[buildingData.gridPosition.x, buildingData.gridPosition.y].ownedByPlayer = buildingData.ownedByPlayer;
-        GameData.tiles[buildingData.gridPosition.x, buildingData.gridPosition.y].ownedByCity = cityData;
 
-        cityData.takenTiles.Add(buildingData.gridPosition + new Vector2Int(0, 1));
-        GameData.borderTilemap.SetTile((Vector3Int)buildingData.gridPosition + new Vector3Int(0, 1, 0), buildingData.ownedByPlayer.border);
-        GameData.tiles[buildingData.gridPosition.x, buildingData.gridPosition.y + 1].ownedByPlayer = buildingData.ownedByPlayer;
-        GameData.tiles[buildingData.gridPosition.x, buildingData.gridPosition.y + 1].ownedByCity = cityData;
+        // claims the tile the city is in and the surrounding tiles.
+        ClaimTile(buildingData.gridPosition);
 
-        cityData.takenTiles.Add(buildingData.gridPosition + new Vector2Int(1, 0));
-        GameData.borderTilemap.SetTile((Vector3Int)buildingData.gridPosition + new Vector3Int(1, 0, 0), buildingData.ownedByPlayer.border);
-        GameData.tiles[buildingData.gridPosition.x + 1, buildingData.gridPosition.y].ownedByPlayer = buildingData.ownedByPlayer;
-        GameData.tiles[buildingData.gridPosition.x + 1, buildingData.gridPosition.y].ownedByCity = cityData;
+        ClaimTile(buildingData.gridPosition + new Vector2Int(0, 1));
 
-        cityData.takenTiles.Add(buildingData.gridPosition - new Vector2Int(0, 1));
-        GameData.borderTilemap.SetTile((Vector3Int)buildingData.gridPosition - new Vector3Int(0, 1, 0), buildingData.ownedByPlayer.border);
-        GameData.tiles[buildingData.gridPosition.x, buildingData.gridPosition.y - 1].ownedByPlayer = buildingData.ownedByPlayer;
-        GameData.tiles[buildingData.gridPosition.x, buildingData.gridPosition.y - 1].ownedByCity = cityData;
+        ClaimTile(buildingData.gridPosition + new Vector2Int(1, 0));
 
-        cityData.takenTiles.Add(buildingData.gridPosition - new Vector2Int(1, 0));
-        GameData.borderTilemap.SetTile((Vector3Int)buildingData.gridPosition - new Vector3Int(1, 0, 0), buildingData.ownedByPlayer.border);
-        GameData.tiles[buildingData.gridPosition.x - 1, buildingData.gridPosition.y].ownedByPlayer = buildingData.ownedByPlayer;
-        GameData.tiles[buildingData.gridPosition.x - 1, buildingData.gridPosition.y].ownedByCity = cityData;
+        ClaimTile(buildingData.gridPosition - new Vector2Int(0, 1));
+
+        ClaimTile(buildingData.gridPosition - new Vector2Int(1, 0));
 
         if (buildingData.gridPosition.y % 2 == 1)
         {
-            cityData.takenTiles.Add(buildingData.gridPosition + new Vector2Int(1, 1));
-            GameData.borderTilemap.SetTile((Vector3Int)buildingData.gridPosition + new Vector3Int(1, 1, 0), buildingData.ownedByPlayer.border);
-            GameData.tiles[buildingData.gridPosition.x + 1, buildingData.gridPosition.y + 1].ownedByPlayer = buildingData.ownedByPlayer;
-            GameData.tiles[buildingData.gridPosition.x + 1, buildingData.gridPosition.y + 1].ownedByCity = cityData;
+            ClaimTile(buildingData.gridPosition + new Vector2Int(1, 1));
 
-            cityData.takenTiles.Add(buildingData.gridPosition + new Vector2Int(1, -1));
-            GameData.borderTilemap.SetTile((Vector3Int)buildingData.gridPosition + new Vector3Int(1, -1, 0), buildingData.ownedByPlayer.border);
-            GameData.tiles[buildingData.gridPosition.x + 1, buildingData.gridPosition.y - 1].ownedByPlayer = buildingData.ownedByPlayer;
-            GameData.tiles[buildingData.gridPosition.x + 1, buildingData.gridPosition.y - 1].ownedByCity = cityData;
+            ClaimTile(buildingData.gridPosition + new Vector2Int(1, -1));
         }
         else
         {
-            cityData.takenTiles.Add(buildingData.gridPosition + new Vector2Int(-1, 1));
-            GameData.borderTilemap.SetTile((Vector3Int)buildingData.gridPosition + new Vector3Int(-1, 1, 0), buildingData.ownedByPlayer.border);
-            GameData.tiles[buildingData.gridPosition.x - 1, buildingData.gridPosition.y + 1].ownedByPlayer = buildingData.ownedByPlayer;
-            GameData.tiles[buildingData.gridPosition.x - 1, buildingData.gridPosition.y + 1].ownedByCity = cityData;
+            ClaimTile(buildingData.gridPosition + new Vector2Int(-1, 1));
 
-            cityData.takenTiles.Add(buildingData.gridPosition + new Vector2Int(-1, -1));
-            GameData.borderTilemap.SetTile((Vector3Int)buildingData.gridPosition + new Vector3Int(-1, -1, 0), buildingData.ownedByPlayer.border);
-            GameData.tiles[buildingData.gridPosition.x - 1, buildingData.gridPosition.y - 1].ownedByPlayer = buildingData.ownedByPlayer;
-            GameData.tiles[buildingData.gridPosition.x - 1, buildingData.gridPosition.y - 1].ownedByCity = cityData;
+            ClaimTile(buildingData.gridPosition + new Vector2Int(-1, -1));
         }
 
         GameData.fogOfWar.UpdateVisibility();
+    }
+
+    private void ClaimTile(Vector2Int position) // sets all the data to claim a tile.
+    {
+        cityData.takenTiles.Add(position);
+        GameData.borderTilemap.SetTile((Vector3Int)position, buildingData.ownedByPlayer.border);
+        GameData.tiles[position.x , position.y].ownedByPlayer = buildingData.ownedByPlayer;
+        GameData.tiles[position.x, position.y].ownedByCity = cityData;
     }
 
     private void Update()
@@ -78,7 +61,7 @@ public class TownCenter : MonoBehaviour
         }
     }
 
-    private void ClaimTile()
+    private void ClaimTile() // Finds a unclaimed tile next to a claimed tile and claims it.
     {
         for (int i = 0; i < 100; i++)
         {
@@ -94,9 +77,8 @@ public class TownCenter : MonoBehaviour
             }
             if (GameData.tiles[nextTilePosition.x, nextTilePosition.y].ownedByCity == null)
             {
-                cityData.takenTiles.Add(nextTilePosition);
-                GameData.borderTilemap.SetTile((Vector3Int)nextTilePosition, GameData.thisPlayer.border);
-                GameData.tiles[nextTilePosition.x, nextTilePosition.y].ownedByPlayer = buildingData.ownedByPlayer;
+                ClaimTile(nextTilePosition);
+
                 claimCooldownSec = Time.time + claimDelaySec;
                 return;
             }

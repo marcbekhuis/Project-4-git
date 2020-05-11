@@ -21,13 +21,13 @@ public class BuildingData
     public CityData ownedByCity;
     public float health;
 
-    public void OpenActionPanel()
+    public void OpenActionPanel() // Opens or closes the ui action panel
     {
-        if (GameData.activeActionPanel)
+        if (GameData.activeActionPanel) // Destroys the active action panel
         {
             GameObject.Destroy(GameData.activeActionPanel);
         }
-        if (GameData.selectedBuilding != this)
+        if (GameData.selectedBuilding != this) // Opens the action panel if the previous action panel wasn't this one.
         {
             GameObject spawnedPanel = GameObject.Instantiate(building.actionPanel, GameData.canvas.transform);
 
@@ -57,15 +57,15 @@ public class BuildingData
             GameData.buildingTilemap.SetTile((Vector3Int)gridPosition, null);
             ownedByPlayer.buildings.Remove(this);
 
-            if (building.maxNumberOfResidence > 0)
+            if (building.maxNumberOfResidence > 0) // removes the building from the residence list if it increased the max population.
             {
                 ownedByCity.residenceBuildings.Remove(this);
             }
 
-            if (building.townCenter)
+            if (building.townCenter) // removes all the town data and removes any building thats owned by the town.
             {
                 TownCenter townCenter = scriptGameObject.GetComponent<TownCenter>();
-                foreach (var takenTile in townCenter.cityData.takenTiles)
+                foreach (var takenTile in townCenter.cityData.takenTiles) // removes any building owned by the city.
                 {
                     GameData.tiles[(int)takenTile.x, (int)takenTile.y].ownedByCity = null;
                     GameData.tiles[(int)takenTile.x, (int)takenTile.y].ownedByPlayer = null;
@@ -96,7 +96,7 @@ public class BuildingData
 
                 GameData.fogOfWar.UpdateVisibility();
 
-                foreach (var unit in GameData.thisPlayer.units)
+                foreach (var unit in GameData.thisPlayer.units) // check if the player has a settler to see if he/she can continue playing.
                 {
                     if (unit.unit.name == "Settler")
                     {
@@ -104,7 +104,7 @@ public class BuildingData
                     }
                 }
 
-                if (GameData.thisPlayer.cities.Count == 0)
+                if (GameData.thisPlayer.cities.Count == 0) // checks if the player has any cities left so he/she can continue playing.
                 {
                     GameData.gameOverScreen.SetActive(true);
                 }

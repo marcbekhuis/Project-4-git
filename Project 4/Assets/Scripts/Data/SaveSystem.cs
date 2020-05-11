@@ -17,12 +17,6 @@ public class SaveSystem : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void SaveData()
     {
         SavedData savedData = new SavedData(
@@ -37,7 +31,7 @@ public class SaveSystem : MonoBehaviour
             ) ;
 
         string json = JsonUtility.ToJson(savedData);
-        Debug.LogError(json);
+        //Debug.LogError(json);
         File.WriteAllText(saveFolder + LobbyData.sessionName + ".txt", Encryptor(json));
     }
 
@@ -59,7 +53,7 @@ public class SaveSystem : MonoBehaviour
         if (File.Exists(saveFolder + saveName + ".txt"))
         {
             string json = File.ReadAllText(saveFolder + saveName + ".txt");
-            Debug.LogError(Dencryptor(json));
+            //Debug.LogError(Dencryptor(json));
         }
     }
 

@@ -26,7 +26,7 @@ public class EnemySpawner : MonoBehaviour
         {
             if (Time.time > spawnCooldownSec)
             {
-                for (int i = 0; i < unitsPerWave; i++)
+                for (int i = 0; i < unitsPerWave; i++) // Spawns a enemy unit.
                 {
                     Vector2 cityLocation = GameData.thisPlayer.cities[Random.Range(0, GameData.thisPlayer.cities.Count)].originLocation;
                     Vector2 position = HexagonCalculator.GridToHexagonPosition(cityLocation);
@@ -36,6 +36,7 @@ public class EnemySpawner : MonoBehaviour
                     position = HexagonCalculator.GridToHexagonPosition(gridPosition);
 
                     GameObject spawnedUnit = Instantiate(unitBase, position, new Quaternion(0,0,0,0));
+
                     UnitPrefab unit = unitsToSpawn[Random.Range(0, unitsToSpawn.Length)];
                     spawnedUnit.GetComponent<SpriteRenderer>().sprite = unit.sprite;
                     UnitMovement unitMovement = spawnedUnit.GetComponent<UnitMovement>();

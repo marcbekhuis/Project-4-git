@@ -8,18 +8,6 @@ public class SpawnUnit : MonoBehaviour
     public UnitPrefab unitPrefab;
     public GameObject baseUnit;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void SpawnU()
     {
         Vector2 position = HexagonCalculator.GridToHexagonPosition(buildingData.gridPosition);

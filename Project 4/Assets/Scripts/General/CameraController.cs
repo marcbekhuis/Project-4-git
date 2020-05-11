@@ -22,14 +22,14 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.touches.Length == 1)
+        if (Input.touches.Length == 1) // Moving around
         {
             if (Input.touches[0].phase == TouchPhase.Moved)
             {
                 camera.transform.position -= (Vector3)Input.touches[0].deltaPosition * movementSpeed * camera.orthographicSize;
             }
         }
-        else if (Input.touches.Length == 2)
+        else if (Input.touches.Length == 2) // Zooming in and out.
         {
             if (Input.touches[0].phase == TouchPhase.Moved && Input.touches[1].phase == TouchPhase.Moved)
             {

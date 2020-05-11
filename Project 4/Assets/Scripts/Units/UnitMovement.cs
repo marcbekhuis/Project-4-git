@@ -16,12 +16,6 @@ public class UnitMovement : MonoBehaviour
     float distanceBetweenTiles = 0;
     bool movedOnGrid = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -40,7 +34,7 @@ public class UnitMovement : MonoBehaviour
         CalculatePath();
     }
 
-    private void CalculatePath()
+    private void CalculatePath() // Finds a path to the target position.
     {
         moving = false;
         path.Clear();

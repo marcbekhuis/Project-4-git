@@ -14,23 +14,6 @@ public class CityData
     public List<Vector2> cityBuildings = new List<Vector2>();
     [HideInInspector] public List<BuildingData> residenceBuildings = new List<BuildingData>();
 
-    public void SetNewCity(string cityName, Vector2Int capitalLocation, string cityDiscription, int startPopulation)
-    {
-        name = cityName;
-        originLocation = capitalLocation;
-        discription = cityDiscription;
-        cityPopulation = startPopulation;
-    }
-
-    public CityData CreateNewCity(string cityName, Vector2 capitalLocation, string cityDiscription, int startPopulation)
-    {
-        CityData newCity = new CityData();
-
-        newCity.SetNewCity("New City", Vector2Int.zero, "Intresting Discription", 1);
-
-        return newCity;
-    }
-
     public void UpdateMaxPopulation()
     {
         maxPopulation = 0;

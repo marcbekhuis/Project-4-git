@@ -24,13 +24,13 @@ public class UnitData
     public PlayerData ownedByPlayer;
     public float health;
 
-    public void OpenActionPanel()
+    public void OpenActionPanel() // Opens or closes the ui action panel
     {
-        if (GameData.activeActionPanel)
+        if (GameData.activeActionPanel) // Destroys the active action panel
         {
             GameObject.Destroy(GameData.activeActionPanel);
         }
-        if (GameData.selectedUnit != this)
+        if (GameData.selectedUnit != this) // Opens the action panel if the previous action panel wasn't this one.
         {
             GameObject spawnedPanel = GameObject.Instantiate(unit.actionPanel, GameData.canvas.transform);
             GameData.activeActionPanel = spawnedPanel;

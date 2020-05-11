@@ -26,7 +26,7 @@ public class SelectUnitMoveToPos : MonoBehaviour
             {
                 if (Input.touches.Length == 1)
                 {
-                    if (touch.phase == TouchPhase.Began)
+                    if (touch.phase == TouchPhase.Began) // Gets a move to position for the selected unit.
                     {
                         Vector2Int gridPosition = HexagonCalculator.HexagonToGridPosition(CameraController.camera.ScreenToWorldPoint(touch.position));
 
