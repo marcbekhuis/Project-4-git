@@ -28,7 +28,6 @@ public static class GameData
     public static Canvas canvas;
     public static GameObject gameOverScreen;
 
-
     public enum BiomeTypes
     {
         Plains,

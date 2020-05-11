@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tile: {fileID: 11400000, guid: 74a2b3d395e56c046bb90096d758ca51, type: 2}
   actionPanel: {fileID: 0}
+  maxHealth: 100
   townCenter: 0
   producesResources: 1
   itemToProduce:
@@ -21,7 +22,7 @@ MonoBehaviour:
     discription: 
     itemImage: {fileID: 0}
     gameObject: {fileID: 0}
-    amount: 0
+    amount: 1
   amount: 1
   productionDelay: 20
   maxNumberOfResidence: 0
