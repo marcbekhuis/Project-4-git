@@ -8,6 +8,8 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private GameObject unitBase;
 
     [SerializeField] private int unitsPerWave = 1;
+    [SerializeField] private float percentageIncreaseByCities = 100f;
+    [SerializeField] private float percentageIncreaseByUnits = 100f;
     [SerializeField] private float spawnDelaySec = 80;
     [SerializeField] private float beginDelaySec = 320;
 
@@ -26,7 +28,8 @@ public class EnemySpawner : MonoBehaviour
         {
             if (Time.time > spawnCooldownSec)
             {
-                for (int i = 0; i < unitsPerWave; i++) // Spawns a enemy unit.
+                int unitsInWave = Mathf.RoundToInt((float)unitsPerWave * (float)GameData.thisPlayer.cities.Count / 100f * (float)percentageIncreaseByCities + (float)GameData.thisPlayer.units.Count / 100f * percentageIncreaseByUnits);
+                for (int i = 0; i < unitsInWave; i++) // Spawns a enemy unit.
                 {
                     Vector2 cityLocation = GameData.thisPlayer.cities[Random.Range(0, GameData.thisPlayer.cities.Count)].originLocation;
                     Vector2 position = HexagonCalculator.GridToHexagonPosition(cityLocation);

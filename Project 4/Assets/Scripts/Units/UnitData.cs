@@ -62,6 +62,21 @@ public class UnitData
             }
             GameObject.Destroy(gameObject);
             GameData.units[gridPosition.x, gridPosition.y] = null;
+
+            GameData.fogOfWar.UpdateVisibility();
+
+            foreach (var unit in GameData.thisPlayer.units) // check if the player has a settler to see if he/she can continue playing.
+            {
+                if (unit.unit.name == "Settler")
+                {
+                    return;
+                }
+            }
+
+            if (GameData.thisPlayer.cities.Count == 0) // checks if the player has any cities left so he/she can continue playing.
+            {
+                GameData.gameOverScreen.SetActive(true);
+            }
         }
     }
 }

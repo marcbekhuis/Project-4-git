@@ -11,7 +11,7 @@ public class UnitMovement : MonoBehaviour
     Vector2Int destanationGridPosition;
     public UnitData unitData;
 
-    Vector2Int nextTileGridPosition;
+    Vector2Int nextTileGridPosition = new Vector2Int(-1,-1);
     Vector2Int previousTileGridPosition;
     float distanceBetweenTiles = 0;
     bool movedOnGrid = false;
@@ -19,6 +19,17 @@ public class UnitMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!moving)
+        {
+            if (unitData.gridPosition != nextTileGridPosition && nextTileGridPosition != new Vector2Int(-1,-1))
+            {
+                if (GameData.units[nextTileGridPosition.x, nextTileGridPosition.y] == null)
+                {
+                    moving = true;
+                }
+            }
+        }
+
         MoveFromTileToTile();
     }
 
@@ -123,6 +134,7 @@ public class UnitMovement : MonoBehaviour
             if (GameData.units[nextTileGridPosition.x, nextTileGridPosition.y].ownedByPlayer == unitData.ownedByPlayer)
             {
                 moving = false;
+                path.Clear();
             }
             else
             {

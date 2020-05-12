@@ -31,10 +31,43 @@ public class UnitCombat : MonoBehaviour
     {
         if (Time.time > attackCooldownSec)
         {
-            buildingTarget.UpdateHealth(-unit.unit.damage);
-            attackCooldownSec = Time.time + unit.unit.attackDelaySec;
+            if (buildingTarget != null)
+            {
+                buildingTarget.UpdateHealth(-unit.unit.damage);
+                attackCooldownSec = Time.time + unit.unit.attackDelaySec;
 
-            if (buildingTarget.health <= 0)
+                if (buildingTarget.health <= 0)
+                {
+                    attackingTile = false;
+
+                    unit.unitMovement.moving = wasMoving;
+
+                    if (unit.ownedByPlayer == null)
+                    {
+                        if (GameData.thisPlayer.cities.Count > 0)
+                        {
+                            Vector2Int cityLocation = GameData.thisPlayer.cities[Random.Range(0, GameData.thisPlayer.cities.Count)].originLocation;
+                            unit.unitMovement.SetDestanationGrid(cityLocation);
+                            return;
+                        }
+                        else if (GameData.thisPlayer.units.Count > 0)
+                        {
+                            foreach (var unit in GameData.thisPlayer.units)
+                            {
+                                if (unit.unit.name == "Settler")
+                                {
+                                    unit.unitMovement.SetDestanationGrid(unit.gridPosition);
+                                    return;
+                                }
+                            }
+
+                            unit.unitMovement.SetDestanationGrid(GameData.thisPlayer.units[Random.Range(0, GameData.thisPlayer.units.Count)].gridPosition);
+                            return;
+                        }
+                    }
+                }
+            }
+            else
             {
                 attackingTile = false;
 
@@ -46,6 +79,21 @@ public class UnitCombat : MonoBehaviour
                     {
                         Vector2Int cityLocation = GameData.thisPlayer.cities[Random.Range(0, GameData.thisPlayer.cities.Count)].originLocation;
                         unit.unitMovement.SetDestanationGrid(cityLocation);
+                        return;
+                    }
+                    else if (GameData.thisPlayer.units.Count > 0)
+                    {
+                        foreach (var unit in GameData.thisPlayer.units)
+                        {
+                            if (unit.unit.name == "Settler")
+                            {
+                                unit.unitMovement.SetDestanationGrid(unit.gridPosition);
+                                return;
+                            }
+                        }
+
+                        unit.unitMovement.SetDestanationGrid(GameData.thisPlayer.units[Random.Range(0, GameData.thisPlayer.units.Count)].gridPosition);
+                        return;
                     }
                 }
             }

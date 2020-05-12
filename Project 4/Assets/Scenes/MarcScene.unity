@@ -510,6 +510,8 @@ MonoBehaviour:
   unitBase: {fileID: 3626150143577605205, guid: 92465a45deb862b489e05c90d5343012,
     type: 3}
   unitsPerWave: 1
+  percentageIncreaseByCities: 100
+  percentageIncreaseByUnits: 40
   spawnDelaySec: 60
   beginDelaySec: 120
 --- !u!114 &235623060
