@@ -17,6 +17,8 @@ public class ClickOnObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameData.gameOverScreen.activeSelf) return;
+
         foreach (Touch touch in Input.touches)
         {
             if (Input.touches.Length == 1)

@@ -12,6 +12,12 @@ public class Item
     public GameObject gameObject = null;
     public int amount = 0;
 
+    public Item(string Name, int Amount = 0)
+    {
+        name = Name;
+        amount = Amount;
+    }
+
     public void SetPicture(string objectName)
     {
         itemImage = GameObject.Find(objectName).GetComponent<Image>();

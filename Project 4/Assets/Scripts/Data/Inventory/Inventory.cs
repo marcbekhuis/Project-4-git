@@ -14,7 +14,6 @@ public class Inventory
 
     public void PickUpItem(Item item, int amount)
     {
-        bool foundItem = false;
         //Checks if the player already has the item
         foreach (var currentItem in playerInventory)
         {
@@ -24,30 +23,12 @@ public class Inventory
                 if (currentItem.amount + amount <= fullStack)
                 {
                     currentItem.amount += amount;
-                    foundItem = true;
-                    break;
-                }
-                else
-                {
-                    foundItem = true;
-                    CannotGetItem();
-                    break;
+                    return;
                 }
             }
         }
-        if (!foundItem)
-        {
-            //if it couldn't find the item in the inventory, it will add it to the inventory
-            if (playerInventory.Count < inventoryMaxSize)
-            {
-                playerInventory.Add(item);
-            }
-            else
-            {
-                CannotGetItem();
-            }
-            lastItem = item;
-        }
+
+        playerInventory.Add(new Item(item.name, amount));
     }
 
     void CannotGetItem()

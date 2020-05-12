@@ -25,22 +25,15 @@ public class CityData
     
     public void UpdatePopulation()
     {
-        Item bread = new Item();
-        bread.name = "Bread";
-
-        Item breadInventory = new Item();
-
         foreach (var item in GameData.thisPlayer.inventory.playerInventory)
         {
-            if (item.name == bread.name)
+            if (item.name == "Bread")
             {
-                breadInventory = item;
-                break;
+                int newAmount = Mathf.Clamp(item.amount, 0, maxPopulation);
+                cityPopulation = newAmount;
+                item.amount -= newAmount;
+                return;
             }
         }
-
-        int newAmount = Mathf.Clamp(breadInventory.amount, 0, maxPopulation);
-        cityPopulation = newAmount;
-        breadInventory.amount -= newAmount;
     }
 }

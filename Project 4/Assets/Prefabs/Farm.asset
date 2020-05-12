@@ -22,7 +22,7 @@ MonoBehaviour:
     discription: 
     itemImage: {fileID: 0}
     gameObject: {fileID: 0}
-    amount: 1
+    amount: 3
   amount: 1
   productionDelay: 20
   maxNumberOfResidence: 0
