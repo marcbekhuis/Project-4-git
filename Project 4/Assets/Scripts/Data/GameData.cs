@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public static class GameData
 {
@@ -27,6 +28,15 @@ public static class GameData
     public static UnitData selectedUnit;
     public static Canvas canvas;
     public static GameObject gameOverScreen;
+
+    public static AudioSource sfxBuildingBuild;
+    public static AudioSource sfxUnitBuild;
+    public static AudioSource sfxUnitCombat;
+
+    public static AudioClip cityDestroy;
+    public static AudioClip buildingBuild;
+    public static AudioClip unitBuild;
+    public static AudioClip unitDamage;
 
     public enum BiomeTypes
     {

@@ -63,6 +63,14 @@ public class UnitData
             GameObject.Destroy(gameObject);
             GameData.units[gridPosition.x, gridPosition.y] = null;
 
+            if (GameData.sfxUnitCombat)
+            {
+                if (GameData.unitDamage)
+                {
+                    if (!GameData.sfxUnitCombat.isPlaying) GameData.sfxUnitCombat.PlayOneShot(GameData.unitDamage);
+                }
+            }
+
             GameData.fogOfWar.UpdateVisibility();
 
             foreach (var unit in GameData.thisPlayer.units) // check if the player has a settler to see if he/she can continue playing.

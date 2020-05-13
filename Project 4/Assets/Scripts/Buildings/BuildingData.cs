@@ -64,6 +64,13 @@ public class BuildingData
 
             if (building.townCenter) // removes all the town data and removes any building thats owned by the town.
             {
+                if (GameData.sfxBuildingBuild)
+                {
+                    if (GameData.cityDestroy)
+                    {
+                        GameData.sfxBuildingBuild.PlayOneShot(GameData.cityDestroy);
+                    }
+                }
                 TownCenter townCenter = scriptGameObject.GetComponent<TownCenter>();
                 foreach (var takenTile in townCenter.cityData.takenTiles) // removes any building owned by the city.
                 {

@@ -20,6 +20,15 @@ public class SetUpGameData : MonoBehaviour
     [SerializeField] private Canvas canvas;
     [SerializeField] private GameObject gameOverScreen;
 
+    [SerializeField] private AudioSource sfxBuildingBuild;
+    [SerializeField] private AudioSource sfxUnitBuild;
+    [SerializeField] private AudioSource sfxUnitCombat;
+
+    [SerializeField] private AudioClip cityDestroy;
+    [SerializeField] private AudioClip buildingBuild;
+    [SerializeField] private AudioClip unitBuild;
+    [SerializeField] private AudioClip unitDamage;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -40,6 +49,15 @@ public class SetUpGameData : MonoBehaviour
         GameData.tiles = new TileData[mapSize.x, mapSize.y];
         GameData.units = new UnitData[mapSize.x, mapSize.y];
         GameData.buildings = new BuildingData[mapSize.x, mapSize.y];
+
+        GameData.sfxBuildingBuild = sfxBuildingBuild;
+        GameData.sfxUnitBuild = sfxUnitBuild;
+        GameData.sfxUnitCombat = sfxUnitCombat;
+
+        GameData.cityDestroy = cityDestroy;
+        GameData.buildingBuild = buildingBuild;
+        GameData.unitBuild = unitBuild;
+        GameData.unitDamage = unitDamage;
 
         foreach (var player in players)
         {

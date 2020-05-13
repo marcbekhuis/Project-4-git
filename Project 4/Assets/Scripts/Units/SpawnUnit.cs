@@ -10,6 +10,14 @@ public class SpawnUnit : MonoBehaviour
 
     public void SpawnU()
     {
+        if (GameData.sfxUnitBuild)
+        {
+            if (GameData.unitBuild)
+            {
+                if (!GameData.sfxUnitBuild.isPlaying) GameData.sfxUnitBuild.PlayOneShot(GameData.unitBuild);
+            }
+        }
+
         Vector2 position = HexagonCalculator.GridToHexagonPosition(buildingData.gridPosition);
         GameObject spawnedUnit = Instantiate(baseUnit, position, new Quaternion(0, 0, 0, 0));
         spawnedUnit.GetComponent<SpriteRenderer>().sprite = unitPrefab.sprite;
